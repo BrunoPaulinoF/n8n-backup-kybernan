@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-26T23:48:13.896Z",
+  "updatedAt": "2025-11-26T23:51:06.143Z",
   "createdAt": "2025-11-26T23:37:51.286Z",
   "id": "YhwAtdLW77IP6rD9",
   "name": "BACKUP GITHUB",
@@ -40,7 +40,7 @@
           "value": "={{ $('Edit Fields').item.json.repository }}",
           "mode": "name"
         },
-        "filePath": "=zapdin/{{ $('obter todos').item.json.id }}.json",
+        "filePath": "=kybernan/{{ $('obter todos').item.json.id }}.json",
         "additionalParameters": {}
       },
       "type": "n8n-nodes-base.github",
@@ -184,7 +184,6 @@
     },
     {
       "parameters": {
-        "authentication": "oAuth2",
         "resource": "file",
         "owner": {
           "__rl": true,
@@ -196,7 +195,7 @@
           "value": "={{ $('Edit Fields').first().json.repository }}",
           "mode": "name"
         },
-        "filePath": "=zapdin/{{ $('workflow').item.json.id }}.json",
+        "filePath": "=kybernan/{{ $('workflow').item.json.id }}.json",
         "binaryData": true,
         "commitMessage": "={{ $('workflow').item.json.name }} {{ $now.toString() }}"
       },
@@ -208,7 +207,13 @@
       ],
       "id": "09fb180b-3f67-4663-87d7-07032fd8b3d1",
       "name": "GitHub Create File",
-      "webhookId": "ae86c1b6-0bfa-4bb5-89e6-cae5a628548c"
+      "webhookId": "ae86c1b6-0bfa-4bb5-89e6-cae5a628548c",
+      "credentials": {
+        "githubApi": {
+          "id": "fz15qtvs9TYx0exm",
+          "name": "GitHub account"
+        }
+      }
     },
     {
       "parameters": {
@@ -245,7 +250,6 @@
     },
     {
       "parameters": {
-        "authentication": "oAuth2",
         "resource": "file",
         "operation": "edit",
         "owner": {
@@ -258,7 +262,7 @@
           "value": "={{ $('Edit Fields').first().json.repository }}",
           "mode": "name"
         },
-        "filePath": "=zapdin/{{ $('workflow1').item.json.id }}.json",
+        "filePath": "=kybernan/{{ $('workflow1').item.json.id }}.json",
         "binaryData": true,
         "commitMessage": "={{ $('workflow1').item.json.name }} {{ $now.toString() }}"
       },
@@ -270,7 +274,13 @@
       ],
       "id": "531657a5-9a33-4390-a8c0-c976d893d40a",
       "name": "GitHub Edit File",
-      "webhookId": "ae86c1b6-0bfa-4bb5-89e6-cae5a628548c"
+      "webhookId": "ae86c1b6-0bfa-4bb5-89e6-cae5a628548c",
+      "credentials": {
+        "githubApi": {
+          "id": "fz15qtvs9TYx0exm",
+          "name": "GitHub account"
+        }
+      }
     },
     {
       "parameters": {
@@ -479,9 +489,11 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "pinData": {},
-  "versionId": "94e366bd-2bc7-4711-834d-ef1088be6d00",
+  "versionId": "3735010c-3de9-48b5-a67b-e9774d81799f",
   "triggerCount": 0,
   "shared": [
     {
