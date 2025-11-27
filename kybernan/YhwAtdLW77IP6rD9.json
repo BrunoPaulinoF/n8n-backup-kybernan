@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2025-11-26T23:51:06.143Z",
+  "updatedAt": "2025-11-27T01:54:10.455Z",
   "createdAt": "2025-11-26T23:37:51.286Z",
   "id": "YhwAtdLW77IP6rD9",
   "name": "BACKUP GITHUB",
-  "active": false,
+  "active": true,
   "isArchived": false,
   "nodes": [
     {
@@ -488,13 +488,17 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
   "versionId": "3735010c-3de9-48b5-a67b-e9774d81799f",
-  "triggerCount": 0,
+  "triggerCount": 1,
   "shared": [
     {
       "updatedAt": "2025-11-26T23:37:51.286Z",
