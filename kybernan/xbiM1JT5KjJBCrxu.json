@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-26T23:34:50.391Z",
+  "updatedAt": "2025-11-27T02:45:11.349Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "ARQUIVADOR",
@@ -586,6 +586,119 @@
       ],
       "id": "06543081-c9e4-49d2-a117-5877a2ea7524",
       "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## FALLBACK PERGUNTANDO ONDE ARQUIVAR QUANDO DER PROBLEMA\n\n",
+        "height": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1152,
+        -224
+      ],
+      "id": "2c0078d6-d8f4-41c1-9c93-ba1f7b772383",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "name": "teste",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1pHJKSMiWUuozZZKVIiP6Izt3inkppFny",
+          "mode": "id"
+        },
+        "options": {
+          "ocrLanguage": "pt"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1280,
+        112
+      ],
+      "id": "0c40d983-5d6b-49c9-8008-77dae0f542bc",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/drive/v3/files",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDriveOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "mimeType",
+              "value": "application/vnd.google-apps.folder"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1760,
+        192
+      ],
+      "id": "1e6fe8d4-b64d-4284-b81a-f26fc17e50b4",
+      "name": "HTTP Request1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "01 - JAN",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "mode": "list",
+            "value": "root",
+            "cachedResultName": "/ (Root folder)"
+          },
+          "whatToSearch": "folders"
+        },
+        "options": {
+          "fields": [
+            "id",
+            "name",
+            "webViewLink"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1504,
+        176
+      ],
+      "id": "7288f54b-101a-47c9-8c92-38005813c165",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
     }
   ],
   "connections": {
@@ -713,6 +826,16 @@
             "index": 0
           }
         ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        []
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        []
       ]
     }
   },
@@ -847,7 +970,7 @@
       }
     ]
   },
-  "versionId": "42dedaf4-dd4c-4aaf-9904-aea7f4ed1472",
+  "versionId": "f5724850-ff60-4ea8-b975-cbdde92ee02a",
   "triggerCount": 1,
   "shared": [
     {
