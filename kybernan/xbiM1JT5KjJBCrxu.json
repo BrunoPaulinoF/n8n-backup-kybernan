@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-27T02:45:11.349Z",
+  "updatedAt": "2025-11-27T10:58:02.499Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "ARQUIVADOR",
@@ -454,7 +454,7 @@
     {
       "parameters": {
         "content": "## BANCO DE DADOS\n\ntratamento de BD para identificar usuário e pasta correta, etc..\n",
-        "height": 496,
+        "height": 464,
         "width": 448,
         "color": 3
       },
@@ -621,8 +621,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1280,
-        112
+        1264,
+        176
       ],
       "id": "0c40d983-5d6b-49c9-8008-77dae0f542bc",
       "name": "Upload file",
@@ -970,7 +970,7 @@
       }
     ]
   },
-  "versionId": "f5724850-ff60-4ea8-b975-cbdde92ee02a",
+  "versionId": "f09564af-8c93-485b-b0de-582e80e3f906",
   "triggerCount": 1,
   "shared": [
     {
