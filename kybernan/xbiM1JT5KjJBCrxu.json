@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-27T22:25:11.882Z",
+  "updatedAt": "2025-11-28T10:56:28.881Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "ARQUIVADOR",
@@ -823,8 +823,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2,
       "position": [
-        1200,
-        320
+        208,
+        880
       ],
       "id": "192d29ae-293e-4daa-83c0-8b2c1ba178d7",
       "name": "Analyze image",
@@ -843,8 +843,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        1696,
-        736
+        832,
+        1520
       ],
       "id": "1d71cb53-dd9b-475e-9230-5a186ec0a31d",
       "name": "Extract from File"
@@ -892,8 +892,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        704,
-        320
+        -288,
+        880
       ],
       "id": "023fa18a-cac6-4e2a-8dc2-78bd53dc51be",
       "name": "HTTP Request2"
@@ -909,8 +909,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        960,
-        320
+        -32,
+        880
       ],
       "id": "2351b7f9-ae4d-456f-a70d-6c9e8c67460b",
       "name": "Convert to File1"
@@ -958,8 +958,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        704,
-        560
+        -304,
+        1104
       ],
       "id": "da62ecd9-2e16-42b7-b050-ef61e44eb982",
       "name": "HTTP Request3"
@@ -975,8 +975,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        960,
-        560
+        -48,
+        1104
       ],
       "id": "f548f8d3-b350-4c20-a701-1b74efd7c4ff",
       "name": "Convert to File2"
@@ -1040,10 +1040,11 @@
       "parameters": {
         "model": {
           "__rl": true,
+          "value": "gpt-5-mini",
           "mode": "list",
-          "value": "gpt-4.1-mini"
+          "cachedResultName": "gpt-5-mini"
         },
-        "builtInTools": {},
+        "responsesApiEnabled": false,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
@@ -1078,8 +1079,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1888,
-        496
+        1040,
+        1072
       ],
       "id": "4ba8a991-1a84-40c6-aacd-10b6f73f032b",
       "name": "Edit Fields"
@@ -1106,8 +1107,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        704,
-        784
+        -256,
+        1536
       ],
       "id": "7c480619-edba-46d5-adfa-a4d7ca0f9012",
       "name": "Gerar JWT"
@@ -1135,8 +1136,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        960,
-        784
+        -64,
+        1536
       ],
       "id": "a159f4c6-0a56-4f85-a6d1-10b8dcad4f12",
       "name": "CriaTarefaOcr"
@@ -1174,8 +1175,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1184,
-        944
+        368,
+        1520
       ],
       "id": "feb10a82-73c9-4f41-a429-449f70cc61d7",
       "name": "UploadPdf"
@@ -1201,8 +1202,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1360,
-        944
+        528,
+        1520
       ],
       "id": "7b36388b-33ab-4225-997e-aff2a0bf4970",
       "name": "ProcessPdfToOcr"
@@ -1230,8 +1231,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1536,
-        944
+        688,
+        1520
       ],
       "id": "3b4dec12-071f-4d72-83b9-701d00d7286e",
       "name": "DownloadPdfOcr"
@@ -1245,8 +1246,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1296,
-        688
+        208,
+        1520
       ],
       "id": "25116963-8a16-4f85-b974-b481173f9cee",
       "name": "Merge"
@@ -1271,8 +1272,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1488,
-        544
+        576,
+        1312
       ],
       "id": "9bc951fe-d887-4954-b199-363c66a2d85b",
       "name": "Upload file2",
@@ -1348,11 +1349,12 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        2096,
-        480
+        2112,
+        464
       ],
       "id": "c4438367-3efd-4b04-ae7a-a1dd06e1d31f",
-      "name": "Merge1"
+      "name": "Merge1",
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -1400,6 +1402,83 @@
       ],
       "id": "18268f31-e329-4f86-907f-665adb0975e3",
       "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -304,
+        1328
+      ],
+      "id": "feeecb04-34b4-4e4a-b886-013d8a5c4fce",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "75f8e189-a085-4dad-9650-bc8f10936fc0",
+              "leftValue": "={{ Number($json.text.length) }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -64,
+        1328
+      ],
+      "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
+      "name": "Menos que 10 caracteres"
+    },
+    {
+      "parameters": {
+        "content": "## TRATA IMAGENS\n",
+        "height": 240,
+        "width": 688
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        800
+      ],
+      "id": "6bd77148-c4c2-4a94-9b49-c1bd6853e36f",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## TRATA PDF\n",
+        "height": 640,
+        "width": 1504
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        1056
+      ],
+      "id": "cf0601c3-5907-4c0e-9954-259d4d99133f",
+      "name": "Sticky Note4"
     }
   ],
   "connections": {
@@ -1654,17 +1733,17 @@
       "main": [
         [
           {
-            "node": "Gerar JWT",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "Merge",
             "type": "main",
             "index": 0
           },
           {
             "node": "Merge2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extract from File1",
             "type": "main",
             "index": 0
           }
@@ -1851,6 +1930,35 @@
           }
         ]
       ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Menos que 10 caracteres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menos que 10 caracteres": {
+      "main": [
+        [
+          {
+            "node": "Gerar JWT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -1867,7 +1975,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "3092",
+            "content-length": "4057",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -1887,9 +1995,9 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r4aab3f5a8100ea",
+              "id": "r05f4051753580a",
               "image": "",
-              "imagePreview": "",
+              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/549351847_1539700660385093_2114147981921870226_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3AElYVn7RzT9UAdE-zbqlWkqgdx7RVQ-mXlx9bqc01FcHQ&oe=6933F9B4&_nc_sid=5e03e0&_nc_cat=106",
               "lead_assignedAttendant_id": "",
               "lead_email": "",
               "lead_field01": "",
@@ -1920,14 +2028,14 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "CAMPSUI - BPO/KY",
+              "name": "RECANTO DO LAGO - BPO/KY",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363420394007891@g.us",
+              "wa_chatid": "120363388861527002@g.us",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363420394007891",
+              "wa_fastid": "5519995586796:120363388861527002",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -1936,57 +2044,54 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "20800694431744:64@lid",
-              "wa_lastMessageTextVote": "SOL NO ZAP DO BOFE 👆🏻",
+              "wa_lastMessageSender": "265768348459066@lid",
+              "wa_lastMessageTextVote": "Cobertura do pergolado",
               "wa_lastMessageType": "DocumentMessage",
-              "wa_lastMsgTimestamp": 1764275972000,
+              "wa_lastMsgTimestamp": 1764323873000,
               "wa_muteEndTime": 0,
-              "wa_name": "CAMPSUI - BPO/KY",
-              "wa_unreadCount": 37
+              "wa_name": "RECANTO DO LAGO - BPO/KY",
+              "wa_unreadCount": 71
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363420394007891@g.us",
+              "chatid": "120363388861527002@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/590079035_1479320093135699_7545563503112300648_n.enc?ccb=11-4&oh=01_Q5Aa3AGFtIn6WGJcXicqE4CddKOURucTDN-7aHa9Ea85UFIQ3A&oe=695036EC&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "title": "A PAGAR 28-11.xlsx",
-                "fileSHA256": "DD3IsiDnJpbITKkLmpGUNPkMY7Fu+pIRG5722vRxJLk=",
-                "fileLength": 14602,
-                "mediaKey": "WE8EfvpSIyxL2KYebVvcwQW/R8FErMVI154uG4uBecI=",
-                "fileName": "A PAGAR 28-11.xlsx",
-                "fileEncSHA256": "xBUx6ndDS4XfmyDMorvJIXM+7fAijr98YvW9uP8PQxI=",
-                "directPath": "/v/t62.7119-24/590079035_1479320093135699_7545563503112300648_n.enc?ccb=11-4&oh=01_Q5Aa3AGFtIn6WGJcXicqE4CddKOURucTDN-7aHa9Ea85UFIQ3A&oe=695036EC&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1764275970,
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/592509716_852323890536825_7656702982385905442_n.enc?ccb=11-4&oh=01_Q5Aa3AEFJhXy83p76dgonFRy1J9XJwM8pz4DbCwOa5a0PRTafQ&oe=6950D618&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "application/pdf",
+                "title": "SICOOB_2025_28_11_06_57_28_PIX",
+                "fileSHA256": "XuopUjBfSIB4WUO3kKw7QeX24QWugs0doy1UYsl5lVQ=",
+                "fileLength": 428867,
+                "pageCount": 1,
+                "mediaKey": "tzR5AbBRcHR/sktuuhpG4t5U17BYyO+kdf8dGsubbg4=",
+                "fileName": "SICOOB_2025_28_11_06_57_28_PIX.pdf",
+                "fileEncSHA256": "2knkJuKU+iBTlD4Y8rqzOIjsPVubhXH3Vrhi/NiN274=",
+                "directPath": "/v/t62.7119-24/592509716_852323890536825_7656702982385905442_n.enc?ccb=11-4&oh=01_Q5Aa3AEFJhXy83p76dgonFRy1J9XJwM8pz4DbCwOa5a0PRTafQ&oe=6950D618&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1764323872,
                 "contactVcard": false,
-                "contextInfo": {
-                  "disappearingMode": {
-                    "initiator": 0
-                  }
-                },
-                "caption": "SOL NO ZAP DO BOFE 👆🏻"
+                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIACQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAIDBAEG/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPTVWZjujJpSYWGbSsz6O9OiWmNkSUnToKY2VJZKXVAjUEpBMH//xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAECAQE/AH//xAAWEQADAAAAAAAAAAAAAAAAAAARIDD/2gAIAQMBAT8AQT//xAApEAABAwIFAgYDAAAAAAAAAAABAAIRAxIQISIxQQQTJDJRUnGBM5Gh/9oACAEBAAE/AFUuPkeB8rxEjWyOUDPOB2zVRuoWNBHMoB8wWNj5TA0DThUJAyXeq+z+IVapMWR9JsxnvhUdaOE0giSQPtS31CEHbDqGhzRMpjaZ0lpldlnomsDdhhVEgaoTabxtUyTQQMzOPUXWi1M7rt3gBWVI/ImNeDqdOFUEjISmtPNM/tDIYvBLdJgq2t70LwM4KbPOH//+AAMA/9k=",
+                "caption": "Cobertura do pergolado"
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "CAMPSUI - BPO/KY",
-              "id": "5519995586796:3EB0B21BB10F4CC19B472B",
+              "groupName": "RECANTO DO LAGO - BPO/KY",
+              "id": "5519995586796:4A1115801ECA48EC887F",
               "isGroup": true,
               "mediaType": "document",
-              "messageTimestamp": 1764275972000,
+              "messageTimestamp": 1764323873000,
               "messageType": "DocumentMessage",
-              "messageid": "3EB0B21BB10F4CC19B472B",
+              "messageid": "4A1115801ECA48EC887F",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "20800694431744:64@lid",
-              "senderName": "campsui",
-              "sender_lid": "20800694431744@lid",
-              "sender_pn": "5519991352948@s.whatsapp.net",
-              "source": "web",
+              "sender": "265768348459066@lid",
+              "senderName": "Nataliana Deus é Incrivel",
+              "sender_lid": "265768348459066@lid",
+              "sender_pn": "5519996951885@s.whatsapp.net",
+              "source": "unknown",
               "status": "",
-              "text": "SOL NO ZAP DO BOFE 👆🏻",
+              "text": "Cobertura do pergolado",
               "track_id": "",
               "track_source": "",
               "type": "media",
@@ -2002,7 +2107,7 @@
       }
     ]
   },
-  "versionId": "cc482cd8-78da-447b-81c9-7cb8b376c0cc",
+  "versionId": "87dc44c7-1149-4075-8c86-0db88b1bb5c7",
   "triggerCount": 1,
   "shared": [
     {
