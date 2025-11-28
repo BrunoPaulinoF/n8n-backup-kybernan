@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2025-11-28T10:56:28.881Z",
+  "updatedAt": "2025-11-28T17:30:50.802Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
-  "name": "ARQUIVADOR",
+  "name": "PRINCIPAL - ARQUIVADOR",
   "active": true,
   "isArchived": false,
   "nodes": [
@@ -15,8 +15,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -16,
-        -368
+        -1840,
+        -640
       ],
       "id": "02e65664-256c-4dbb-9aca-7f8cb2fe9832",
       "name": "Webhook",
@@ -44,7 +44,7 @@
           "parameters": [
             {
               "name": "id",
-              "value": "={{ $json.body.message.messageid }}"
+              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
             },
             {
               "name": "return_base64",
@@ -65,8 +65,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        704,
-        112
+        -832,
+        240
       ],
       "id": "6a7c8b26-557d-4f4c-b34c-749d0138b3ca",
       "name": "HTTP Request"
@@ -82,8 +82,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        992,
-        112
+        -544,
+        240
       ],
       "id": "605d6c75-c61b-4cd4-a142-6f8b7a00fbae",
       "name": "Convert to File"
@@ -115,11 +115,12 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        288,
-        -368
+        -1296,
+        -640
       ],
       "id": "27f5f0f3-677b-404d-b04a-fd415490c8e0",
-      "name": "isGroup"
+      "name": "isGroup",
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -136,7 +137,7 @@
                 "conditions": [
                   {
                     "id": "1d8f7b82-de27-4f28-afe4-9f073754da5b",
-                    "leftValue": "={{ $json.body.message.messageType }}",
+                    "leftValue": "={{ $('Dados de Entrada').item.json.TipoDeMensagem }}",
                     "rightValue": "ExtendedTextMessage",
                     "operator": {
                       "type": "string",
@@ -161,7 +162,7 @@
                 "conditions": [
                   {
                     "id": "8e75be5f-38f7-4db9-8ebe-c2f0e4580de1",
-                    "leftValue": "={{ $json.body.message.messageType }}",
+                    "leftValue": "={{ $('Dados de Entrada').item.json.TipoDeMensagem }}",
                     "rightValue": "=Conversation",
                     "operator": {
                       "type": "string",
@@ -185,7 +186,7 @@
                 },
                 "conditions": [
                   {
-                    "leftValue": "={{ $json.body.message.messageType }}",
+                    "leftValue": "={{ $('Dados de Entrada').item.json.TipoDeMensagem }}",
                     "rightValue": "AudioMessage",
                     "operator": {
                       "type": "string",
@@ -210,7 +211,7 @@
                 "conditions": [
                   {
                     "id": "6dc571f3-1d8c-4784-8cfa-d29f807666f7",
-                    "leftValue": "={{ $json.body.message.messageType }}",
+                    "leftValue": "={{ $('Dados de Entrada').item.json.TipoDeMensagem }}",
                     "rightValue": "ImageMessage",
                     "operator": {
                       "type": "string",
@@ -235,7 +236,7 @@
                 "conditions": [
                   {
                     "id": "7a88511a-7a3c-442d-bad5-fc9aa48d5a18",
-                    "leftValue": "={{ $json.body.message.messageType }}",
+                    "leftValue": "={{ $('Dados de Entrada').item.json.TipoDeMensagem }}",
                     "rightValue": "DocumentMessage",
                     "operator": {
                       "type": "string",
@@ -256,8 +257,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        192,
-        208
+        -1232,
+        192
       ],
       "id": "271e1181-ddcd-4143-a6a6-79e35c53c17b",
       "name": "tipoMsg"
@@ -276,7 +277,7 @@
           "conditions": [
             {
               "keyName": "IdGroup",
-              "keyValue": "={{ $json.body.chat.wa_chatid }}"
+              "keyValue": "={{ $json.body.message.chatid }}"
             }
           ]
         }
@@ -284,11 +285,12 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        656,
-        -832
+        -1056,
+        -752
       ],
       "id": "e7150fda-84b5-4a1d-ace4-d2d974f070a7",
-      "name": "ExisteGrupoTabela False"
+      "name": "ExisteGrupoTabela False",
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -304,19 +306,19 @@
           "conditions": [
             {
               "keyName": "IdGroup",
-              "keyValue": "={{ $json.body.chat.wa_chatid }}"
+              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.chatid }}"
             },
             {
               "keyName": "phone1",
-              "keyValue": "={{ $json.body.chat.phone }}"
+              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.sender_pn }}"
             },
             {
               "keyName": "phone2",
-              "keyValue": "={{ $json.body.chat.phone }}"
+              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.sender_pn }}"
             },
             {
               "keyName": "phone3",
-              "keyValue": "={{ $json.body.chat.phone }}"
+              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.sender_pn }}"
             }
           ]
         },
@@ -325,8 +327,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        640,
-        -624
+        -1056,
+        -544
       ],
       "id": "c4e81850-1e79-4f18-89b6-c46f34c3aaa3",
       "name": "Get row(s)"
@@ -343,8 +345,8 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "IdGroup": "={{ $json.body.message.chatid }}",
-            "NomeGrupo": "={{ $('Webhook').item.json.body.chat.name }}"
+            "IdGroup": "={{ $('Dados de Entrada').item.json.body.message.chatid }}",
+            "NomeGrupo": "={{ $('Dados de Entrada').item.json.Nome }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -447,8 +449,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        848,
-        -832
+        -864,
+        -752
       ],
       "id": "fbb4a44a-71e6-4f63-a7f9-95e9c4c308e6",
       "name": "Insere Novo Row"
@@ -456,15 +458,15 @@
     {
       "parameters": {
         "content": "## BANCO DE DADOS\n\ntratamento de BD para identificar usuário e pasta correta, etc..\n",
-        "height": 464,
+        "height": 480,
         "width": 448,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        576,
-        -944
+        -1136,
+        -864
       ],
       "id": "e2b4180f-4460-443c-a34d-979ffd64ab8b",
       "name": "Sticky Note"
@@ -528,8 +530,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        848,
-        -624
+        -848,
+        -544
       ],
       "id": "c7008e17-9448-4747-8b4e-a3e3692e6e56",
       "name": "DADOS USUÁRIO"
@@ -542,8 +544,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1152,
-        -368
+        736,
+        -704
       ],
       "id": "06543081-c9e4-49d2-a117-5877a2ea7524",
       "name": "Sticky Note1"
@@ -556,8 +558,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1152,
-        -224
+        784,
+        -528
       ],
       "id": "2c0078d6-d8f4-41c1-9c93-ba1f7b772383",
       "name": "Sticky Note2"
@@ -582,42 +584,11 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        4736,
-        -208
+        3296,
+        112
       ],
       "id": "0c40d983-5d6b-49c9-8008-77dae0f542bc",
       "name": "Upload file",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "folder",
-        "name": "TESTE-APAGAR",
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "={{ $('encontraMês').item.json.id }}",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        4576,
-        16
-      ],
-      "id": "b511ab3a-9edd-471e-a693-897f33f00381",
-      "name": "Create folder",
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -649,8 +620,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3232,
-        128
+        1232,
+        448
       ],
       "id": "7288f54b-101a-47c9-8c92-38005813c165",
       "name": "encontraControle",
@@ -685,11 +656,12 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3456,
-        128
+        1408,
+        448
       ],
       "id": "a83bd865-f0b3-4592-b765-90424dd8b369",
       "name": "encontraAno",
+      "alwaysOutputData": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -721,11 +693,12 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3696,
-        128
+        1792,
+        432
       ],
       "id": "63b143aa-9d5a-41c1-9f3b-e749c16a1670",
       "name": "encontraMês",
+      "alwaysOutputData": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -757,12 +730,13 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3936,
-        128
+        2288,
+        416
       ],
       "id": "163697c2-7261-42ea-b487-6c963a5b05e5",
       "name": "encontraDia",
       "alwaysOutputData": true,
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -798,8 +772,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        4384,
-        -112
+        2672,
+        208
       ],
       "id": "cce7d4c9-00e2-47a1-9571-5fe4675dbfee",
       "name": "PastaDiaExiste?"
@@ -814,7 +788,7 @@
           "mode": "list",
           "cachedResultName": "GPT-4O"
         },
-        "text": "=O que é nesta imagem?\nPreciso que me explique em detalhes e organizado, transcrevendo tudo.\n\nNa maioria das vezes estará recebendo documentos financeiros.\n\nSEMPRE quando houver data de vencimento, vocês precisa informar a data de vencimento\n\nSe for boleto obrigatório informar a data de VENCIMENTO, neste caso não preciso saber a data de documento nem de processamento, apenas a de vencimento e outras informações.\n\nNunca invente informações, apenas envie informações verdadeiras que estão na imagem",
+        "text": "=O que é nesta imagem?\n\nPreciso que me explique em detalhes e organizado, transcrevendo tudo.\n\nNa maioria das vezes estará recebendo documentos financeiros.\n\nSEMPRE quando houver data de vencimento, vocês precisa informar a data de vencimento\n\nSe for boleto obrigatório informar a data de VENCIMENTO, neste caso não preciso saber a data de documento nem de processamento, apenas a de vencimento e outras informações.\n\nNunca invente informações, apenas envie informações verdadeiras que estão na imagem\n\nPrecisa ter certeza absoluta da data que irá enviar de vencimento, nunca confundir dia, mês e ano, exemplo está escrito 2025 e você enviar 2023, isso jamais poderá acontecer",
         "inputType": "base64",
         "options": {
           "detail": "auto"
@@ -823,8 +797,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2,
       "position": [
-        208,
-        880
+        -1344,
+        768
       ],
       "id": "192d29ae-293e-4daa-83c0-8b2c1ba178d7",
       "name": "Analyze image",
@@ -843,8 +817,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        832,
-        1520
+        -960,
+        1536
       ],
       "id": "1d71cb53-dd9b-475e-9230-5a186ec0a31d",
       "name": "Extract from File"
@@ -871,7 +845,7 @@
           "parameters": [
             {
               "name": "id",
-              "value": "={{ $json.body.message.messageid }}"
+              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
             },
             {
               "name": "return_base64",
@@ -892,8 +866,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -288,
-        880
+        -1840,
+        768
       ],
       "id": "023fa18a-cac6-4e2a-8dc2-78bd53dc51be",
       "name": "HTTP Request2"
@@ -909,8 +883,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -32,
-        880
+        -1584,
+        768
       ],
       "id": "2351b7f9-ae4d-456f-a70d-6c9e8c67460b",
       "name": "Convert to File1"
@@ -937,7 +911,7 @@
           "parameters": [
             {
               "name": "id",
-              "value": "={{ $json.body.message.messageid }}"
+              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
             },
             {
               "name": "return_base64",
@@ -958,7 +932,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -304,
+        -2128,
         1104
       ],
       "id": "da62ecd9-2e16-42b7-b050-ef61e44eb982",
@@ -975,7 +949,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -48,
+        -1872,
         1104
       ],
       "id": "f548f8d3-b350-4c20-a701-1b74efd7c4ff",
@@ -1030,8 +1004,8 @@
       "type": "@n8n/n8n-nodes-langchain.textClassifier",
       "typeVersion": 1.1,
       "position": [
-        2304,
-        352
+        352,
+        1232
       ],
       "id": "9e05b0c8-d3f2-49a0-a84c-bace19459f3e",
       "name": "Text Classifier"
@@ -1050,8 +1024,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2272,
-        800
+        304,
+        1664
       ],
       "id": "3beb4822-f5df-4b4d-841d-6041c9035b66",
       "name": "OpenAI Chat Model1",
@@ -1079,8 +1053,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1040,
-        1072
+        -816,
+        1152
       ],
       "id": "4ba8a991-1a84-40c6-aacd-10b6f73f032b",
       "name": "Edit Fields"
@@ -1107,7 +1081,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -256,
+        -2080,
         1536
       ],
       "id": "7c480619-edba-46d5-adfa-a4d7ca0f9012",
@@ -1136,7 +1110,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -64,
+        -1888,
         1536
       ],
       "id": "a159f4c6-0a56-4f85-a6d1-10b8dcad4f12",
@@ -1175,8 +1149,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        368,
-        1520
+        -1424,
+        1536
       ],
       "id": "feb10a82-73c9-4f41-a429-449f70cc61d7",
       "name": "UploadPdf"
@@ -1202,8 +1176,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        528,
-        1520
+        -1264,
+        1536
       ],
       "id": "7b36388b-33ab-4225-997e-aff2a0bf4970",
       "name": "ProcessPdfToOcr"
@@ -1231,8 +1205,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        688,
-        1520
+        -1104,
+        1536
       ],
       "id": "3b4dec12-071f-4d72-83b9-701d00d7286e",
       "name": "DownloadPdfOcr"
@@ -1246,8 +1220,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        208,
-        1520
+        -1648,
+        1536
       ],
       "id": "25116963-8a16-4f85-b974-b481173f9cee",
       "name": "Merge"
@@ -1272,8 +1246,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        576,
-        1312
+        -1216,
+        1328
       ],
       "id": "9bc951fe-d887-4954-b199-363c66a2d85b",
       "name": "Upload file2",
@@ -1290,14 +1264,14 @@
         "text": "={{ $json.text }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DD.MM NOME_DO_FORNECEDOR\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro."
+          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        2768,
-        128
+        864,
+        448
       ],
       "id": "fee0a4a4-dc7a-4c9d-8313-2cb40fef7eb0",
       "name": "AI Agent"
@@ -1315,8 +1289,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2720,
-        320
+        816,
+        640
       ],
       "id": "2eebaf89-ee86-4e10-afb7-6fd57143d3d4",
       "name": "OpenAI Chat Model2",
@@ -1334,8 +1308,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2960,
-        304
+        1056,
+        624
       ],
       "id": "918eadd9-256b-4061-b8cc-0061a3cd26cb",
       "name": "Structured Output Parser"
@@ -1349,44 +1323,12 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        2112,
-        464
+        -176,
+        1328
       ],
       "id": "c4438367-3efd-4b04-ae7a-a1dd06e1d31f",
       "name": "Merge1",
       "executeOnce": true
-    },
-    {
-      "parameters": {
-        "name": "=não-pagar-teste-automação-IGNORAR - {{ $('AI Agent').item.json.output.NOME_ARQUIVO }}",
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "={{ $json.id }}",
-          "mode": "id"
-        },
-        "options": {
-          "ocrLanguage": "pt-BR"
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        4816,
-        16
-      ],
-      "id": "857be689-7dc6-4cc0-b669-2c1b9b0d135e",
-      "name": "Upload file1",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
     },
     {
       "parameters": {
@@ -1397,8 +1339,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        4160,
-        -48
+        3072,
+        128
       ],
       "id": "18268f31-e329-4f86-907f-665adb0975e3",
       "name": "Merge2"
@@ -1411,7 +1353,7 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -304,
+        -2128,
         1328
       ],
       "id": "feeecb04-34b4-4e4a-b886-013d8a5c4fce",
@@ -1444,7 +1386,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -64,
+        -1888,
         1328
       ],
       "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
@@ -1459,8 +1401,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -352,
-        800
+        -1904,
+        688
       ],
       "id": "6bd77148-c4c2-4a94-9b49-c1bd6853e36f",
       "name": "Sticky Note3"
@@ -1474,11 +1416,324 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -352,
+        -2176,
         1056
       ],
       "id": "cf0601c3-5907-4c0e-9954-259d4d99133f",
       "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b6a152ef-f1f0-47ca-bd32-db9737dff1ae",
+              "leftValue": "={{ $json.Folder }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1856,
+        256
+      ],
+      "id": "4d4f66fe-732f-4ec1-ba67-e849af83f79b",
+      "name": "temPasta"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ea5837ba-5aa9-42b0-bfda-da89345ec33e",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1968,
+        432
+      ],
+      "id": "d585e58b-5637-4ecc-af2a-1ed8f99866fc",
+      "name": "PastaDiaExiste?1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ea5837ba-5aa9-42b0-bfda-da89345ec33e",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1584,
+        448
+      ],
+      "id": "036454ae-d3fc-4ee1-916b-8d1c047f9638",
+      "name": "PastaDiaExiste?2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d0250d2a-d792-4061-a12e-e16b7a22cb47",
+              "name": "Nome",
+              "value": "={{ $json.body.chat.name }}",
+              "type": "string"
+            },
+            {
+              "id": "ad1db2aa-736d-4164-9683-87654e150161",
+              "name": "body.message.senderName",
+              "value": "={{ $json.body.message.senderName }}",
+              "type": "string"
+            },
+            {
+              "id": "9c67e34d-811b-4ff2-87ad-6075a508463b",
+              "name": "TipoDeMensagem",
+              "value": "={{ $json.body.message.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "cb9a1539-beeb-407b-a17d-23985944eed0",
+              "name": "body.message.content.URL",
+              "value": "={{ $json.body.message.content.URL }}",
+              "type": "string"
+            },
+            {
+              "id": "1d589f28-545f-455a-995b-15fe80092f32",
+              "name": "body.message.isGroup",
+              "value": "={{ $json.body.message.isGroup }}",
+              "type": "boolean"
+            },
+            {
+              "id": "2fcecf85-6540-41a7-987f-bd25c45a5a8f",
+              "name": "body.message.sender_pn",
+              "value": "={{ $json.body.message.sender_pn ? $json.body.message.sender_pn.replace(/[^0-9]/g, '').slice(2) : null }}",
+              "type": "string"
+            },
+            {
+              "id": "2d522b05-d083-432a-af3e-292a2baf080a",
+              "name": "body.message.text",
+              "value": "={{ $json.body.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "4159e7cd-a733-47b5-8a3d-0786c19be8cd",
+              "name": "body.message.chatid",
+              "value": "={{ $json.body.message.chatid }}",
+              "type": "string"
+            },
+            {
+              "id": "b9b4a916-acb6-4032-be80-0bdd78b1033f",
+              "name": "body.message.messageid",
+              "value": "={{ $json.body.message.messageid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1584,
+        -640
+      ],
+      "id": "58174c50-92b5-4c4d-98bc-9adaa7f9448b",
+      "name": "Dados de Entrada"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('AI Agent').item.json.output.ANO }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('encontraControle').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1584,
+        672
+      ],
+      "id": "5acd9ed9-27bb-4396-9e1b-554940bd1a73",
+      "name": "Cria Pasta Ano",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('AI Agent').item.json.output.MES }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1968,
+        672
+      ],
+      "id": "b8bd4d4c-b653-4c16-9ef5-2808536dd22c",
+      "name": "Cria Pasta Mes",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('AI Agent').item.json.output.DATA }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2672,
+        448
+      ],
+      "id": "b511ab3a-9edd-471e-a693-897f33f00381",
+      "name": "Cria Pasta Dia",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ (new Date()).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }).replace(/\\//g, '.') }} - {{ $('Dados de Entrada').item.json.Nome }} - (SALVADO POR IA)",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "=12JepBiCyidTjZknzUgb8yVOFHZF-Q6Ro",
+          "mode": "id"
+        },
+        "options": {
+          "ocrLanguage": "pt-BR"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1136,
+        1200
+      ],
+      "id": "a2852f48-e5a1-457a-8ca9-6a2351a72c2e",
+      "name": "Upload file3",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        848,
+        1184
+      ],
+      "id": "92d8fa18-ac23-483c-a33d-e1c12722f99a",
+      "name": "Merge3"
     }
   ],
   "connections": {
@@ -1486,7 +1741,7 @@
       "main": [
         [
           {
-            "node": "isGroup",
+            "node": "Dados de Entrada",
             "type": "main",
             "index": 0
           }
@@ -1508,7 +1763,7 @@
       "main": [
         [
           {
-            "node": "tipoMsg",
+            "node": "Get row(s)",
             "type": "main",
             "index": 0
           },
@@ -1516,19 +1771,9 @@
             "node": "ExisteGrupoTabela False",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Get row(s)",
-            "type": "main",
-            "index": 0
           }
         ],
         [
-          {
-            "node": "tipoMsg",
-            "type": "main",
-            "index": 0
-          },
           {
             "node": "Get row(s)",
             "type": "main",
@@ -1617,7 +1862,7 @@
       "main": [
         [
           {
-            "node": "encontraMês",
+            "node": "PastaDiaExiste?2",
             "type": "main",
             "index": 0
           }
@@ -1628,7 +1873,7 @@
       "main": [
         [
           {
-            "node": "encontraDia",
+            "node": "PastaDiaExiste?1",
             "type": "main",
             "index": 0
           }
@@ -1639,9 +1884,9 @@
       "main": [
         [
           {
-            "node": "Merge2",
+            "node": "PastaDiaExiste?",
             "type": "main",
-            "index": 1
+            "index": 0
           }
         ]
       ]
@@ -1650,25 +1895,14 @@
       "main": [
         [
           {
-            "node": "Upload file",
+            "node": "Merge2",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ],
         [
           {
-            "node": "Create folder",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create folder": {
-      "main": [
-        [
-          {
-            "node": "Upload file1",
+            "node": "Cria Pasta Dia",
             "type": "main",
             "index": 0
           }
@@ -1746,6 +1980,11 @@
             "node": "Extract from File1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -1755,6 +1994,11 @@
         [
           {
             "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge3",
             "type": "main",
             "index": 0
           }
@@ -1862,6 +2106,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
         ]
       ]
     },
@@ -1905,6 +2156,11 @@
             "node": "Merge1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "temPasta",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -1924,7 +2180,7 @@
       "main": [
         [
           {
-            "node": "PastaDiaExiste?",
+            "node": "Upload file",
             "type": "main",
             "index": 0
           }
@@ -1959,6 +2215,108 @@
           }
         ]
       ]
+    },
+    "temPasta": {
+      "main": [
+        [
+          {
+            "node": "tipoMsg",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PastaDiaExiste?1": {
+      "main": [
+        [
+          {
+            "node": "encontraDia",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cria Pasta Mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PastaDiaExiste?2": {
+      "main": [
+        [
+          {
+            "node": "encontraMês",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cria Pasta Ano",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dados de Entrada": {
+      "main": [
+        [
+          {
+            "node": "isGroup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria Pasta Ano": {
+      "main": [
+        [
+          {
+            "node": "Cria Pasta Mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria Pasta Mes": {
+      "main": [
+        [
+          {
+            "node": "Cria Pasta Dia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cria Pasta Dia": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Upload file3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -1975,7 +2333,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "4057",
+            "content-length": "3202",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -1995,9 +2353,9 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r05f4051753580a",
+              "id": "ref8832bd85cb03",
               "image": "",
-              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/549351847_1539700660385093_2114147981921870226_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3AElYVn7RzT9UAdE-zbqlWkqgdx7RVQ-mXlx9bqc01FcHQ&oe=6933F9B4&_nc_sid=5e03e0&_nc_cat=106",
+              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/491875945_698624952979637_3766181487753972042_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3AGgJZwUyyFzX88Ej5fvJalNJ9st05jmm6gklGwZkpOmJA&oe=69369AA2&_nc_sid=5e03e0&_nc_cat=105",
               "lead_assignedAttendant_id": "",
               "lead_email": "",
               "lead_field01": "",
@@ -2028,14 +2386,14 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "RECANTO DO LAGO - BPO/KY",
+              "name": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363388861527002@g.us",
+              "wa_chatid": "120363422750225374@g.us",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363388861527002",
+              "wa_fastid": "5519995586796:120363422750225374",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -2044,54 +2402,55 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "265768348459066@lid",
-              "wa_lastMessageTextVote": "Cobertura do pergolado",
+              "wa_lastMessageSender": "137499217248386:72@lid",
+              "wa_lastMessageTextVote": "",
               "wa_lastMessageType": "DocumentMessage",
-              "wa_lastMsgTimestamp": 1764323873000,
+              "wa_lastMsgTimestamp": 1764338100000,
               "wa_muteEndTime": 0,
-              "wa_name": "RECANTO DO LAGO - BPO/KY",
-              "wa_unreadCount": 71
+              "wa_name": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
+              "wa_unreadCount": 4
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363388861527002@g.us",
+              "chatid": "120363422750225374@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/592509716_852323890536825_7656702982385905442_n.enc?ccb=11-4&oh=01_Q5Aa3AEFJhXy83p76dgonFRy1J9XJwM8pz4DbCwOa5a0PRTafQ&oe=6950D618&_nc_sid=5e03e0&mms3=true",
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/591495104_866686369202265_8346041651958416397_n.enc?ccb=11-4&oh=01_Q5Aa3AGLZMj3zm_su9bkWW3zEDuVtxdzupR3g9mZxCfPl-HAeQ&oe=69512232&_nc_sid=5e03e0&mms3=true",
                 "mimetype": "application/pdf",
-                "title": "SICOOB_2025_28_11_06_57_28_PIX",
-                "fileSHA256": "XuopUjBfSIB4WUO3kKw7QeX24QWugs0doy1UYsl5lVQ=",
-                "fileLength": 428867,
+                "title": "arquivo (16).pdf",
+                "fileSHA256": "ZwyKsoWe499zjrkJpBlkD2xkdneAVGwbbf6qQy09z9U=",
+                "fileLength": 2610213,
                 "pageCount": 1,
-                "mediaKey": "tzR5AbBRcHR/sktuuhpG4t5U17BYyO+kdf8dGsubbg4=",
-                "fileName": "SICOOB_2025_28_11_06_57_28_PIX.pdf",
-                "fileEncSHA256": "2knkJuKU+iBTlD4Y8rqzOIjsPVubhXH3Vrhi/NiN274=",
-                "directPath": "/v/t62.7119-24/592509716_852323890536825_7656702982385905442_n.enc?ccb=11-4&oh=01_Q5Aa3AEFJhXy83p76dgonFRy1J9XJwM8pz4DbCwOa5a0PRTafQ&oe=6950D618&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1764323872,
-                "contactVcard": false,
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIACQDASIAAhEBAxEB/8QAGQABAAMBAQAAAAAAAAAAAAAAAAIDBAEG/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPTVWZjujJpSYWGbSsz6O9OiWmNkSUnToKY2VJZKXVAjUEpBMH//xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAECAQE/AH//xAAWEQADAAAAAAAAAAAAAAAAAAARIDD/2gAIAQMBAT8AQT//xAApEAABAwIFAgYDAAAAAAAAAAABAAIRAxIQISIxQQQTJDJRUnGBM5Gh/9oACAEBAAE/AFUuPkeB8rxEjWyOUDPOB2zVRuoWNBHMoB8wWNj5TA0DThUJAyXeq+z+IVapMWR9JsxnvhUdaOE0giSQPtS31CEHbDqGhzRMpjaZ0lpldlnomsDdhhVEgaoTabxtUyTQQMzOPUXWi1M7rt3gBWVI/ImNeDqdOFUEjISmtPNM/tDIYvBLdJgq2t70LwM4KbPOH//+AAMA/9k=",
-                "caption": "Cobertura do pergolado"
+                "mediaKey": "snt7+imUZCR5tHwdbhEzAeQf113NklJd5o2l29IH7Qg=",
+                "fileName": "arquivo (16).pdf",
+                "fileEncSHA256": "LLMUpKbxLk3nx5o2PQN9TCW9wFX8EbJRvOcC9HZQg28=",
+                "directPath": "/v/t62.7119-24/591495104_866686369202265_8346041651958416397_n.enc?ccb=11-4&oh=01_Q5Aa3AGLZMj3zm_su9bkWW3zEDuVtxdzupR3g9mZxCfPl-HAeQ&oe=69512232&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1764338097,
+                "contextInfo": {
+                  "expiration": 0
+                },
+                "caption": ""
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "RECANTO DO LAGO - BPO/KY",
-              "id": "5519995586796:4A1115801ECA48EC887F",
+              "groupName": "",
+              "id": "5519995586796:3FA04E43F81B26AE9D39",
               "isGroup": true,
               "mediaType": "document",
-              "messageTimestamp": 1764323873000,
+              "messageTimestamp": 1764338100000,
               "messageType": "DocumentMessage",
-              "messageid": "4A1115801ECA48EC887F",
+              "messageid": "3FA04E43F81B26AE9D39",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "265768348459066@lid",
-              "senderName": "Nataliana Deus é Incrivel",
-              "sender_lid": "265768348459066@lid",
-              "sender_pn": "5519996951885@s.whatsapp.net",
+              "sender": "137499217248386:72@lid",
+              "senderName": "Bruno P Ferreira",
+              "sender_lid": "137499217248386@lid",
+              "sender_pn": "553499969911@s.whatsapp.net",
               "source": "unknown",
               "status": "",
-              "text": "Cobertura do pergolado",
+              "text": "",
               "track_id": "",
               "track_source": "",
               "type": "media",
@@ -2107,7 +2466,7 @@
       }
     ]
   },
-  "versionId": "87dc44c7-1149-4075-8c86-0db88b1bb5c7",
+  "versionId": "c6779f19-cd5d-484b-9d1c-63622cec325d",
   "triggerCount": 1,
   "shared": [
     {
