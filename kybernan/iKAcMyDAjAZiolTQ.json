@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2025-11-27T15:11:43.421Z",
+  "updatedAt": "2025-11-28T12:27:37.038Z",
   "createdAt": "2025-11-26T23:55:14.200Z",
   "id": "iKAcMyDAjAZiolTQ",
-  "name": "BACKUP BANCO DE DADOS",
+  "name": "BACKUP SHEET CLIENTES BPO GRUPOS",
   "active": true,
   "isArchived": false,
   "nodes": [
@@ -570,8 +570,8 @@
     "node:Google Sheets Trigger": {
       "documentId": "1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ",
       "sheetId": 0,
-      "lastRevision": 90,
-      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ&revision=90&exportFormat=xlsx"
+      "lastRevision": 132,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ&revision=132&exportFormat=xlsx"
     }
   },
   "meta": {
@@ -615,7 +615,7 @@
       }
     ]
   },
-  "versionId": "24d9d3dc-5bcf-45c6-922f-f4a2ab37d356",
+  "versionId": "aef8f1ee-1b64-4abe-9ed5-c8185d520db9",
   "triggerCount": 2,
   "shared": [
     {
