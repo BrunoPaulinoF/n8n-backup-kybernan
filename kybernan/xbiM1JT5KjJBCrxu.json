@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-28T19:14:07.835Z",
+  "updatedAt": "2025-11-29T14:09:55.158Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -1280,8 +1280,9 @@
       "parameters": {
         "model": {
           "__rl": true,
+          "value": "gpt-5-mini",
           "mode": "list",
-          "value": "gpt-4.1-mini"
+          "cachedResultName": "gpt-5-mini"
         },
         "builtInTools": {},
         "options": {}
@@ -1786,13 +1787,7 @@
       "main": [
         [],
         [],
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
         [
           {
             "node": "HTTP Request2",
@@ -2473,7 +2468,7 @@
       }
     ]
   },
-  "versionId": "8ec3c58e-453e-401a-ab25-980b9313bab9",
+  "versionId": "f9f9d06f-aaa8-4e12-8dbd-f6997000d912",
   "triggerCount": 1,
   "shared": [
     {
