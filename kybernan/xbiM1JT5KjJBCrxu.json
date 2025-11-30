@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-29T14:09:55.158Z",
+  "updatedAt": "2025-11-30T12:39:18.016Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -788,7 +788,7 @@
           "mode": "list",
           "cachedResultName": "GPT-4O"
         },
-        "text": "=O que é nesta imagem?\n\nPreciso que me explique em detalhes e organizado, transcrevendo tudo.\n\nNa maioria das vezes estará recebendo documentos financeiros.\n\nSEMPRE quando houver data de vencimento, vocês precisa informar a data de vencimento\n\nSe for boleto obrigatório informar a data de VENCIMENTO, neste caso não preciso saber a data de documento nem de processamento, apenas a de vencimento e outras informações.\n\nNunca invente informações, apenas envie informações verdadeiras que estão na imagem\n\nPrecisa ter certeza absoluta da data que irá enviar de vencimento, nunca confundir dia, mês e ano, exemplo está escrito 2025 e você enviar 2023, isso jamais poderá acontecer",
+        "text": "=O que é nesta imagem?\n\nPreciso que me explique em detalhes e organizado, transcrevendo tudo.\n\nNa maioria das vezes estará recebendo documentos financeiros.\n\nSEMPRE quando houver data de vencimento, vocês precisa informar a data de vencimento\n\nSe for boleto obrigatório informar a data de VENCIMENTO, neste caso não preciso saber a data de documento nem de processamento, apenas a de vencimento e outras informações.\n\nNunca invente informações, apenas envie informações verdadeiras que estão na imagem\n\nSempre que tiver código de barras ou código de acesso, etc.. Preciso que informe o número completo e sem errar nenhum número.\n\nPrecisa ter certeza absoluta da data que irá enviar de vencimento, nunca confundir dia, mês e ano, exemplo está escrito 2025 e você enviar 2023, isso jamais poderá acontecer",
         "inputType": "base64",
         "options": {
           "detail": "auto"
@@ -1264,7 +1264,7 @@
         "text": "={{ $json.text }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)"
+          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1304,7 +1304,7 @@
     },
     {
       "parameters": {
-        "jsonSchemaExample": "{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DD.MM NOME_DO_FORNECEDOR\"\n}\n"
+        "jsonSchemaExample": "{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DD.MM NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
@@ -1735,6 +1735,217 @@
       ],
       "id": "92d8fa18-ac23-483c-a33d-e1c12722f99a",
       "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "title": "contas",
+        "sheetsUi": {
+          "sheetValues": [
+            {
+              "title": "contas"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4144,
+        448
+      ],
+      "id": "db1f1a8e-16ef-48e1-b2ab-a017c9ea4629",
+      "name": "Create spreadsheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Move file').item.json.id || $('Encontra Sheet').item.json.id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1999136574,
+          "mode": "list",
+          "cachedResultName": "contas",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vbkCxnQuRcyH1EDJspLHFBXmoUTmJDsjyrY-BA_RbV8/edit#gid=1999136574"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "RAW",
+          "useAppend": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4928,
+        240
+      ],
+      "id": "fc7bf97d-988c-4ff7-9923-bc72d7a7cc8b",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3433974b-1343-4e6c-a7c6-2ca24f3ea7f8",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3920,
+        224
+      ],
+      "id": "b639cb6e-648a-4b72-a40d-3e11aab89d28",
+      "name": "JÁ EXISTE PLANILHA?"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=name contains 'contas'",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('Merge2').item.json.id }}",
+            "mode": "id"
+          }
+        },
+        "options": {
+          "fields": [
+            "id",
+            "name"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3664,
+        224
+      ],
+      "id": "384c26f1-2168-4937-baa8-ba49918157f5",
+      "name": "Encontra Sheet",
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.spreadsheetId }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Merge2').item.json.id }}",
+          "mode": "id"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        4368,
+        448
+      ],
+      "id": "0b2e1c97-9d0c-4679-982f-44e119ab1cbf",
+      "name": "Move file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tHbNUSv81dsDoIWb",
+          "name": "Kybernan-BPO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a14234a4-ba82-4b23-be5c-00b04345924e",
+              "name": "coluna 1",
+              "value": "1",
+              "type": "string"
+            },
+            {
+              "id": "25395053-48a8-4cd3-82fa-d047711b9767",
+              "name": "coluna 2",
+              "value": "2",
+              "type": "string"
+            },
+            {
+              "id": "f8f3f6fb-e386-4992-a445-35d528095369",
+              "name": "coluna 3",
+              "value": "3",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4672,
+        240
+      ],
+      "id": "9c6da1fd-3a53-43f7-bf4a-1b138047f886",
+      "name": "Edit Fields1"
     }
   ],
   "connections": {
@@ -2312,6 +2523,68 @@
           }
         ]
       ]
+    },
+    "Create spreadsheet": {
+      "main": [
+        [
+          {
+            "node": "Move file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JÁ EXISTE PLANILHA?": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create spreadsheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Encontra Sheet": {
+      "main": [
+        [
+          {
+            "node": "JÁ EXISTE PLANILHA?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move file": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -2468,7 +2741,7 @@
       }
     ]
   },
-  "versionId": "f9f9d06f-aaa8-4e12-8dbd-f6997000d912",
+  "versionId": "cecdfbcf-cc64-41a0-b64a-638b036812fc",
   "triggerCount": 1,
   "shared": [
     {
