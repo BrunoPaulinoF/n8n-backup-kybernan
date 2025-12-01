@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-30T12:39:18.016Z",
+  "updatedAt": "2025-12-01T13:23:27.237Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -566,7 +566,7 @@
     },
     {
       "parameters": {
-        "name": "=não-pagar-teste-automação-IGNORAR - {{ $('AI Agent').item.json.output.NOME_ARQUIVO }}",
+        "name": "={{ $('AI Agent').item.json.output.NOME_ARQUIVO }} (ARQUIVADO POR IA)",
         "driveId": {
           "__rl": true,
           "mode": "list",
@@ -584,7 +584,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3296,
+        3504,
         112
       ],
       "id": "0c40d983-5d6b-49c9-8008-77dae0f542bc",
@@ -620,7 +620,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1232,
+        1440,
         448
       ],
       "id": "7288f54b-101a-47c9-8c92-38005813c165",
@@ -656,7 +656,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1408,
+        1616,
         448
       ],
       "id": "a83bd865-f0b3-4592-b765-90424dd8b369",
@@ -693,7 +693,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1792,
+        2000,
         432
       ],
       "id": "63b143aa-9d5a-41c1-9f3b-e749c16a1670",
@@ -730,7 +730,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2288,
+        2496,
         416
       ],
       "id": "163697c2-7261-42ea-b487-6c963a5b05e5",
@@ -772,7 +772,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2672,
+        2880,
         208
       ],
       "id": "cce7d4c9-00e2-47a1-9571-5fe4675dbfee",
@@ -788,7 +788,7 @@
           "mode": "list",
           "cachedResultName": "GPT-4O"
         },
-        "text": "=O que é nesta imagem?\n\nPreciso que me explique em detalhes e organizado, transcrevendo tudo.\n\nNa maioria das vezes estará recebendo documentos financeiros.\n\nSEMPRE quando houver data de vencimento, vocês precisa informar a data de vencimento\n\nSe for boleto obrigatório informar a data de VENCIMENTO, neste caso não preciso saber a data de documento nem de processamento, apenas a de vencimento e outras informações.\n\nNunca invente informações, apenas envie informações verdadeiras que estão na imagem\n\nSempre que tiver código de barras ou código de acesso, etc.. Preciso que informe o número completo e sem errar nenhum número.\n\nPrecisa ter certeza absoluta da data que irá enviar de vencimento, nunca confundir dia, mês e ano, exemplo está escrito 2025 e você enviar 2023, isso jamais poderá acontecer",
+        "text": "=O que é nesta imagem?\n\nPreciso que me explique em detalhes e organizado, transcrevendo tudo.\n\nNa maioria das vezes estará recebendo documentos financeiros.\n\nSEMPRE quando houver data de vencimento, vocês precisa informar a data de vencimento\n\nSe for boleto obrigatório informar a data de VENCIMENTO, neste caso não preciso saber a data de documento nem de processamento, apenas a de vencimento e outras informações.\n\nNunca invente informações, apenas envie informações verdadeiras que estão na imagem\n\nSempre que tiver código de barras COMPLETO ou código de acesso COMPLETO, etc.. Preciso que informe o número completo e sem errar nenhum número.\n\nPrecisa ter certeza absoluta da data que irá enviar de vencimento, nunca confundir dia, mês e ano, exemplo está escrito 2025 e você enviar 2023, isso jamais poderá acontecer\n\nTenha certeza que o código foi COMPLETO, do início ao fim, sem faltar nenhum número.",
         "inputType": "base64",
         "options": {
           "detail": "auto"
@@ -817,8 +817,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -960,
-        1536
+        -1056,
+        1744
       ],
       "id": "1d71cb53-dd9b-475e-9230-5a186ec0a31d",
       "name": "Extract from File"
@@ -932,7 +932,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -2128,
+        -2176,
         1104
       ],
       "id": "da62ecd9-2e16-42b7-b050-ef61e44eb982",
@@ -949,7 +949,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -1872,
+        -1936,
         1104
       ],
       "id": "f548f8d3-b350-4c20-a701-1b74efd7c4ff",
@@ -1004,7 +1004,7 @@
       "type": "@n8n/n8n-nodes-langchain.textClassifier",
       "typeVersion": 1.1,
       "position": [
-        352,
+        560,
         1232
       ],
       "id": "9e05b0c8-d3f2-49a0-a84c-bace19459f3e",
@@ -1024,7 +1024,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        304,
+        512,
         1664
       ],
       "id": "3beb4822-f5df-4b4d-841d-6041c9035b66",
@@ -1054,7 +1054,7 @@
       "typeVersion": 3.4,
       "position": [
         -816,
-        1152
+        896
       ],
       "id": "4ba8a991-1a84-40c6-aacd-10b6f73f032b",
       "name": "Edit Fields"
@@ -1081,8 +1081,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -2080,
-        1536
+        -2176,
+        1744
       ],
       "id": "7c480619-edba-46d5-adfa-a4d7ca0f9012",
       "name": "Gerar JWT"
@@ -1110,8 +1110,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1888,
-        1536
+        -1984,
+        1744
       ],
       "id": "a159f4c6-0a56-4f85-a6d1-10b8dcad4f12",
       "name": "CriaTarefaOcr"
@@ -1149,8 +1149,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1424,
-        1536
+        -1520,
+        1744
       ],
       "id": "feb10a82-73c9-4f41-a429-449f70cc61d7",
       "name": "UploadPdf"
@@ -1176,8 +1176,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1264,
-        1536
+        -1360,
+        1744
       ],
       "id": "7b36388b-33ab-4225-997e-aff2a0bf4970",
       "name": "ProcessPdfToOcr"
@@ -1205,8 +1205,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1104,
-        1536
+        -1200,
+        1744
       ],
       "id": "3b4dec12-071f-4d72-83b9-701d00d7286e",
       "name": "DownloadPdfOcr"
@@ -1220,8 +1220,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -1648,
-        1536
+        -1744,
+        1744
       ],
       "id": "25116963-8a16-4f85-b974-b481173f9cee",
       "name": "Merge"
@@ -1246,8 +1246,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -1216,
-        1328
+        -1424,
+        944
       ],
       "id": "9bc951fe-d887-4954-b199-363c66a2d85b",
       "name": "Upload file2",
@@ -1270,7 +1270,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        864,
+        1072,
         448
       ],
       "id": "fee0a4a4-dc7a-4c9d-8313-2cb40fef7eb0",
@@ -1290,7 +1290,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        816,
+        1024,
         640
       ],
       "id": "2eebaf89-ee86-4e10-afb7-6fd57143d3d4",
@@ -1309,7 +1309,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1056,
+        1264,
         624
       ],
       "id": "918eadd9-256b-4061-b8cc-0061a3cd26cb",
@@ -1318,13 +1318,14 @@
     {
       "parameters": {
         "mode": "combine",
-        "combineBy": "combineAll",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
         "options": {}
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -176,
+        32,
         1328
       ],
       "id": "c4438367-3efd-4b04-ae7a-a1dd06e1d31f",
@@ -1340,7 +1341,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        3072,
+        3280,
         128
       ],
       "id": "18268f31-e329-4f86-907f-665adb0975e3",
@@ -1354,8 +1355,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -2128,
-        1328
+        -2176,
+        1536
       ],
       "id": "feeecb04-34b4-4e4a-b886-013d8a5c4fce",
       "name": "Extract from File1"
@@ -1387,8 +1388,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1888,
-        1328
+        -1936,
+        1536
       ],
       "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
       "name": "Menos que 10 caracteres"
@@ -1411,13 +1412,13 @@
     {
       "parameters": {
         "content": "## TRATA PDF\n",
-        "height": 640,
-        "width": 1504
+        "height": 864,
+        "width": 1376
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -2176,
+        -2240,
         1056
       ],
       "id": "cf0601c3-5907-4c0e-9954-259d4d99133f",
@@ -1485,7 +1486,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1968,
+        2176,
         432
       ],
       "id": "d585e58b-5637-4ecc-af2a-1ed8f99866fc",
@@ -1519,7 +1520,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1584,
+        1792,
         448
       ],
       "id": "036454ae-d3fc-4ee1-916b-8d1c047f9638",
@@ -1615,7 +1616,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1584,
+        1792,
         672
       ],
       "id": "5acd9ed9-27bb-4396-9e1b-554940bd1a73",
@@ -1638,7 +1639,7 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "={{ $json.id }}",
+          "value": "={{ $('encontraAno').item.json.id || $json.id }}",
           "mode": "id"
         },
         "options": {}
@@ -1646,7 +1647,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1968,
+        2176,
         672
       ],
       "id": "b8bd4d4c-b653-4c16-9ef5-2808536dd22c",
@@ -1669,7 +1670,7 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "={{ $json.id }}",
+          "value": "={{ $('encontraMês').item.json.id || $json.id }}",
           "mode": "id"
         },
         "options": {}
@@ -1677,7 +1678,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2672,
+        2880,
         448
       ],
       "id": "b511ab3a-9edd-471e-a693-897f33f00381",
@@ -1709,8 +1710,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1136,
-        1200
+        1360,
+        1184
       ],
       "id": "a2852f48-e5a1-457a-8ca9-6a2351a72c2e",
       "name": "Upload file3",
@@ -1730,7 +1731,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        848,
+        1056,
         1184
       ],
       "id": "92d8fa18-ac23-483c-a33d-e1c12722f99a",
@@ -1752,8 +1753,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        4144,
-        448
+        4416,
+        240
       ],
       "id": "db1f1a8e-16ef-48e1-b2ab-a017c9ea4629",
       "name": "Create spreadsheet",
@@ -1769,21 +1770,40 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "={{ $('Move file').item.json.id || $('Encontra Sheet').item.json.id }}",
+          "value": "={{ $('Move file').item.json.id }}",
           "mode": "id"
         },
         "sheetName": {
           "__rl": true,
-          "value": 1999136574,
-          "mode": "list",
-          "cachedResultName": "contas",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vbkCxnQuRcyH1EDJspLHFBXmoUTmJDsjyrY-BA_RbV8/edit#gid=1999136574"
+          "value": "contas",
+          "mode": "name"
         },
         "columns": {
           "mappingMode": "autoMapInputData",
           "value": {},
           "matchingColumns": [],
-          "schema": [],
+          "schema": [
+            {
+              "id": "NOME ARQUIVO",
+              "displayName": "NOME ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CÓD BARRAS",
+              "displayName": "CÓD BARRAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
           "attemptToConvertTypes": false,
           "convertFieldsToString": false
         },
@@ -1795,8 +1815,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        4928,
-        240
+        5120,
+        96
       ],
       "id": "fc7bf97d-988c-4ff7-9923-bc72d7a7cc8b",
       "name": "Append row in sheet",
@@ -1822,7 +1842,7 @@
               "leftValue": "={{ $json }}",
               "rightValue": "",
               "operator": {
-                "type": "string",
+                "type": "object",
                 "operation": "notEmpty",
                 "singleValue": true
               }
@@ -1835,8 +1855,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3920,
-        224
+        4128,
+        112
       ],
       "id": "b639cb6e-648a-4b72-a40d-3e11aab89d28",
       "name": "JÁ EXISTE PLANILHA?"
@@ -1864,8 +1884,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3664,
-        224
+        3824,
+        112
       ],
       "id": "384c26f1-2168-4937-baa8-ba49918157f5",
       "name": "Encontra Sheet",
@@ -1900,8 +1920,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        4368,
-        448
+        4640,
+        240
       ],
       "id": "0b2e1c97-9d0c-4679-982f-44e119ab1cbf",
       "name": "Move file",
@@ -1917,21 +1937,15 @@
         "assignments": {
           "assignments": [
             {
-              "id": "a14234a4-ba82-4b23-be5c-00b04345924e",
-              "name": "coluna 1",
-              "value": "1",
-              "type": "string"
-            },
-            {
               "id": "25395053-48a8-4cd3-82fa-d047711b9767",
-              "name": "coluna 2",
-              "value": "2",
+              "name": "NOME ARQUIVO",
+              "value": "={{ $('AI Agent').item.json.output.NOME_ARQUIVO }}",
               "type": "string"
             },
             {
               "id": "f8f3f6fb-e386-4992-a445-35d528095369",
-              "name": "coluna 3",
-              "value": "3",
+              "name": "CÓD BARRAS",
+              "value": "={{ $('AI Agent').item.json.output.CODIGO_BARRAS }}",
               "type": "string"
             }
           ]
@@ -1941,11 +1955,991 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4672,
-        240
+        4864,
+        96
       ],
       "id": "9c6da1fd-3a53-43f7-bf4a-1b138047f886",
       "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "TIPO DE ARQUIVO": "NOTA FISCAL",
+            "CAMINHO QUE FOI SALVO": "=PASTA DE NOTAS FISCAIS",
+            "LINK ARQUIVO": "={{ $json.webViewLink }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1744,
+        1184
+      ],
+      "id": "663cb474-45c6-4261-9f2c-a58136864172",
+      "name": "log arquivos",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "={{ $('Get row(s)').item.json.NomeGrupo }} / {{ $('AI Agent').item.json.output.ANO }} / {{ $('AI Agent').item.json.output.MES }} / {{ $('AI Agent').item.json.output.DATA }}",
+            "LINK ARQUIVO": "={{ $('Upload file').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "BOLETO"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        5568,
+        96
+      ],
+      "id": "56786945-e8f5-4980-b066-efc94e45c0da",
+      "name": "log arquivos1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "PEDIDO COMPRA"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        2192
+      ],
+      "id": "a788e0f5-192b-469f-8839-d77e39419903",
+      "name": "PEDIDO COMPRA",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "HOLERITES"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        1360
+      ],
+      "id": "bec0d12d-bb21-4e3a-827f-96a9d72e2783",
+      "name": "HOLERITES",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "RECIBOS"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        1520
+      ],
+      "id": "4f58faf7-9116-4eaf-9a0b-d2908cc31675",
+      "name": "RECIBOS",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "COMPROVANTE PAGAMENTO"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        1680
+      ],
+      "id": "0128b1d7-95e2-4dd8-be43-f97c951e6e64",
+      "name": "COMPROVANTE PAGAMENTO",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "CHEQUES"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        1856
+      ],
+      "id": "f6e8c582-1a4d-4cbd-a7f4-d5b8f73075f6",
+      "name": "CHEQUES",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "TRANSFERENCIA PIX"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        2016
+      ],
+      "id": "3eef9de4-a311-4090-b780-1e642fca1f2f",
+      "name": "TRANSFERENCIA PIX",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "OUTROS"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1264,
+        2352
+      ],
+      "id": "1a0c29e1-8240-41e5-a7e4-f0979f4eac02",
+      "name": "OUTROS",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0ca53349-4a2f-410c-9b0f-d37dbd8379fa",
+              "leftValue": "={{ $('HTTP Request3').item.json.mimetype }}",
+              "rightValue": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2176,
+        1296
+      ],
+      "id": "7fc622cc-02c9-4fc9-86a5-fea2e1727f78",
+      "name": "excel?"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1824,
+        1280
+      ],
+      "id": "65eff5b9-60c2-451e-9551-d19a493a2f43",
+      "name": "EXCEL, IGNORAR"
     }
   ],
   "connections": {
@@ -2050,7 +3044,13 @@
     },
     "Upload file": {
       "main": [
-        []
+        [
+          {
+            "node": "Encontra Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "encontraControle": {
@@ -2170,6 +3170,11 @@
             "node": "Merge3",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Upload file2",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -2188,12 +3193,17 @@
             "index": 0
           },
           {
-            "node": "Extract from File1",
+            "node": "Merge3",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Merge3",
+            "node": "Upload file2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "excel?",
             "type": "main",
             "index": 0
           }
@@ -2284,11 +3294,6 @@
             "node": "UploadPdf",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Upload file2",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -2318,6 +3323,55 @@
             "node": "Merge3",
             "type": "main",
             "index": 1
+          }
+        ],
+        [
+          {
+            "node": "HOLERITES",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "RECIBOS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "COMPROVANTE PAGAMENTO",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CHEQUES",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "TRANSFERENCIA PIX",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "PEDIDO COMPRA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OUTROS",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -2585,6 +3639,57 @@
           }
         ]
       ]
+    },
+    "Upload file3": {
+      "main": [
+        [
+          {
+            "node": "log arquivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "log arquivos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "excel?": {
+      "main": [
+        [
+          {
+            "node": "EXCEL, IGNORAR",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -2601,7 +3706,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "3780",
+            "content-length": "2960",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -2621,7 +3726,7 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r5179105d33b663",
+              "id": "r4aab3f5a8100ea",
               "image": "",
               "imagePreview": "",
               "lead_assignedAttendant_id": "",
@@ -2654,14 +3759,14 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "LELEY FOODS - BPO/KY",
+              "name": "CAMPSUI - BPO/KY",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363401866070546@g.us",
+              "wa_chatid": "120363420394007891@g.us",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363401866070546",
+              "wa_fastid": "5519995586796:120363420394007891",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -2670,60 +3775,49 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "137499217248386@lid",
+              "wa_lastMessageSender": "192281424482510:40@lid",
               "wa_lastMessageTextVote": "",
-              "wa_lastMessageType": "ImageMessage",
-              "wa_lastMsgTimestamp": 1764356618000,
+              "wa_lastMessageType": "DocumentMessage",
+              "wa_lastMsgTimestamp": 1764594388000,
               "wa_muteEndTime": 0,
-              "wa_name": "LELEY FOODS - BPO/KY",
-              "wa_unreadCount": 62
+              "wa_name": "CAMPSUI - BPO/KY",
+              "wa_unreadCount": 57
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363401866070546@g.us",
+              "chatid": "120363420394007891@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7118-24/592657295_682876758036810_8097124408988693766_n.enc?ccb=11-4&oh=01_Q5Aa3AGSGiT0FiC5NICg3qKH75oYViooRy0KOSTAJvkhga0idQ&oe=69517E1D&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "image/jpeg",
-                "fileSHA256": "Zn/tBK0LQDtugNH1AAConYiMM5DxvzB8zp4PBlL4EUk=",
-                "fileLength": 84056,
-                "height": 1280,
-                "width": 720,
-                "mediaKey": "q2JUs4fFv9qcm7GPMWCsH6ZsK4S1VTaX5xwfjjJrEc0=",
-                "fileEncSHA256": "++hAVwvinIbKj04t4MbnXzLsqLcar3N47f0lqPFMgUM=",
-                "directPath": "/v/t62.7118-24/592657295_682876758036810_8097124408988693766_n.enc?ccb=11-4&oh=01_Q5Aa3AGSGiT0FiC5NICg3qKH75oYViooRy0KOSTAJvkhga0idQ&oe=69517E1D&_nc_sid=5e03e0&_nc_hot=1764356616",
-                "mediaKeyTimestamp": 1764356331,
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABsbGxscGx4hIR4qLSgtKj04MzM4PV1CR0JHQl2NWGdYWGdYjX2Xe3N7l33gsJycsOD/2c7Z//////////////8BGxsbGxwbHiEhHiotKC0qPTgzMzg9XUJHQkdCXY1YZ1hYZ1iNfZd7c3uXfeCwnJyw4P/Zztn////////////////CABEIADwAIQMBIgACEQEDEQH/xAAtAAADAQEBAAAAAAAAAAAAAAAAAgMEBQEBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAA4NWoQ90scw2h23Ws0mnJeLkQk/rEmKigVGmSo1sdhyAf/8QAJRAAAQQABAcBAQAAAAAAAAAAAQACAxEEECExEhQiMkFRYUJT/9oACAEBAAE/AGoZfk5crMPCbhZ/iGBnedKRwGKaOxcnN/MoxR00k7qOGM+EQyM6MUcrC3sVw+01txxWBsgBR6iiz6VHGKulSlJB0UQsWXJ7T7tMsNydRUYbWyf5TOzLiTCnHdMPQuJNKY4onUpp6Mv/xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAECAQE/AE//xAAUEQEAAAAAAAAAAAAAAAAAAAAw/9oACAEDAQE/AE//2Q==",
-                "contextInfo": {
-                  "pairedMediaType": 3
-                },
-                "scansSidecar": "TGZBRt3JLZOr6wCnXZKZQUaFsX8Qdhuf1jBq22OS+xkqLkf2adCgMA==",
-                "scanLengths": [
-                  7661,
-                  28458,
-                  18240,
-                  29697
-                ],
-                "midQualityFileSHA256": "xhKoBbK4AO/Lw3Okc9PrUPhYpZLhlZ0iJD/rnYF+aK0="
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/594023035_1864391127617317_2283860832949763501_n.enc?ccb=11-4&oh=01_Q5Aa3AGoHVseYdikXj58sXQ1idF-W9_8A0WH5dEXM97_jFCw8w&oe=6954F3D1&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "title": "juridica 28-11.xlsx",
+                "fileSHA256": "Jbs8LDkYo7DWS3fAcD32NdulUM5M8WcaDXCH0XxxgKw=",
+                "fileLength": 21360,
+                "mediaKey": "nLvKew52VOA24HRw9gvskh3QWczwOMNRJQ/q2g96gPs=",
+                "fileName": "juridica 28-11.xlsx",
+                "fileEncSHA256": "IQnAWH336gHH6k/hXv2bGFo5PFr4Gw2GCXApg1grr3Q=",
+                "directPath": "/v/t62.7119-24/594023035_1864391127617317_2283860832949763501_n.enc?ccb=11-4&oh=01_Q5Aa3AGoHVseYdikXj58sXQ1idF-W9_8A0WH5dEXM97_jFCw8w&oe=6954F3D1&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1764594385,
+                "contactVcard": false
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "LELEY FOODS - BPO/KY",
-              "id": "5519995586796:A52DB446A9AB9A45E92EBB2149446FE8",
+              "groupName": "CAMPSUI - BPO/KY",
+              "id": "5519995586796:3EB0E9138CD9CE036B8571",
               "isGroup": true,
-              "mediaType": "image",
-              "messageTimestamp": 1764356618000,
-              "messageType": "ImageMessage",
-              "messageid": "A52DB446A9AB9A45E92EBB2149446FE8",
+              "mediaType": "document",
+              "messageTimestamp": 1764594388000,
+              "messageType": "DocumentMessage",
+              "messageid": "3EB0E9138CD9CE036B8571",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "137499217248386@lid",
-              "senderName": "Bruno P Ferreira",
-              "sender_lid": "137499217248386@lid",
-              "sender_pn": "553499969911@s.whatsapp.net",
-              "source": "android",
+              "sender": "192281424482510:40@lid",
+              "senderName": "Solange Coimbra",
+              "sender_lid": "192281424482510@lid",
+              "sender_pn": "5519981260772@s.whatsapp.net",
+              "source": "web",
               "status": "",
               "text": "",
               "track_id": "",
@@ -2741,7 +3835,7 @@
       }
     ]
   },
-  "versionId": "cecdfbcf-cc64-41a0-b64a-638b036812fc",
+  "versionId": "62efe2d1-a861-4f75-b245-266d8fe7282c",
   "triggerCount": 1,
   "shared": [
     {
