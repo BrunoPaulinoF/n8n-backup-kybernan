@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-02T14:11:47.801Z",
+  "updatedAt": "2025-12-03T10:56:34.059Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -1184,7 +1184,7 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -528,
+        -576,
         144
       ],
       "id": "feeecb04-34b4-4e4a-b886-013d8a5c4fce",
@@ -1217,7 +1217,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -352,
+        -400,
         144
       ],
       "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
@@ -2405,46 +2405,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "http://kybernan_gotenberg:3000/forms/libreoffice/convert",
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "landscape",
-              "value": "true"
-            },
-            {
-              "parameterType": "formBinaryData",
-              "name": "files",
-              "inputDataFieldName": "data"
-            },
-            {
-              "name": "addOriginalDocumentAsStream",
-              "value": "false"
-            }
-          ]
-        },
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        -1264,
-        48
-      ],
-      "id": "12dbefd1-fc95-4c90-ab02-8190e4689e18",
-      "name": "HTTP Request1"
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -2529,7 +2489,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -608,
+        -656,
         64
       ],
       "id": "c364bf06-b91a-4fd7-82d0-95954a009f45",
@@ -2546,7 +2506,7 @@
       "typeVersion": 1,
       "position": [
         -592,
-        784
+        752
       ],
       "id": "23d5b8ff-9511-48fe-9440-c67dc1dfc963",
       "name": "Aggregate"
@@ -2560,7 +2520,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -608,
+        -656,
         688
       ],
       "id": "87ac175d-99db-461d-82d5-f2a376386816",
@@ -2609,7 +2569,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -544,
+        -592,
         464
       ],
       "id": "deff2226-0703-40bb-b934-2c8334254ec5",
@@ -2626,7 +2586,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -336,
+        -384,
         464
       ],
       "id": "c3e60bc5-4d76-47b7-a178-b15e257b837c",
@@ -2634,14 +2594,14 @@
     },
     {
       "parameters": {
-        "content": "## PDF/EXCEL com padrão OCR",
+        "content": "## PDF com padrão OCR",
         "height": 224,
-        "width": 416
+        "width": 672
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -608,
+        -656,
         400
       ],
       "id": "f250a6f8-4a7f-4e30-8601-34eec3ff019c",
@@ -3053,6 +3013,79 @@
       ],
       "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
       "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://kybernan_gotenberg:3000/forms/libreoffice/convert",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "landscape",
+              "value": "true"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "files",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "addOriginalDocumentAsStream",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1280,
+        48
+      ],
+      "id": "1a00927b-11cf-44c2-9d1c-da346e0bc0ec",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0ca53349-4a2f-410c-9b0f-d37dbd8379fa",
+              "leftValue": "={{ $('HTTP Request3').item.json.mimetype }}",
+              "rightValue": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -192,
+        464
+      ],
+      "id": "2ae1adee-50d7-4fbf-9c61-e67f6fa7cc8a",
+      "name": "excel?1"
     }
   ],
   "connections": {
@@ -3616,7 +3649,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request1",
+            "node": "HTTP Request5",
             "type": "main",
             "index": 0
           }
@@ -3640,17 +3673,6 @@
           },
           {
             "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "Extract from File1",
             "type": "main",
             "index": 0
           }
@@ -3694,7 +3716,7 @@
       "main": [
         [
           {
-            "node": "Aggregate",
+            "node": "excel?1",
             "type": "main",
             "index": 0
           }
@@ -3821,6 +3843,34 @@
           }
         ]
       ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "excel?1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -3837,7 +3887,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "5125",
+            "content-length": "2979",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -3857,7 +3907,7 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r779bf30c53efb8",
+              "id": "r4aab3f5a8100ea",
               "image": "",
               "imagePreview": "",
               "lead_assignedAttendant_id": "",
@@ -3890,15 +3940,15 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "CAMPSUI - GESTÃO DE CONTAS NF",
+              "name": "CAMPSUI - BPO/KY",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363403273068963@g.us",
+              "wa_chatid": "120363420394007891@g.us",
               "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363403273068963",
+              "wa_fastid": "5519995586796:120363420394007891",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -3907,60 +3957,48 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "63797544915030:75@lid",
+              "wa_lastMessageSender": "192281424482510:40@lid",
               "wa_lastMessageTextVote": "",
               "wa_lastMessageType": "DocumentMessage",
-              "wa_lastMsgTimestamp": 1764683809000,
+              "wa_lastMsgTimestamp": 1764688621000,
               "wa_muteEndTime": 0,
-              "wa_name": "CAMPSUI - GESTÃO DE CONTAS NF",
-              "wa_unreadCount": 21
+              "wa_name": "CAMPSUI - BPO/KY",
+              "wa_unreadCount": 146
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363403273068963@g.us",
+              "chatid": "120363420394007891@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/546069936_1632996767685462_7267348084229431043_n.enc?ccb=11-4&oh=01_Q5Aa3AE-sISmN4m_wYwkRXj0P6zZ8G1DXpNgwvh9y2-pltvZ0w&oe=695673C5&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "application/pdf",
-                "title": "LIMSEPT_PRODUTOSDE LIMPEZAPRODUCAO_USOCONSUMO_NFE02046.pdf",
-                "fileSHA256": "8JTJco3+loxC6QITf5INn1MhalcBaJzZrZ2G6W6dH7k=",
-                "fileLength": 6620804,
-                "pageCount": 4,
-                "mediaKey": "phmS8LJk8OqMzvwvttvvBe4hw0oDeaoM3ut3eu7wqB8=",
-                "fileName": "LIMSEPT_PRODUTOSDE LIMPEZAPRODUCAO_USOCONSUMO_NFE02046.pdf",
-                "fileEncSHA256": "w3O94f0Cue4Ggo1NLzr48Ugm/2xDq7DB7EERoxn1Si8=",
-                "directPath": "/v/t62.7119-24/546069936_1632996767685462_7267348084229431043_n.enc?ccb=11-4&oh=01_Q5Aa3AE-sISmN4m_wYwkRXj0P6zZ8G1DXpNgwvh9y2-pltvZ0w&oe=695673C5&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1764683805,
-                "contactVcard": false,
-                "thumbnailDirectPath": "/v/t62.36145-24/594463512_866535422543838_4248313071664159681_n.enc?ccb=11-4&oh=01_Q5Aa3AH7lQjLDJNh3LsrY5K_zwXRfpKieTdsNHFsaHUvyhTr4g&oe=695657A9&_nc_sid=5e03e0",
-                "thumbnailSHA256": "vwYx90+ALhGZ3a/VpqM0jJe7czeCBajFl5810dV1KUU=",
-                "thumbnailEncSHA256": "2QTKWYyHnU6x6JG0ngJ1QsWGV8KdMEbat0Fh1R1iaFQ=",
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAkABkDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAUGAQQI/8QAJRAAAgICAQUAAwADAAAAAAAAAQIDBAUREgAGEyEiBxQxFSMz/8QAFgEBAQEAAAAAAAAAAAAAAAAAAQAC/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhEDEQA/APeuTy/ZuT7vvYUfhj/MXq0sjT20p4uZSQ4BLyPYBR22WCSakKgtx0raqK2C7fkxs0b/AI2jpV54/F+ugqIyJo7O45NI2y3tWJ9Kdg+h01ex+ybOQs5ST8cYmtYe1O8k89CuZZpC+zMCvLYc8m2xDbOyNk9OK0VupMtGtQghrxAyeSKELGyln1Eq89qwHAltFT9el2NLKb7aw3bXbkteHt/HS1OISMrZzjybXQXfEyyeRtDe29kje9knq56ncmYqcmUt1KVCOzLXiazIVjWXxKzDcjfRb5MnjUqV2jAkcvVF0GJDMdwZeHLQw4vHxyuhl8kM6W0WRVLKCrpEwH9Q74MDsgH0pLc5qYgmHGyHToq8oLC/PkIc/wDH1pNMB/Cx4kqPo8mYu0XyFSeW/wAEozk/66gnZZOLA6f68fzyQnQP0V2Cw6YwZnHz/qutmdRdWJoVlgaMnmrMoIZQVYhW2raI0AQCRtCezi0bFawleg8bT5rHXLDmpKnJ4pK7BifHonUKLskegPfoA2fSu/Q3QnFjIy8AEkd2jU68YBLEKBsnjs61/BoD3tp0GDo6OjqLOt6OjqT/2Q==",
-                "contextInfo": {
-                  "disappearingMode": {
-                    "initiator": 0
-                  }
-                },
-                "thumbnailHeight": 36,
-                "thumbnailWidth": 25
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/35252742_1166010782380450_6912903279875685134_n.enc?ccb=11-4&oh=01_Q5Aa3AFGUYNF2Vn--CBu_HfQmxjbkt0AGN6UdqsmAtAXnvnr9g&oe=69566A32&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "title": "A PAGAR EM 03-12.xlsx",
+                "fileSHA256": "C5uB/Tl0imV5peqN6ED5iZNhzXHLgQF6IBWkLzm1TGc=",
+                "fileLength": 11591,
+                "mediaKey": "iN20sBZ8PuqwtcVtxFVZK1FHnK0Oq4t168pSgurJTds=",
+                "fileName": "A PAGAR EM 03-12.xlsx",
+                "fileEncSHA256": "SK7M5XEOxfp81mWzlQm9x+PtlsVAW8qFoBk/9x9zB2c=",
+                "directPath": "/v/t62.7119-24/35252742_1166010782380450_6912903279875685134_n.enc?ccb=11-4&oh=01_Q5Aa3AFGUYNF2Vn--CBu_HfQmxjbkt0AGN6UdqsmAtAXnvnr9g&oe=69566A32&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1764688619,
+                "contactVcard": false
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "CAMPSUI - GESTÃO DE CONTAS NF",
-              "id": "5519995586796:3EB0D93053E11802B9623F",
+              "groupName": "CAMPSUI - BPO/KY",
+              "id": "5519995586796:3EB022B31B93FAB3C5E7C5",
               "isGroup": true,
               "mediaType": "document",
-              "messageTimestamp": 1764683809000,
+              "messageTimestamp": 1764688621000,
               "messageType": "DocumentMessage",
-              "messageid": "3EB0D93053E11802B9623F",
+              "messageid": "3EB022B31B93FAB3C5E7C5",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "63797544915030:75@lid",
-              "senderName": "Dinael Dantas",
-              "sender_lid": "63797544915030@lid",
-              "sender_pn": "5519983143392@s.whatsapp.net",
+              "sender": "192281424482510:40@lid",
+              "senderName": "Solange Coimbra",
+              "sender_lid": "192281424482510@lid",
+              "sender_pn": "5519981260772@s.whatsapp.net",
               "source": "web",
               "status": "",
               "text": "",
@@ -3979,7 +4017,7 @@
       }
     ]
   },
-  "versionId": "c2cc51b8-a4ac-4f9c-93c2-815d5d17ab56",
+  "versionId": "fe524e56-818c-483f-9f79-e60d223e88b7",
   "triggerCount": 1,
   "shared": [
     {
