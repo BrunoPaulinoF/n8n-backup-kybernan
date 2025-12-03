@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-03T10:56:34.059Z",
+  "updatedAt": "2025-12-03T14:18:12.989Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -15,8 +15,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -3888,
-        160
+        -4400,
+        128
       ],
       "id": "02e65664-256c-4dbb-9aca-7f8cb2fe9832",
       "name": "Webhook",
@@ -49,8 +49,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -3344,
-        160
+        -3856,
+        128
       ],
       "id": "27f5f0f3-677b-404d-b04a-fd415490c8e0",
       "name": "isGroup",
@@ -479,7 +479,7 @@
         "filter": {
           "folderId": {
             "__rl": true,
-            "value": "={{ $('Merge1').item.json.Folder }} ",
+            "value": "={{ $json.Folder }}",
             "mode": "id"
           },
           "whatToSearch": "folders"
@@ -495,7 +495,7 @@
       "typeVersion": 3,
       "position": [
         2928,
-        352
+        320
       ],
       "id": "7288f54b-101a-47c9-8c92-38005813c165",
       "name": "encontraControle",
@@ -531,7 +531,7 @@
       "typeVersion": 3,
       "position": [
         3216,
-        352
+        320
       ],
       "id": "a83bd865-f0b3-4592-b765-90424dd8b369",
       "name": "encontraAno",
@@ -568,7 +568,7 @@
       "typeVersion": 3,
       "position": [
         4080,
-        336
+        304
       ],
       "id": "63b143aa-9d5a-41c1-9f3b-e749c16a1670",
       "name": "encontraMês",
@@ -605,7 +605,7 @@
       "typeVersion": 3,
       "position": [
         4912,
-        320
+        288
       ],
       "id": "163697c2-7261-42ea-b487-6c963a5b05e5",
       "name": "encontraDia",
@@ -647,7 +647,7 @@
       "typeVersion": 2.2,
       "position": [
         5200,
-        320
+        288
       ],
       "id": "cce7d4c9-00e2-47a1-9571-5fe4675dbfee",
       "name": "PastaDiaExiste?"
@@ -660,7 +660,7 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -592,
+        -624,
         1344
       ],
       "id": "1d71cb53-dd9b-475e-9230-5a186ec0a31d",
@@ -838,46 +838,20 @@
           ]
         },
         "options": {
-          "multiClass": false,
+          "multiClass": true,
           "fallback": "other",
-          "systemPromptTemplate": "=Atue como um classificador de documentos financeiros. Analise o texto e defina a categoria correta entre as opções: {categories}.\n\nRegras de diferenciação estrita:\n1. Se for uma cobrança ou boleto (dívida aberta), use \"aPagar\".\n2. Se for prova de pagamento de boleto, use \"comprovantePagamento\".\n3. Se for transferência bancária (Pix/TED), use \"comprovantePixTransferencia\".",
+          "systemPromptTemplate": "=Atue como um classificador de documentos financeiros. Analise o texto e defina a categoria correta entre as opções: {categories}.\n\nRegras de diferenciação estrita:\n1. Se for uma cobrança ou boleto (dívida aberta), use \"aPagar\".\n2. Se for prova de pagamento de boleto, use \"comprovantePagamento\".\n3. Se for transferência bancária (Pix/TED), use \"comprovantePixTransferencia\".\n\n\n## Importante\n- Alguns documentos podem ter contas a pagar (boletos) e nota fiscal (NF) por exemplo, se receber nota fiscal com boleto juntos então classificar ambos como true, apenas aceitar multiplos caminhos quando for nota e boleto ou pedido de compra com data de conta a pagar, outros casos precisa ser 1 classificação apenas\n- Se for só um boleto então classificar apenas como aPagar, para boletos, não classificar para NF, só classificar para ambos se realmente tiver amboras, NF e Boleto.\n- Se for só um boleto classifique apenas como boleto, não como outros ou nota fiscal",
           "enableAutoFixing": true
         }
       },
       "type": "@n8n/n8n-nodes-langchain.textClassifier",
       "typeVersion": 1.1,
       "position": [
-        304,
+        256,
         1008
       ],
       "id": "9e05b0c8-d3f2-49a0-a84c-bace19459f3e",
       "name": "Text Classifier"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-5-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-5-mini"
-        },
-        "responsesApiEnabled": false,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.3,
-      "position": [
-        304,
-        1456
-      ],
-      "id": "3beb4822-f5df-4b4d-841d-6041c9035b66",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "fRrIyxCKgTlReSWb",
-          "name": "Kybernan-Arquivador"
-        }
-      }
     },
     {
       "parameters": {
@@ -886,7 +860,7 @@
             {
               "id": "cc623d92-90a9-4c53-a977-960b80305e27",
               "name": "text",
-              "value": "={{ $json.text || $json['0'].content[0].text }}",
+              "value": "={{ $json.text || $json['0'].content[0].text || $json['0'].content[0].text }}",
               "type": "string"
             }
           ]
@@ -896,8 +870,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -416,
-        1344
+        -208,
+        1184
       ],
       "id": "4ba8a991-1a84-40c6-aacd-10b6f73f032b",
       "name": "Edit Fields"
@@ -1089,7 +1063,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -592,
+        -608,
         1136
       ],
       "id": "9bc951fe-d887-4954-b199-363c66a2d85b",
@@ -1107,14 +1081,14 @@
         "text": "={{ $json.text }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\"\n}\n]"
+          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
         1728,
-        336
+        304
       ],
       "id": "fee0a4a4-dc7a-4c9d-8313-2cb40fef7eb0",
       "name": "AI Agent"
@@ -1123,9 +1097,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5-mini",
+          "value": "gpt-5.1",
           "mode": "list",
-          "cachedResultName": "gpt-5-mini"
+          "cachedResultName": "gpt-5.1"
         },
         "builtInTools": {},
         "options": {}
@@ -1133,8 +1107,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        1680,
-        528
+        1712,
+        544
       ],
       "id": "2eebaf89-ee86-4e10-afb7-6fd57143d3d4",
       "name": "OpenAI Chat Model2",
@@ -1147,14 +1121,14 @@
     },
     {
       "parameters": {
-        "jsonSchemaExample": "[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\"\n}\n]",
+        "jsonSchemaExample": "[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]",
         "autoFix": true
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
         1920,
-        512
+        480
       ],
       "id": "918eadd9-256b-4061-b8cc-0061a3cd26cb",
       "name": "Structured Output Parser"
@@ -1169,8 +1143,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -240,
-        1120
+        -32,
+        1040
       ],
       "id": "c4438367-3efd-4b04-ae7a-a1dd06e1d31f",
       "name": "Merge1",
@@ -1189,39 +1163,6 @@
       ],
       "id": "feeecb04-34b4-4e4a-b886-013d8a5c4fce",
       "name": "Extract from File1"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "75f8e189-a085-4dad-9650-bc8f10936fc0",
-              "leftValue": "={{ Number($json.text.length) }}",
-              "rightValue": 10,
-              "operator": {
-                "type": "number",
-                "operation": "lt"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -400,
-        144
-      ],
-      "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
-      "name": "Menos que 10 caracteres"
     },
     {
       "parameters": {
@@ -1302,7 +1243,7 @@
       "typeVersion": 2.2,
       "position": [
         4368,
-        336
+        304
       ],
       "id": "d585e58b-5637-4ecc-af2a-1ed8f99866fc",
       "name": "PastaDiaExiste?1"
@@ -1336,7 +1277,7 @@
       "typeVersion": 2.2,
       "position": [
         3488,
-        352
+        320
       ],
       "id": "036454ae-d3fc-4ee1-916b-8d1c047f9638",
       "name": "PastaDiaExiste?2"
@@ -1406,8 +1347,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -3632,
-        160
+        -4144,
+        128
       ],
       "id": "58174c50-92b5-4c4d-98bc-9adaa7f9448b",
       "name": "Dados de Entrada"
@@ -1426,13 +1367,15 @@
           "value": "={{ $('encontraControle').item.json.id }}",
           "mode": "id"
         },
-        "options": {}
+        "options": {
+          "simplifyOutput": true
+        }
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3792,
-        560
+        3648,
+        480
       ],
       "id": "5acd9ed9-27bb-4396-9e1b-554940bd1a73",
       "name": "Cria Pasta Ano",
@@ -1454,16 +1397,18 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "={{ $('idPastaAno').item.json.id || $json.id }}",
+          "value": "={{ $('idPastaAno').item.json.id }}",
           "mode": "id"
         },
-        "options": {}
+        "options": {
+          "simplifyOutput": true
+        }
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
         4512,
-        592
+        496
       ],
       "id": "b8bd4d4c-b653-4c16-9ef5-2808536dd22c",
       "name": "Cria Pasta Mes",
@@ -1485,16 +1430,18 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "={{ $('idPastaMes').item.json.id || $json.id }}",
+          "value": "={{ $('idPastaMes').item.json.id }}",
           "mode": "id"
         },
-        "options": {}
+        "options": {
+          "simplifyOutput": true
+        }
       },
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
         5408,
-        544
+        480
       ],
       "id": "b511ab3a-9edd-471e-a693-897f33f00381",
       "name": "Cria Pasta Dia",
@@ -1528,131 +1475,7 @@
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "TIPO DE ARQUIVO": "NOTA FISCAL",
-            "CAMINHO QUE FOI SALVO": "=PASTA DE NOTAS FISCAIS",
-            "LINK ARQUIVO": "=https://drive.google.com/file/d/{{ $json.id }}/view"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "DATA",
-              "displayName": "DATA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "HORA",
-              "displayName": "HORA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CLIENTE",
-              "displayName": "CLIENTE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIPO DE ARQUIVO",
-              "displayName": "TIPO DE ARQUIVO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "LINK ARQUIVO",
-              "displayName": "LINK ARQUIVO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CAMINHO QUE FOI SALVO",
-              "displayName": "CAMINHO QUE FOI SALVO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "MOTIVO DO ERRO",
-              "displayName": "MOTIVO DO ERRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "CORRIGIDO",
-              "displayName": "CORRIGIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        2048,
-        912
-      ],
-      "id": "663cb474-45c6-4261-9f2c-a58136864172",
-      "name": "log arquivos",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vwb992tcodcaklq5",
-          "name": "KyberTech"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
-          "mode": "list",
-          "cachedResultName": "LOG ARQUIVOS",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Página1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
-            "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "PEDIDO COMPRA"
           },
@@ -1721,7 +1544,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
+        960,
         1968
       ],
       "id": "a788e0f5-192b-469f-8839-d77e39419903",
@@ -1756,7 +1579,7 @@
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "HOLERITES"
           },
@@ -1825,7 +1648,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
+        960,
         1136
       ],
       "id": "bec0d12d-bb21-4e3a-827f-96a9d72e2783",
@@ -1860,7 +1683,7 @@
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "RECIBOS"
           },
@@ -1929,7 +1752,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
+        960,
         1296
       ],
       "id": "4f58faf7-9116-4eaf-9a0b-d2908cc31675",
@@ -1964,7 +1787,7 @@
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "CAMINHO QUE FOI SALVO": "=NÃO SALVO",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "COMPROVANTE PAGAMENTO"
           },
@@ -2033,7 +1856,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
+        960,
         1456
       ],
       "id": "0128b1d7-95e2-4dd8-be43-f97c951e6e64",
@@ -2068,7 +1891,7 @@
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "CHEQUES"
           },
@@ -2137,7 +1960,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
+        960,
         1632
       ],
       "id": "f6e8c582-1a4d-4cbd-a7f4-d5b8f73075f6",
@@ -2172,7 +1995,7 @@
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "CAMINHO QUE FOI SALVO": "=NÃO SALVO",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "TRANSFERENCIA PIX"
           },
@@ -2241,7 +2064,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
+        960,
         1792
       ],
       "id": "3eef9de4-a311-4090-b780-1e642fca1f2f",
@@ -2276,7 +2099,7 @@
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "=ARQUIVOS RECEBIDOS KYBERNAN",
+            "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "OUTROS"
           },
@@ -2345,7 +2168,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
+        960,
         2128
       ],
       "id": "1a0c29e1-8240-41e5-a7e4-f0979f4eac02",
@@ -2420,8 +2243,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3776,
-        336
+        3792,
+        304
       ],
       "id": "5fa71fde-da89-4c8d-ae7c-d6416a6e1517",
       "name": "idPastaAno"
@@ -2444,7 +2267,7 @@
       "typeVersion": 3.4,
       "position": [
         4640,
-        320
+        288
       ],
       "id": "0a9a9088-44bc-4860-b70d-94417b846ee7",
       "name": "idPastaMes"
@@ -2723,7 +2546,7 @@
       "parameters": {
         "content": "## Boletos",
         "height": 576,
-        "width": 4288
+        "width": 4512
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -2733,21 +2556,6 @@
       ],
       "id": "a04f1d7a-762b-4f4f-9010-783f4131bd8d",
       "name": "Sticky Note10"
-    },
-    {
-      "parameters": {
-        "content": "## Nota Fiscal\n",
-        "height": 240,
-        "width": 608
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1632,
-        832
-      ],
-      "id": "5a1cc6d9-6a4b-440c-ad46-ebc8de100268",
-      "name": "Sticky Note11"
     },
     {
       "parameters": {
@@ -2773,7 +2581,7 @@
             "HORA": "={{ $now.format('hh:mm') }}",
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "={{ $('Get row(s)').item.json.NomeGrupo }} / {{ $('Loop Over Items').item.json.ANO }} / {{ $('Loop Over Items').item.json.MES }} / {{ $('Loop Over Items').item.json.DATA }}",
-            "LINK ARQUIVO": "={{ $('Copy file').item.json.webViewLink }}",
+            "LINK ARQUIVO": "=https://drive.google.com/file/d/{{ $json.id }}/view",
             "TIPO DE ARQUIVO": "BOLETO"
           },
           "matchingColumns": [],
@@ -2861,8 +2669,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        6000,
-        624
+        5792,
+        528
       ],
       "id": "ed9b4517-7767-41b4-9602-6956668c6dae",
       "name": "log arquivos1",
@@ -2887,7 +2695,7 @@
       "typeVersion": 1.3,
       "position": [
         1920,
-        640
+        608
       ],
       "id": "d3cd5c1f-6e1a-4a3d-a37b-1849ef108daa",
       "name": "OpenAI Chat Model",
@@ -2906,7 +2714,7 @@
       "typeVersion": 3,
       "position": [
         2608,
-        336
+        304
       ],
       "id": "af41894a-e84e-4e45-b04c-0d5a1147e854",
       "name": "Loop Over Items"
@@ -2920,7 +2728,7 @@
       "typeVersion": 1,
       "position": [
         2128,
-        336
+        304
       ],
       "id": "efbc1974-6b5e-4797-9ab2-394a1942c724",
       "name": "Split Out"
@@ -2951,7 +2759,7 @@
       "typeVersion": 3,
       "position": [
         5776,
-        288
+        272
       ],
       "id": "06462904-6a46-4c7c-a310-24d70fbe78b0",
       "name": "Copy file",
@@ -2987,8 +2795,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1760,
-        912
+        1728,
+        1536
       ],
       "id": "84a0ba27-92bb-4c18-b81d-ab7a3bbaa9ed",
       "name": "Copy file1",
@@ -3009,7 +2817,7 @@
       "typeVersion": 3.2,
       "position": [
         2384,
-        336
+        304
       ],
       "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
       "name": "Merge2"
@@ -3086,6 +2894,535 @@
       ],
       "id": "2ae1adee-50d7-4fbf-9c61-e67f6fa7cc8a",
       "name": "excel?1"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "Transcreva o que tem nesta imagem, tudo o que exatamente está escrito nela de forma organizada.",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        1648
+      ],
+      "id": "ece7a3fb-81d7-497f-b483-f69cac4c79a1",
+      "name": "Analyze image",
+      "credentials": {
+        "openAiApi": {
+          "id": "fRrIyxCKgTlReSWb",
+          "name": "Kybernan-Arquivador"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Se fizer OCR e tiver sem texto",
+        "height": 208,
+        "width": 528
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        1600
+      ],
+      "id": "91beb6ad-6576-4e6c-914f-1023277a46f0",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kybernan.uazapi.com/message/download",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "token",
+              "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
+            },
+            {
+              "name": "return_base64",
+              "value": "true"
+            },
+            {
+              "name": "generate_mp3",
+              "value": "false"
+            },
+            {
+              "name": "transcribe",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -688,
+        1664
+      ],
+      "id": "da57fbe7-a982-400e-8874-66b836589420",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64Data",
+        "options": {
+          "mimeType": "={{ $json.mimetype }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -512,
+        1664
+      ],
+      "id": "66f8b565-7646-4207-a74e-1b6bce6054bc",
+      "name": "Convert to File4"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "TIPO DE ARQUIVO": "NOTA FISCAL",
+            "CAMINHO QUE FOI SALVO": "=PASTA DE NOTAS FISCAIS",
+            "LINK ARQUIVO": "=https://drive.google.com/file/d/{{ $json.id }}/view"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "MOTIVO DO ERRO",
+              "displayName": "MOTIVO DO ERRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CORRIGIDO",
+              "displayName": "CORRIGIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        960,
+        976
+      ],
+      "id": "663cb474-45c6-4261-9f2c-a58136864172",
+      "name": "NOTA FISCAL",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "75f8e189-a085-4dad-9650-bc8f10936fc0",
+              "leftValue": "={{ Number($json.text.length) }}",
+              "rightValue": 20,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        144
+      ],
+      "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
+      "name": "Menos que 20 caracteres"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "75f8e189-a085-4dad-9650-bc8f10936fc0",
+              "leftValue": "={{ Number($json.text.length) }}",
+              "rightValue": 20,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -480,
+        1360
+      ],
+      "id": "2b625636-5b90-42e9-95de-072ff02a2623",
+      "name": "Menos que 20 caracteres1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -3856,
+        592
+      ],
+      "id": "acddbb94-728b-4409-a75f-1097a677dfad",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "TvERETBAGi000bZb",
+          "mode": "list",
+          "cachedResultName": "DadosClienteKybernan",
+          "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/TvERETBAGi000bZb"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "IdGroup",
+              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.chatid }}"
+            },
+            {
+              "keyName": "phone1",
+              "keyValue": "={{ $json.telefone_10_digitos || $json.telefone_11_digitos }}"
+            },
+            {
+              "keyName": "phone2",
+              "keyValue": "={{ $json.telefone_10_digitos || $json.telefone_11_digitos }}"
+            },
+            {
+              "keyName": "phone3",
+              "keyValue": "={{ $json.telefone_10_digitos || $json.telefone_11_digitos }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -3648,
+        624
+      ],
+      "id": "6465a5b5-be23-4e89-8776-4a474aa9a1f6",
+      "name": "Get row(s)1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// O código deve retornar um array de itens.\n// Como precisamos de 2 saídas, retornaremos um array com 2 objetos de item.\n\n// 1. Obter o número de telefone de entrada\n// A entrada está no formato do primeiro item (index 0)\nconst numeroCompleto = $input.first().json.body.message.sender_pn;\n\n// 2. Definir o DDD (os primeiros 2 dígitos)\nconst ddd = numeroCompleto.substring(0, 2);\n\n// 3. Definir o número original sem o DDD\nconst numeroSemDdd = numeroCompleto.substring(2);\n\n// 4. Inicializar as variáveis para as saídas\nlet numero10Digitos;\nlet numero11Digitos;\n\n// 5. Normalizar o número\nif (numeroSemDdd.length === 8) {\n    // Caso de entrada com 10 dígitos (Ex: 1188888888)\n    // Saída de 10 dígitos: Mantém como está\n    numero10Digitos = ddd + numeroSemDdd;\n    \n    // Saída de 11 dígitos: Adiciona o '9' após o DDD\n    numero11Digitos = ddd + '9' + numeroSemDdd;\n    \n} else if (numeroSemDdd.length === 9) {\n    // Caso de entrada com 11 dígitos (Ex: 11988888888)\n    // Saída de 11 dígitos: Mantém como está\n    numero11Digitos = ddd + numeroSemDdd;\n    \n    // Saída de 10 dígitos: Remove o primeiro dígito do número (que deve ser o '9')\n    // Usamos `slice(1)` para remover o primeiro caractere da string.\n    const numeroSemNove = numeroSemDdd.slice(1);\n    numero10Digitos = ddd + numeroSemNove;\n    \n} else {\n    // Caso de erro ou formato inesperado\n    console.error(\"Número de telefone com formato inesperado:\", numeroCompleto);\n    // Para evitar que o workflow pare, vamos apenas usar o número original em ambas as saídas\n    numero10Digitos = numeroCompleto;\n    numero11Digitos = numeroCompleto;\n}\n\n// 6. Criar os dois itens de output\nconst outputItem1 = {\n    json: {\n        telefone_10_digitos: numero10Digitos\n    }\n};\n\nconst outputItem2 = {\n    json: {\n        telefone_11_digitos: numero11Digitos\n    }\n};\n\n// 7. Retornar o array de itens\nreturn [outputItem1, outputItem2];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3856,
+        368
+      ],
+      "id": "939bacb5-4fc1-408b-8b14-e76b13dea785",
+      "name": "normalizaNumero"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7fa82878-e3a3-4b6f-9533-8352ea7d4ea0",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -3472,
+        624
+      ],
+      "id": "038c3e36-bc0f-4db3-9170-cec274ccad28",
+      "name": "seNumeroExisteSegue"
+    },
+    {
+      "parameters": {
+        "content": "## Normaliza numero 10 ou 11 digitos, tenta encontrar com ambos no banco de dados",
+        "height": 560,
+        "width": 592
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -3920,
+        272
+      ],
+      "id": "5e686850-6293-41e6-8d9b-12f758a69e63",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.1",
+          "mode": "list",
+          "cachedResultName": "gpt-5.1"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        272,
+        1488
+      ],
+      "id": "3beb4822-f5df-4b4d-841d-6041c9035b66",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "fRrIyxCKgTlReSWb",
+          "name": "Kybernan-Arquivador"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2912,
+        16
+      ],
+      "id": "d0391e02-d3b5-4f3e-a6cf-2a8c95a921b1",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "hF9yxdAPWHZWy2CV",
+          "mode": "list",
+          "cachedResultName": "CODIGO DE BARRAS",
+          "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/hF9yxdAPWHZWy2CV"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "idPasta": "={{ $('idPastaDia').item.json.id }}",
+            "codBarras": "={{ $('Loop Over Items').item.json.CODIGO_BARRAS }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "codBarras",
+              "displayName": "codBarras",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "idPasta",
+              "displayName": "idPasta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        6016,
+        544
+      ],
+      "id": "26532152-493d-46c4-9345-7580e4d24544",
+      "name": "Insert row"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bbdfcb0e-b11a-4cb9-ae83-00547a243bf0",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5536,
+        288
+      ],
+      "id": "5581deac-20a3-4fca-b7d0-5d3e5318240a",
+      "name": "idPastaDia"
     }
   ],
   "connections": {
@@ -3116,7 +3453,7 @@
         ],
         [
           {
-            "node": "Get row(s)",
+            "node": "normalizaNumero",
             "type": "main",
             "index": 0
           }
@@ -3225,7 +3562,7 @@
       "main": [
         [
           {
-            "node": "Copy file",
+            "node": "idPastaDia",
             "type": "main",
             "index": 0
           }
@@ -3243,7 +3580,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Menos que 20 caracteres1",
             "type": "main",
             "index": 0
           }
@@ -3289,17 +3626,6 @@
           {
             "node": "excel?",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model1": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Text Classifier",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -3393,7 +3719,7 @@
         ],
         [
           {
-            "node": "Copy file1",
+            "node": "NOTA FISCAL",
             "type": "main",
             "index": 0
           }
@@ -3513,25 +3839,7 @@
       "main": [
         [
           {
-            "node": "Menos que 10 caracteres",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Menos que 10 caracteres": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request4",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "HTTP Request",
+            "node": "Menos que 20 caracteres",
             "type": "main",
             "index": 0
           }
@@ -3605,7 +3913,7 @@
       "main": [
         [
           {
-            "node": "Cria Pasta Mes",
+            "node": "idPastaAno",
             "type": "main",
             "index": 0
           }
@@ -3616,7 +3924,7 @@
       "main": [
         [
           {
-            "node": "Cria Pasta Dia",
+            "node": "idPastaMes",
             "type": "main",
             "index": 0
           }
@@ -3627,7 +3935,7 @@
       "main": [
         [
           {
-            "node": "Copy file",
+            "node": "idPastaDia",
             "type": "main",
             "index": 0
           }
@@ -3779,7 +4087,13 @@
     },
     "Loop Over Items": {
       "main": [
-        [],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "encontraControle",
@@ -3793,7 +4107,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Insert row",
             "type": "main",
             "index": 0
           }
@@ -3824,13 +4138,7 @@
     },
     "Copy file1": {
       "main": [
-        [
-          {
-            "node": "log arquivos",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Merge2": {
@@ -3871,10 +4179,227 @@
           }
         ]
       ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Convert to File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File4": {
+      "main": [
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NOTA FISCAL": {
+      "main": [
+        [
+          {
+            "node": "Copy file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OUTROS": {
+      "main": [
+        []
+      ]
+    },
+    "HOLERITES": {
+      "main": [
+        [
+          {
+            "node": "Copy file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RECIBOS": {
+      "main": [
+        [
+          {
+            "node": "Copy file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHEQUES": {
+      "main": [
+        [
+          {
+            "node": "Copy file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PEDIDO COMPRA": {
+      "main": [
+        [
+          {
+            "node": "Copy file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menos que 20 caracteres": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menos que 20 caracteres1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)1": {
+      "main": [
+        [
+          {
+            "node": "seNumeroExisteSegue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "normalizaNumero": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "seNumeroExisteSegue": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "idPastaDia": {
+      "main": [
+        [
+          {
+            "node": "Copy file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "YIG6qfQJNEIBlPcM"
   },
   "staticData": null,
   "meta": {
@@ -3887,7 +4412,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "2979",
+            "content-length": "3032",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -3907,7 +4432,7 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r4aab3f5a8100ea",
+              "id": "r5179105d33b663",
               "image": "",
               "imagePreview": "",
               "lead_assignedAttendant_id": "",
@@ -3940,15 +4465,15 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "CAMPSUI - BPO/KY",
+              "name": "LELEY FOODS - BPO/KY",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363420394007891@g.us",
+              "wa_chatid": "120363401866070546@g.us",
               "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363420394007891",
+              "wa_fastid": "5519995586796:120363401866070546",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -3957,49 +4482,55 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "192281424482510:40@lid",
+              "wa_lastMessageSender": "224193132101769@lid",
               "wa_lastMessageTextVote": "",
               "wa_lastMessageType": "DocumentMessage",
-              "wa_lastMsgTimestamp": 1764688621000,
+              "wa_lastMsgTimestamp": 1764769620000,
               "wa_muteEndTime": 0,
-              "wa_name": "CAMPSUI - BPO/KY",
-              "wa_unreadCount": 146
+              "wa_name": "LELEY FOODS - BPO/KY",
+              "wa_unreadCount": 151
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363420394007891@g.us",
+              "chatid": "120363401866070546@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/35252742_1166010782380450_6912903279875685134_n.enc?ccb=11-4&oh=01_Q5Aa3AFGUYNF2Vn--CBu_HfQmxjbkt0AGN6UdqsmAtAXnvnr9g&oe=69566A32&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "title": "A PAGAR EM 03-12.xlsx",
-                "fileSHA256": "C5uB/Tl0imV5peqN6ED5iZNhzXHLgQF6IBWkLzm1TGc=",
-                "fileLength": 11591,
-                "mediaKey": "iN20sBZ8PuqwtcVtxFVZK1FHnK0Oq4t168pSgurJTds=",
-                "fileName": "A PAGAR EM 03-12.xlsx",
-                "fileEncSHA256": "SK7M5XEOxfp81mWzlQm9x+PtlsVAW8qFoBk/9x9zB2c=",
-                "directPath": "/v/t62.7119-24/35252742_1166010782380450_6912903279875685134_n.enc?ccb=11-4&oh=01_Q5Aa3AFGUYNF2Vn--CBu_HfQmxjbkt0AGN6UdqsmAtAXnvnr9g&oe=69566A32&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1764688619,
-                "contactVcard": false
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/594014130_1145464431077324_3402262979922838172_n.enc?ccb=11-4&oh=01_Q5Aa3AHN_J_95ZdHGvBA858tp3qI5jfZ18x2nJO_1x1za0HMIA&oe=6957AC31&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "application/pdf",
+                "title": "boleto 149141.pdf",
+                "fileSHA256": "VWKea3jgg6P8mPCeEiLXJRvdsSKjyaQvTWJWBa85ysQ=",
+                "fileLength": 211043,
+                "pageCount": 1,
+                "mediaKey": "hYJVpADh3bIBMzwbWiuy5b+uuzxbSAcjCNtm7lVeaD8=",
+                "fileName": "boleto 149141.pdf",
+                "fileEncSHA256": "XeGibgJEhcOcOI6bzcUvO2Ew+B1nm5cmbgQksSx9p0o=",
+                "directPath": "/v/t62.7119-24/594014130_1145464431077324_3402262979922838172_n.enc?ccb=11-4&oh=01_Q5Aa3AHN_J_95ZdHGvBA858tp3qI5jfZ18x2nJO_1x1za0HMIA&oe=6957AC31&_nc_sid=5e03e0&_nc_hot=1764769620",
+                "mediaKeyTimestamp": 1764769617,
+                "contactVcard": false,
+                "contextInfo": {
+                  "forwardingScore": 1,
+                  "isForwarded": true,
+                  "pairedMediaType": 0
+                }
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "CAMPSUI - BPO/KY",
-              "id": "5519995586796:3EB022B31B93FAB3C5E7C5",
+              "groupName": "LELEY FOODS - BPO/KY",
+              "id": "5519995586796:3A33B5D95919723C4B8A",
               "isGroup": true,
               "mediaType": "document",
-              "messageTimestamp": 1764688621000,
+              "messageTimestamp": 1764769620000,
               "messageType": "DocumentMessage",
-              "messageid": "3EB022B31B93FAB3C5E7C5",
+              "messageid": "3A33B5D95919723C4B8A",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "192281424482510:40@lid",
-              "senderName": "Solange Coimbra",
-              "sender_lid": "192281424482510@lid",
-              "sender_pn": "5519981260772@s.whatsapp.net",
-              "source": "web",
+              "sender": "224193132101769@lid",
+              "senderName": "Kederley",
+              "sender_lid": "224193132101769@lid",
+              "sender_pn": "5519981804818@s.whatsapp.net",
+              "source": "ios",
               "status": "",
               "text": "",
               "track_id": "",
@@ -4017,7 +4548,7 @@
       }
     ]
   },
-  "versionId": "fe524e56-818c-483f-9f79-e60d223e88b7",
+  "versionId": "9965edd5-ff9e-4d9b-8318-e6ad79e4ae77",
   "triggerCount": 1,
   "shared": [
     {
