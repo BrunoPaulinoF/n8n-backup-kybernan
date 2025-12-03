@@ -1,0 +1,721 @@
+{
+  "updatedAt": "2025-12-03T14:13:37.438Z",
+  "createdAt": "2025-12-03T13:06:28.201Z",
+  "id": "deKq2IVSuoKG2Tcz",
+  "name": "ARQUIVADOR - COMPROVANTES",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true,
+          "imageSize": "large"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1328,
+        -64
+      ],
+      "id": "34df1600-4869-4384-a331-cef5e9fee4e0",
+      "name": "Telegram Trigger",
+      "webhookId": "951b38e3-77bd-4847-9209-e8ffa74c7d46",
+      "credentials": {
+        "telegramApi": {
+          "id": "ouMbTOaEUCUE7jGs",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## TRIGGER\n",
+        "height": 208,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1392,
+        -112
+      ],
+      "id": "1ae1eb93-2ee5-4765-a12f-2fd46d24f499",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## LÊ CODIGO DE BARRAS\n",
+        "height": 256,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1952,
+        -96
+      ],
+      "id": "dc8babab-b29a-4653-9a71-f289d2d65923",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## PROCURA O CODIGO NO TABLE\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2256,
+        0
+      ],
+      "id": "5fa69b3e-f5ca-459c-b861-718f3611ea60",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## PUXA O ID DA PASTA DO TABLE\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2544,
+        0
+      ],
+      "id": "812e9da5-42ba-4a13-90fa-5dd4197a909c",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## FAZ UPLOAD DO COMPROVANTE NA PASTA\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2848,
+        0
+      ],
+      "id": "944701a6-c3df-4b56-9764-db5dbbea1177",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Extraia o código de barras do comprovante de pagamento, apenas números, exemplo de output:\n\n{\nCOD_BARRAS: \"código de barras, apenas números, completo, sem errar nenhum número\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1984,
+        0
+      ],
+      "id": "ab7cc82c-fac0-46f8-ba9a-db8272b4dcd2",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "cae7636b-bce4-43bf-a77b-eb5f6d232863"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "IMAGEM"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "318fb555-bb78-4241-ab61-c26272bbf792",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -1088,
+        -64
+      ],
+      "id": "7f0425ad-5c41-4244-87c7-913a767acf85",
+      "name": "IMAGEM OU PDF"
+    },
+    {
+      "parameters": {
+        "pdfName": "arquivo"
+      },
+      "type": "n8n-nodes-pdfkit.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        -224
+      ],
+      "id": "b97f082c-f6b5-493c-a6a0-29740f3c859f",
+      "name": "PDFKit"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -496,
+        -48
+      ],
+      "id": "8d5955c6-4251-4c6b-bdbb-55a0569bb685",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "75f8e189-a085-4dad-9650-bc8f10936fc0",
+              "leftValue": "={{ Number($json.text.length) }}",
+              "rightValue": 20,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -320,
+        -48
+      ],
+      "id": "bcfee434-70e0-4080-bde8-b94b6aded6ad",
+      "name": "Menos que 20 caracteres"
+    },
+    {
+      "parameters": {
+        "content": "## Puxa o texto e vê quantidade caracteres",
+        "height": 240,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        -128
+      ],
+      "id": "b86cafc9-e094-4669-882a-0bd1628ed34e",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ilovepdf.com/v1/auth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "public_key",
+              "value": "project_public_6e99f304b7b0f32194a219829ae0da16_1TjZUf8d65af7f20c2bb97ef86ef511d10f50"
+            },
+            {
+              "name": "secret_key",
+              "value": "secret_key_2b4e29231feda1bacf76a575828fdba7_8l_xca3740dd3253a8b56bbc5e54cd6c1664f"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        512,
+        -448
+      ],
+      "id": "103a0027-e77f-4ffc-b56b-30b87bdbd509",
+      "name": "Gerar JWT"
+    },
+    {
+      "parameters": {
+        "url": "https://api.ilovepdf.com/v1/start/pdfocr",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        704,
+        -448
+      ],
+      "id": "bd6a9ac4-7c00-4718-a7e5-3b6c2fbbc74f",
+      "name": "CriaTarefaOcr"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://{{ $json.server }}/v1/upload",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "task",
+              "value": "={{ $json.task }}"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1168,
+        -448
+      ],
+      "id": "1d752d02-aef2-4e16-8df1-caa81951bd29",
+      "name": "UploadPdf"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://{{ $('CriaTarefaOcr').item.json.server }}/v1/process",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"task\": \"{{ $('CriaTarefaOcr').item.json.task }}\",\n  \"tool\": \"pdfocr\",\n  \"files\": [\n    {\n      \"server_filename\": \"{{ $json.server_filename }}\",\n      \"filename\": \"file\"\n    }\n  ],\n  \"ocr_languages\": [\n    \"por\"\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1328,
+        -448
+      ],
+      "id": "fc86959b-29b1-4f41-a6bb-dff2a655e1b5",
+      "name": "ProcessPdfToOcr"
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $('CriaTarefaOcr').item.json.server }}/v1/download/{{ $('CriaTarefaOcr').item.json.task }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1504,
+        -352
+      ],
+      "id": "bfd8212c-962b-4bf3-b97a-62eba78236e1",
+      "name": "DownloadPdfOcr"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        944,
+        -560
+      ],
+      "id": "e731be0a-4e3d-49ae-a5c2-55a6e24e21b0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kybernan.uazapi.com/message/download",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "token",
+              "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
+            },
+            {
+              "name": "return_base64",
+              "value": "true"
+            },
+            {
+              "name": "generate_mp3",
+              "value": "false"
+            },
+            {
+              "name": "transcribe",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        112,
+        -656
+      ],
+      "id": "645cd64b-d56d-4e58-8760-009ac6037808",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64Data",
+        "options": {
+          "mimeType": "={{ $json.mimetype }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        -656
+      ],
+      "id": "6771c877-feb9-4d0e-b35b-b0f23f13c3b5",
+      "name": "Convert to File3"
+    },
+    {
+      "parameters": {
+        "content": "## FAZ OCR",
+        "height": 512,
+        "width": 1568,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -720
+      ],
+      "id": "1a4d323e-5136-42a0-af34-bc34262edd77",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        -112
+      ],
+      "id": "75ed01e2-a62d-4264-a36b-1d670480f6f5",
+      "name": "Extract from File"
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "IMAGEM OU PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IMAGEM OU PDF": {
+      "main": [
+        [
+          {
+            "node": "PDFKit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "Menos que 20 caracteres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDFKit": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar JWT": {
+      "main": [
+        [
+          {
+            "node": "CriaTarefaOcr",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriaTarefaOcr": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "UploadPdf": {
+      "main": [
+        [
+          {
+            "node": "ProcessPdfToOcr",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ProcessPdfToOcr": {
+      "main": [
+        [
+          {
+            "node": "DownloadPdfOcr",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "UploadPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Convert to File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File3": {
+      "main": [
+        [
+          {
+            "node": "Gerar JWT",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menos que 20 caracteres": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DownloadPdfOcr": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "4cbb904b-d726-4409-aa62-4f12f605ece3",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-12-03T13:06:28.201Z",
+      "createdAt": "2025-12-03T13:06:28.201Z",
+      "role": "workflow:owner",
+      "workflowId": "deKq2IVSuoKG2Tcz",
+      "projectId": "72MghKyBe7pL4bex"
+    }
+  ],
+  "tags": []
+}
