@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-04T10:59:19.050Z",
+  "updatedAt": "2025-12-04T13:56:39.630Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -49,8 +49,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -3648,
-        128
+        -3872,
+        144
       ],
       "id": "27f5f0f3-677b-404d-b04a-fd415490c8e0",
       "name": "isGroup",
@@ -191,8 +191,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        -2144,
-        80
+        -2560,
+        64
       ],
       "id": "271e1181-ddcd-4143-a6a6-79e35c53c17b",
       "name": "tipoMsg"
@@ -219,8 +219,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -2896,
-        48
+        -3392,
+        -192
       ],
       "id": "e7150fda-84b5-4a1d-ace4-d2d974f070a7",
       "name": "ExisteGrupoTabela False",
@@ -261,8 +261,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -2896,
-        256
+        -3392,
+        16
       ],
       "id": "c4e81850-1e79-4f18-89b6-c46f34c3aaa3",
       "name": "Get row(s)"
@@ -383,8 +383,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -2704,
-        48
+        -3200,
+        -192
       ],
       "id": "fbb4a44a-71e6-4f63-a7f9-95e9c4c308e6",
       "name": "Insere Novo Row"
@@ -399,8 +399,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -3184,
-        -64
+        -3456,
+        -320
       ],
       "id": "e2b4180f-4460-443c-a34d-979ffd64ab8b",
       "name": "Sticky Note"
@@ -464,8 +464,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2688,
-        256
+        -3184,
+        16
       ],
       "id": "c7008e17-9448-4747-8b4e-a3e3692e6e56",
       "name": "DADOS USUÁRIO"
@@ -494,8 +494,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3136,
-        320
+        3056,
+        368
       ],
       "id": "7288f54b-101a-47c9-8c92-38005813c165",
       "name": "encontraControle",
@@ -530,8 +530,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3424,
-        320
+        3344,
+        368
       ],
       "id": "a83bd865-f0b3-4592-b765-90424dd8b369",
       "name": "encontraAno",
@@ -567,8 +567,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        4288,
-        304
+        4208,
+        352
       ],
       "id": "63b143aa-9d5a-41c1-9f3b-e749c16a1670",
       "name": "encontraMês",
@@ -604,8 +604,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        5120,
-        288
+        5040,
+        336
       ],
       "id": "163697c2-7261-42ea-b487-6c963a5b05e5",
       "name": "encontraDia",
@@ -646,8 +646,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        5408,
-        288
+        5328,
+        336
       ],
       "id": "cce7d4c9-00e2-47a1-9571-5fe4675dbfee",
       "name": "PastaDiaExiste?"
@@ -660,8 +660,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -416,
-        1344
+        -640,
+        1328
       ],
       "id": "1d71cb53-dd9b-475e-9230-5a186ec0a31d",
       "name": "Extract from File"
@@ -709,8 +709,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1024,
-        -320
+        -1216,
+        -288
       ],
       "id": "023fa18a-cac6-4e2a-8dc2-78bd53dc51be",
       "name": "HTTP Request2"
@@ -726,8 +726,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -816,
-        -320
+        -1008,
+        -288
       ],
       "id": "2351b7f9-ae4d-456f-a70d-6c9e8c67460b",
       "name": "Convert to File1"
@@ -775,8 +775,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1904,
-        720
+        -2080,
+        528
       ],
       "id": "da62ecd9-2e16-42b7-b050-ef61e44eb982",
       "name": "HTTP Request3"
@@ -792,15 +792,15 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -1696,
-        736
+        -1872,
+        544
       ],
       "id": "f548f8d3-b350-4c20-a701-1b74efd7c4ff",
       "name": "Convert to File2"
     },
     {
       "parameters": {
-        "inputText": "={{ $json.text }}",
+        "inputText": "={{ $json.output }}",
         "categories": {
           "categories": [
             {
@@ -847,8 +847,8 @@
       "type": "@n8n/n8n-nodes-langchain.textClassifier",
       "typeVersion": 1.1,
       "position": [
-        464,
-        1008
+        976,
+        1200
       ],
       "id": "9e05b0c8-d3f2-49a0-a84c-bace19459f3e",
       "name": "Text Classifier"
@@ -870,8 +870,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        0,
-        1184
+        -224,
+        1168
       ],
       "id": "4ba8a991-1a84-40c6-aacd-10b6f73f032b",
       "name": "Edit Fields"
@@ -898,7 +898,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        528,
+        304,
         -208
       ],
       "id": "7c480619-edba-46d5-adfa-a4d7ca0f9012",
@@ -927,7 +927,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        720,
+        496,
         -208
       ],
       "id": "a159f4c6-0a56-4f85-a6d1-10b8dcad4f12",
@@ -966,7 +966,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1184,
+        960,
         -208
       ],
       "id": "feb10a82-73c9-4f41-a429-449f70cc61d7",
@@ -993,7 +993,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1344,
+        1120,
         -208
       ],
       "id": "7b36388b-33ab-4225-997e-aff2a0bf4970",
@@ -1022,7 +1022,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1520,
+        1296,
         -112
       ],
       "id": "3b4dec12-071f-4d72-83b9-701d00d7286e",
@@ -1037,7 +1037,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        960,
+        736,
         -320
       ],
       "id": "25116963-8a16-4f85-b974-b481173f9cee",
@@ -1063,8 +1063,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -400,
-        1136
+        -624,
+        1120
       ],
       "id": "9bc951fe-d887-4954-b199-363c66a2d85b",
       "name": "Upload file2",
@@ -1087,8 +1087,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        1936,
-        304
+        1856,
+        352
       ],
       "id": "fee0a4a4-dc7a-4c9d-8313-2cb40fef7eb0",
       "name": "AI Agent"
@@ -1107,8 +1107,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        1920,
-        544
+        1840,
+        592
       ],
       "id": "2eebaf89-ee86-4e10-afb7-6fd57143d3d4",
       "name": "OpenAI Chat Model2",
@@ -1127,8 +1127,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2128,
-        480
+        2048,
+        528
       ],
       "id": "918eadd9-256b-4061-b8cc-0061a3cd26cb",
       "name": "Structured Output Parser"
@@ -1143,8 +1143,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        176,
-        1040
+        0,
+        1056
       ],
       "id": "c4438367-3efd-4b04-ae7a-a1dd06e1d31f",
       "name": "Merge1",
@@ -1158,7 +1158,7 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -368,
+        -576,
         144
       ],
       "id": "feeecb04-34b4-4e4a-b886-013d8a5c4fce",
@@ -1208,8 +1208,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -2448,
-        256
+        -2944,
+        16
       ],
       "id": "4d4f66fe-732f-4ec1-ba67-e849af83f79b",
       "name": "temPasta"
@@ -1242,8 +1242,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        4576,
-        304
+        4496,
+        352
       ],
       "id": "d585e58b-5637-4ecc-af2a-1ed8f99866fc",
       "name": "PastaDiaExiste?1"
@@ -1276,8 +1276,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3696,
-        320
+        3616,
+        368
       ],
       "id": "036454ae-d3fc-4ee1-916b-8d1c047f9638",
       "name": "PastaDiaExiste?2"
@@ -1374,8 +1374,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3856,
-        480
+        3776,
+        528
       ],
       "id": "5acd9ed9-27bb-4396-9e1b-554940bd1a73",
       "name": "Cria Pasta Ano",
@@ -1407,8 +1407,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        4720,
-        496
+        4640,
+        544
       ],
       "id": "b8bd4d4c-b653-4c16-9ef5-2808536dd22c",
       "name": "Cria Pasta Mes",
@@ -1440,8 +1440,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        5616,
-        480
+        5536,
+        528
       ],
       "id": "b511ab3a-9edd-471e-a693-897f33f00381",
       "name": "Cria Pasta Dia",
@@ -1544,8 +1544,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        1968
+        1680,
+        2160
       ],
       "id": "a788e0f5-192b-469f-8839-d77e39419903",
       "name": "PEDIDO COMPRA",
@@ -1648,8 +1648,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        1136
+        1680,
+        1328
       ],
       "id": "bec0d12d-bb21-4e3a-827f-96a9d72e2783",
       "name": "HOLERITES",
@@ -1752,8 +1752,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        1296
+        1680,
+        1488
       ],
       "id": "4f58faf7-9116-4eaf-9a0b-d2908cc31675",
       "name": "RECIBOS",
@@ -1856,8 +1856,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        1456
+        1680,
+        1648
       ],
       "id": "0128b1d7-95e2-4dd8-be43-f97c951e6e64",
       "name": "COMPROVANTE PAGAMENTO",
@@ -1960,8 +1960,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        1632
+        1680,
+        1824
       ],
       "id": "f6e8c582-1a4d-4cbd-a7f4-d5b8f73075f6",
       "name": "CHEQUES",
@@ -2064,8 +2064,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        1792
+        1680,
+        1984
       ],
       "id": "3eef9de4-a311-4090-b780-1e642fca1f2f",
       "name": "TRANSFERENCIA PIX",
@@ -2168,8 +2168,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        2128
+        1680,
+        2320
       ],
       "id": "1a0c29e1-8240-41e5-a7e4-f0979f4eac02",
       "name": "OUTROS",
@@ -2198,17 +2198,27 @@
                 "type": "string",
                 "operation": "equals"
               }
+            },
+            {
+              "id": "d05a2206-6355-43ae-9547-75bfa0b9be41",
+              "leftValue": "={{ $('HTTP Request3').item.json.mimetype }}",
+              "rightValue": "application/vnd.ms-excel",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
             }
           ],
-          "combinator": "and"
+          "combinator": "or"
         },
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1456,
-        656
+        -1632,
+        464
       ],
       "id": "7fc622cc-02c9-4fc9-86a5-fea2e1727f78",
       "name": "excel?"
@@ -2220,8 +2230,8 @@
       "type": "n8n-nodes-pdfkit.pdfKit",
       "typeVersion": 1,
       "position": [
-        -576,
-        -320
+        -768,
+        -288
       ],
       "id": "6920d41b-fb84-4bc1-8f96-63476949304e",
       "name": "PDFKit"
@@ -2243,8 +2253,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4000,
-        304
+        3920,
+        352
       ],
       "id": "5fa71fde-da89-4c8d-ae7c-d6416a6e1517",
       "name": "idPastaAno"
@@ -2266,8 +2276,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4848,
-        288
+        4768,
+        336
       ],
       "id": "0a9a9088-44bc-4860-b70d-94417b846ee7",
       "name": "idPastaMes"
@@ -2281,8 +2291,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -2160,
-        640
+        -2128,
+        448
       ],
       "id": "7157356b-c417-48a6-91ba-6df915f79b96",
       "name": "Sticky Note4"
@@ -2328,7 +2338,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        -384,
+        -592,
         752
       ],
       "id": "23d5b8ff-9511-48fe-9440-c67dc1dfc963",
@@ -2392,7 +2402,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -384,
+        -592,
         464
       ],
       "id": "deff2226-0703-40bb-b934-2c8334254ec5",
@@ -2409,7 +2419,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -176,
+        -384,
         464
       ],
       "id": "c3e60bc5-4d76-47b7-a178-b15e257b837c",
@@ -2473,7 +2483,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        128,
+        -96,
         -416
       ],
       "id": "1ef4c0a6-e978-4795-bd56-569e5d94a6a5",
@@ -2490,7 +2500,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        336,
+        112,
         -416
       ],
       "id": "5c2bb384-df36-4671-8d91-6407aa0f469b",
@@ -2536,8 +2546,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        224,
-        928
+        928,
+        1120
       ],
       "id": "65f438e5-747a-4e11-a0a6-0b3f8dab987f",
       "name": "Sticky Note9"
@@ -2551,8 +2561,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1648,
-        208
+        1792,
+        240
       ],
       "id": "a04f1d7a-762b-4f4f-9010-783f4131bd8d",
       "name": "Sticky Note10"
@@ -2669,8 +2679,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        6000,
-        528
+        5920,
+        576
       ],
       "id": "ed9b4517-7767-41b4-9602-6956668c6dae",
       "name": "log arquivos1",
@@ -2694,8 +2704,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2128,
-        608
+        2048,
+        656
       ],
       "id": "d3cd5c1f-6e1a-4a3d-a37b-1849ef108daa",
       "name": "OpenAI Chat Model",
@@ -2713,8 +2723,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2816,
-        304
+        2736,
+        352
       ],
       "id": "af41894a-e84e-4e45-b04c-0d5a1147e854",
       "name": "Loop Over Items"
@@ -2727,8 +2737,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        2336,
-        304
+        2256,
+        352
       ],
       "id": "efbc1974-6b5e-4797-9ab2-394a1942c724",
       "name": "Split Out"
@@ -2758,8 +2768,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        5984,
-        272
+        5904,
+        320
       ],
       "id": "06462904-6a46-4c7c-a310-24d70fbe78b0",
       "name": "Copy file",
@@ -2795,8 +2805,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1936,
-        1536
+        2448,
+        1728
       ],
       "id": "84a0ba27-92bb-4c18-b81d-ab7a3bbaa9ed",
       "name": "Copy file1",
@@ -2816,8 +2826,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        2592,
-        304
+        2512,
+        352
       ],
       "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
       "name": "Merge2"
@@ -2856,44 +2866,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1072,
-        48
+        -1264,
+        64
       ],
       "id": "1a00927b-11cf-44c2-9d1c-da346e0bc0ec",
       "name": "HTTP Request5"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "0ca53349-4a2f-410c-9b0f-d37dbd8379fa",
-              "leftValue": "={{ $('HTTP Request3').item.json.mimetype }}",
-              "rightValue": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        16,
-        464
-      ],
-      "id": "2ae1adee-50d7-4fbf-9c61-e67f6fa7cc8a",
-      "name": "excel?1"
     },
     {
       "parameters": {
@@ -2912,8 +2889,8 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2,
       "position": [
-        -128,
-        1648
+        -336,
+        1664
       ],
       "id": "ece7a3fb-81d7-497f-b483-f69cac4c79a1",
       "name": "Analyze image",
@@ -2982,8 +2959,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -480,
-        1664
+        -688,
+        1680
       ],
       "id": "da57fbe7-a982-400e-8874-66b836589420",
       "name": "HTTP Request6"
@@ -2999,8 +2976,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -304,
-        1664
+        -512,
+        1680
       ],
       "id": "66f8b565-7646-4207-a74e-1b6bce6054bc",
       "name": "Convert to File4"
@@ -3117,8 +3094,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1168,
-        976
+        1680,
+        1168
       ],
       "id": "663cb474-45c6-4261-9f2c-a58136864172",
       "name": "NOTA FISCAL",
@@ -3156,7 +3133,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -192,
+        -400,
         144
       ],
       "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
@@ -3189,8 +3166,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -272,
-        1360
+        -496,
+        1344
       ],
       "id": "2b625636-5b90-42e9-95de-072ff02a2623",
       "name": "Menos que 20 caracteres1"
@@ -3202,8 +3179,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -3648,
-        592
+        -3872,
+        608
       ],
       "id": "acddbb94-728b-4409-a75f-1097a677dfad",
       "name": "Loop Over Items1"
@@ -3243,8 +3220,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -3440,
-        624
+        -3664,
+        640
       ],
       "id": "6465a5b5-be23-4e89-8776-4a474aa9a1f6",
       "name": "Get row(s)1",
@@ -3257,8 +3234,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -3648,
-        368
+        -3872,
+        384
       ],
       "id": "939bacb5-4fc1-408b-8b14-e76b13dea785",
       "name": "normalizaNumero"
@@ -3291,8 +3268,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -3264,
-        624
+        -3488,
+        640
       ],
       "id": "038c3e36-bc0f-4db3-9170-cec274ccad28",
       "name": "seNumeroExisteSegue"
@@ -3316,9 +3293,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5.1",
+          "value": "gpt-5-mini",
           "mode": "list",
-          "cachedResultName": "gpt-5.1"
+          "cachedResultName": "gpt-5-mini"
         },
         "builtInTools": {},
         "options": {}
@@ -3326,8 +3303,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        480,
-        1488
+        992,
+        1680
       ],
       "id": "3beb4822-f5df-4b4d-841d-6041c9035b66",
       "name": "OpenAI Chat Model1",
@@ -3343,8 +3320,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3120,
-        16
+        3040,
+        64
       ],
       "id": "d0391e02-d3b5-4f3e-a6cf-2a8c95a921b1",
       "name": "No Operation, do nothing"
@@ -3395,8 +3372,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        6224,
-        544
+        6144,
+        592
       ],
       "id": "26532152-493d-46c4-9345-7580e4d24544",
       "name": "Insert row"
@@ -3418,8 +3395,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        5744,
-        288
+        5664,
+        336
       ],
       "id": "5581deac-20a3-4fca-b7d0-5d3e5318240a",
       "name": "idPastaDia"
@@ -3452,11 +3429,156 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -4064,
+        -4048,
         128
       ],
       "id": "f1cd29ad-a0f3-47e8-833b-d28f3e96aee8",
       "name": "Ana?"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -3824,
+        -16
+      ],
+      "id": "df4684bc-bee0-4a97-b224-5c276aa4054e",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0ca53349-4a2f-410c-9b0f-d37dbd8379fa",
+              "leftValue": "={{ $('HTTP Request3').item.json.mimetype }}",
+              "rightValue": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "d05a2206-6355-43ae-9547-75bfa0b9be41",
+              "leftValue": "={{ $('HTTP Request3').item.json.mimetype }}",
+              "rightValue": "application/vnd.ms-excel",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        464
+      ],
+      "id": "053e7e9a-37b9-49a8-b3c0-d8332cb3acc7",
+      "name": "excel?2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "options": {
+          "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        272,
+        1232
+      ],
+      "id": "4185f616-8791-4940-802b-ee2b065c6de0",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        1440
+      ],
+      "id": "8ba80996-7f66-470e-8032-3e7302e09683",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "fRrIyxCKgTlReSWb",
+          "name": "Kybernan-Arquivador"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "=Verifique se a imagem está de pé, informe com 1 número apenas, sendo:\n0 = sim, está de pé\n1 = virar 1 vez sentido horário.\n2 = virar 2 vezes sentido horário.\n3 = virar 3 vezes sentido horário.\n\nNão diga nada além de apenas o número 0 ou 1 ou 2 ou 3\n\nO objetivo é deixar ela de pé, não pode ficar deitada e nem de cabeça para baixo.",
+        "inputType": "base64",
+        "options": {
+          "detail": "auto",
+          "maxTokens": 30
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -1056,
+        -704
+      ],
+      "id": "94890554-76fc-42d4-a3a3-3b980afb7354",
+      "name": "Analyze image1",
+      "credentials": {
+        "openAiApi": {
+          "id": "fRrIyxCKgTlReSWb",
+          "name": "Kybernan-Arquivador"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "rotate",
+        "options": {
+          "format": "jpeg"
+        }
+      },
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        -560
+      ],
+      "id": "5ab4847d-93af-4dbb-9400-8e03ca07bfe4",
+      "name": "Edit Image"
     }
   ],
   "connections": {
@@ -3626,6 +3748,11 @@
         [
           {
             "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Image",
             "type": "main",
             "index": 0
           }
@@ -3857,7 +3984,7 @@
       "main": [
         [
           {
-            "node": "Text Classifier",
+            "node": "AI Agent1",
             "type": "main",
             "index": 0
           },
@@ -4058,7 +4185,7 @@
       "main": [
         [
           {
-            "node": "excel?1",
+            "node": "excel?2",
             "type": "main",
             "index": 0
           }
@@ -4194,18 +4321,6 @@
             "type": "main",
             "index": 0
           },
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "excel?1": {
-      "main": [
-        [],
-        [
           {
             "node": "Aggregate",
             "type": "main",
@@ -4432,7 +4547,48 @@
       "main": [
         [
           {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
             "node": "isGroup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "excel?2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
             "type": "main",
             "index": 0
           }
@@ -4457,7 +4613,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "3032",
+            "content-length": "4190",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -4477,7 +4633,7 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r5179105d33b663",
+              "id": "r0228bcee93dfe3",
               "image": "",
               "imagePreview": "",
               "lead_assignedAttendant_id": "",
@@ -4510,71 +4666,79 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "LELEY FOODS - BPO/KY",
+              "name": "MERAKI- BOLETOS",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363401866070546@g.us",
+              "wa_chatid": "120363402757807946@g.us",
               "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363401866070546",
+              "wa_fastid": "5519995586796:120363402757807946",
               "wa_isBlocked": false,
               "wa_isGroup": true,
-              "wa_isGroup_admin": true,
+              "wa_isGroup_admin": false,
               "wa_isGroup_announce": false,
               "wa_isGroup_community": false,
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "224193132101769@lid",
+              "wa_lastMessageSender": "269951646593223@lid",
               "wa_lastMessageTextVote": "",
-              "wa_lastMessageType": "DocumentMessage",
-              "wa_lastMsgTimestamp": 1764769620000,
+              "wa_lastMessageType": "ImageMessage",
+              "wa_lastMsgTimestamp": 1764774222000,
               "wa_muteEndTime": 0,
-              "wa_name": "LELEY FOODS - BPO/KY",
-              "wa_unreadCount": 151
+              "wa_name": "MERAKI- BOLETOS",
+              "wa_unreadCount": 27
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363401866070546@g.us",
+              "chatid": "120363402757807946@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/594014130_1145464431077324_3402262979922838172_n.enc?ccb=11-4&oh=01_Q5Aa3AHN_J_95ZdHGvBA858tp3qI5jfZ18x2nJO_1x1za0HMIA&oe=6957AC31&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "application/pdf",
-                "title": "boleto 149141.pdf",
-                "fileSHA256": "VWKea3jgg6P8mPCeEiLXJRvdsSKjyaQvTWJWBa85ysQ=",
-                "fileLength": 211043,
-                "pageCount": 1,
-                "mediaKey": "hYJVpADh3bIBMzwbWiuy5b+uuzxbSAcjCNtm7lVeaD8=",
-                "fileName": "boleto 149141.pdf",
-                "fileEncSHA256": "XeGibgJEhcOcOI6bzcUvO2Ew+B1nm5cmbgQksSx9p0o=",
-                "directPath": "/v/t62.7119-24/594014130_1145464431077324_3402262979922838172_n.enc?ccb=11-4&oh=01_Q5Aa3AHN_J_95ZdHGvBA858tp3qI5jfZ18x2nJO_1x1za0HMIA&oe=6957AC31&_nc_sid=5e03e0&_nc_hot=1764769620",
-                "mediaKeyTimestamp": 1764769617,
-                "contactVcard": false,
+                "URL": "https://mmg.whatsapp.net/v/t62.7118-24/594500023_1356535542881415_4229611233827957888_n.enc?ccb=11-4&oh=01_Q5Aa3AFzQYXBVirq85qPmBpxwm0aLOeVwWE0ylj9yC7w-CUwig&oe=6957C2F2&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "image/jpeg",
+                "fileSHA256": "/GW+EkkCIedvflY8fohkt5RzPr0r8PmDHlyUKexmTuQ=",
+                "fileLength": 167654,
+                "height": 1600,
+                "width": 900,
+                "mediaKey": "6s9LCFRD3ibVmbL1n3NCsjmBUgOAhuvoOLb4ELYTqpw=",
+                "fileEncSHA256": "D6OfqEwAw9AZ1RHXbQEGosfpo/uDVwHzGWYF2XdmFBo=",
+                "directPath": "/v/t62.7118-24/594500023_1356535542881415_4229611233827957888_n.enc?ccb=11-4&oh=01_Q5Aa3AFzQYXBVirq85qPmBpxwm0aLOeVwWE0ylj9yC7w-CUwig&oe=6957C2F2&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1764774221,
+                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAEEAwIF/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC/9oADAMBAAIQAxAAAAD2/PtgLA0GNVDlRli6mgdw2Yam+2ewjpWRZUc512dBzLvNZbRLVTT5SRp512AZZd0HFGfWpo00g740zpDEntBWw1HyCS9BnXYB/8QAFxEBAQEBAAAAAAAAAAAAAAAAIAERMf/aAAgBAgEBPwAYoZww/wD/xAAWEQEBAQAAAAAAAAAAAAAAAAABIDD/2gAIAQMBAT8AyZZZ/8QAKRAAAQMDAwIGAwEAAAAAAAAAAQACEQMEIRIxcQVREyIjMkFhFDSBM//aAAgBAQABPwDcq7fWbXIZUgdlQLnWwLjJ+VTB8UTGyDYaYQAJHeFVaWuM98K2HqvOyc0gyFSOqm09wr10Vzlv9VoZthEfxNEvk7gIbFGQQU86nwqAis9OgNyrc+gzhXzaZuCXNJKstIogNwE0+d2ER5SvaGk9kRFUlUR6zyntLgIVpm3Zwrser7mjkq1EUhkHhAblBOaHCDsjgn6TWw4u2QVn+uzhX1Nrq8ls4VkNNuABCGyCcYHC1atSERsiSCFYu1W1PhdRDvHxOy6fItwDvKBQThAysElNnOUTDgunR+KzhX5d4zdJAwrKfDyZU5AQTxIj6THA1C0DkpsZ5VR2l7ftdPM2rOE+iyqZcJKZTbSEN2Tj6jQgnIN01ZPygd8fKfvnYLp36zU0puxnunDzNP2j/qB8Ko4gDKq+zUqU6CU8Sxf//gADAP/Z",
                 "contextInfo": {
-                  "forwardingScore": 1,
-                  "isForwarded": true,
-                  "pairedMediaType": 0
-                }
+                  "statusSourceType": 0
+                },
+                "firstScanSidecar": "iKUoX9Q0C8jndQ==",
+                "firstScanLength": 13882,
+                "scansSidecar": "iKUoX9Q0C8jndSNg1XpKgT1Cyx+HyCEo0FYXZffJzm/vkqpOdBj+vg==",
+                "scanLengths": [
+                  13882,
+                  62170,
+                  29383,
+                  62217
+                ],
+                "midQualityFileSHA256": "7ZJfSIP+ShXYlez7XupfofI++IiXmBtP3kw8/+JBhcY=",
+                "imageSourceType": 0
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "LELEY FOODS - BPO/KY",
-              "id": "5519995586796:3A33B5D95919723C4B8A",
+              "groupName": "MERAKI- BOLETOS",
+              "id": "5519995586796:3A921EA7B7696D4BC0BB",
               "isGroup": true,
-              "mediaType": "document",
-              "messageTimestamp": 1764769620000,
-              "messageType": "DocumentMessage",
-              "messageid": "3A33B5D95919723C4B8A",
+              "mediaType": "image",
+              "messageTimestamp": 1764774222000,
+              "messageType": "ImageMessage",
+              "messageid": "3A921EA7B7696D4BC0BB",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "224193132101769@lid",
-              "senderName": "Kederley",
-              "sender_lid": "224193132101769@lid",
-              "sender_pn": "5519981804818@s.whatsapp.net",
+              "sender": "269951646593223@lid",
+              "senderName": "Andreia Oliveira",
+              "sender_lid": "269951646593223@lid",
+              "sender_pn": "5519971187804@s.whatsapp.net",
               "source": "ios",
               "status": "",
               "text": "",
@@ -4593,7 +4757,7 @@
       }
     ]
   },
-  "versionId": "0da9f461-1cbc-4ca4-a681-2838781e8345",
+  "versionId": "499080a4-cadd-4f7b-8b8b-4f5d7af131d2",
   "triggerCount": 1,
   "shared": [
     {
