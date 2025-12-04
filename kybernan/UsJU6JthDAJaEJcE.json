@@ -1,0 +1,168 @@
+{
+  "updatedAt": "2025-12-04T14:17:37.278Z",
+  "createdAt": "2025-12-04T13:56:51.420Z",
+  "id": "UsJU6JthDAJaEJcE",
+  "name": "dispara msg grupos",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Pega todos IDs"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -128
+      ],
+      "id": "b21f4286-ee7b-47c2-a815-b60a67f56adb",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## seleciona qual mensagem mandar"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        352,
+        -128
+      ],
+      "id": "bd25d438-6d13-42cd-b2c7-a902da438198",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1db0ba1e-8af5-460e-9635-3090cd865b5f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kybernan.uazapi.com/chat/find",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "token",
+              "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"operator\": \"AND\",\n  \"sort\": \"-wa_lastMsgTimestamp\",\n  \"wa_isBlocked\": \"false\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0cf1ce24-f401-4d13-a67f-6c3bb570f520",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "chats",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "9663e53b-188b-4557-9523-139652fc13de",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "986785f6-0b1b-4b62-95c0-fe0979c17203",
+              "name": "wa_chatid",
+              "value": "={{ $json.wa_chatid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        0
+      ],
+      "id": "54479d95-7d59-47b2-9990-a27b99b977d6",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "fb09fe5a-d857-4633-ad43-3ce41fd07ecb",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-12-04T13:56:51.420Z",
+      "createdAt": "2025-12-04T13:56:51.420Z",
+      "role": "workflow:owner",
+      "workflowId": "UsJU6JthDAJaEJcE",
+      "projectId": "72MghKyBe7pL4bex"
+    }
+  ],
+  "tags": []
+}
