@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-04T13:56:39.630Z",
+  "updatedAt": "2025-12-05T01:24:27.707Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -3531,54 +3531,6 @@
           "name": "Kybernan-Arquivador"
         }
       }
-    },
-    {
-      "parameters": {
-        "resource": "image",
-        "operation": "analyze",
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o",
-          "mode": "list",
-          "cachedResultName": "GPT-4O"
-        },
-        "text": "=Verifique se a imagem está de pé, informe com 1 número apenas, sendo:\n0 = sim, está de pé\n1 = virar 1 vez sentido horário.\n2 = virar 2 vezes sentido horário.\n3 = virar 3 vezes sentido horário.\n\nNão diga nada além de apenas o número 0 ou 1 ou 2 ou 3\n\nO objetivo é deixar ela de pé, não pode ficar deitada e nem de cabeça para baixo.",
-        "inputType": "base64",
-        "options": {
-          "detail": "auto",
-          "maxTokens": 30
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 2,
-      "position": [
-        -1056,
-        -704
-      ],
-      "id": "94890554-76fc-42d4-a3a3-3b980afb7354",
-      "name": "Analyze image1",
-      "credentials": {
-        "openAiApi": {
-          "id": "fRrIyxCKgTlReSWb",
-          "name": "Kybernan-Arquivador"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "rotate",
-        "options": {
-          "format": "jpeg"
-        }
-      },
-      "type": "n8n-nodes-base.editImage",
-      "typeVersion": 1,
-      "position": [
-        -976,
-        -560
-      ],
-      "id": "5ab4847d-93af-4dbb-9400-8e03ca07bfe4",
-      "name": "Edit Image"
     }
   ],
   "connections": {
@@ -3748,11 +3700,6 @@
         [
           {
             "node": "Convert to File1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Edit Image",
             "type": "main",
             "index": 0
           }
@@ -4757,7 +4704,7 @@
       }
     ]
   },
-  "versionId": "499080a4-cadd-4f7b-8b8b-4f5d7af131d2",
+  "versionId": "1897fabc-5af3-4250-8215-d57e4259e9c6",
   "triggerCount": 1,
   "shared": [
     {
