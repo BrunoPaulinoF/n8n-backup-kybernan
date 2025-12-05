@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-05T01:24:27.707Z",
+  "updatedAt": "2025-12-05T10:44:49.723Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -3531,6 +3531,24 @@
           "name": "Kybernan-Arquivador"
         }
       }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyA4EVGzKZUdv4yqjQJN8TjfmP_5Jh-vlgw",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"requests\": [\n    {\n      \"image\": {\n        \"content\": \"\" \n      },\n      \"features\": [\n        {\n          \"type\": \"DOCUMENT_TEXT_DETECTION\"\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -880,
+        -576
+      ],
+      "id": "298fe52b-3075-4412-bfb4-b91cad73abe6",
+      "name": "HTTP Request1"
     }
   ],
   "connections": {
@@ -4704,7 +4722,7 @@
       }
     ]
   },
-  "versionId": "1897fabc-5af3-4250-8215-d57e4259e9c6",
+  "versionId": "8ac3f68c-6dbd-4454-ad48-9954611a1965",
   "triggerCount": 1,
   "shared": [
     {
