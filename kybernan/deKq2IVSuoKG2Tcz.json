@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2025-12-03T14:13:37.438Z",
+  "updatedAt": "2025-12-05T13:48:46.834Z",
   "createdAt": "2025-12-03T13:06:28.201Z",
   "id": "deKq2IVSuoKG2Tcz",
   "name": "ARQUIVADOR - COMPROVANTES",
-  "active": false,
+  "active": true,
   "isArchived": false,
   "nodes": [
     {
@@ -666,13 +666,7 @@
             "index": 0
           }
         ],
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "DownloadPdfOcr": {
@@ -688,13 +682,7 @@
     },
     "Extract from File": {
       "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     }
   },
@@ -706,8 +694,8 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "4cbb904b-d726-4409-aa62-4f12f605ece3",
-  "triggerCount": 0,
+  "versionId": "97bcbf98-1f81-4228-8893-eed14834375d",
+  "triggerCount": 1,
   "shared": [
     {
       "updatedAt": "2025-12-03T13:06:28.201Z",
