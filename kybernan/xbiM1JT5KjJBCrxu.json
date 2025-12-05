@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-05T10:44:49.723Z",
+  "updatedAt": "2025-12-05T14:16:47.476Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -804,12 +804,12 @@
         "categories": {
           "categories": [
             {
-              "category": "aPagar",
-              "description": "BOLETOS, IMPOSTOS, GUIAS, FGTS, DARE,ETC "
+              "category": "Boletos-Guias",
+              "description": "Selecione esta opção se o texto contiver instrumentos de cobrança ou pagamento. Procure obrigatoriamente por \"Linha digitável\", \"Código de barras\", \"Boleto bancário\", \"Vencimento\", \"Pix copia e cola\", \"qr code\" e \"Valor do documento\"."
             },
             {
-              "category": "notaFiscal",
-              "description": "NOTA FISCAL E CUPOM FISCAL"
+              "category": "Nota-Fiscal",
+              "description": "Selecione esta opção se o texto contiver dados de uma Nota Fiscal, DANFE, Cupom ou NFS-e. Procure por termos como \"Chave de Acesso\", \"Natureza da Operação\", \"DANFE\" ou detalhes de produtos e impostos. Marque como verdadeiro mesmo que haja um boleto junto."
             },
             {
               "category": "holerites",
@@ -825,7 +825,7 @@
             },
             {
               "category": "cheque",
-              "description": "CHEQUE "
+              "description": "CHEQUES"
             },
             {
               "category": "comprovantePixTransferencia",
@@ -834,13 +834,16 @@
             {
               "category": "pedidoDeCompra",
               "description": "Pedido de compra"
+            },
+            {
+              "category": "relatórioDiversasContasAPagar",
+              "description": "Relatório de contas a pagar, não uma conta específica mas um relatório completo."
             }
           ]
         },
         "options": {
           "multiClass": true,
-          "fallback": "other",
-          "systemPromptTemplate": "=Atue como um classificador de documentos financeiros. Analise o texto e defina a categoria correta entre as opções: {categories}.\n\nRegras de diferenciação estrita:\n1. Se for uma cobrança ou boleto (dívida aberta), use \"aPagar\".\n2. Se for prova de pagamento de boleto, use \"comprovantePagamento\".\n3. Se for transferência bancária (Pix/TED), use \"comprovantePixTransferencia\".\n\n\n## Importante\n- Alguns documentos podem ter contas a pagar (boletos) e nota fiscal (NF) por exemplo, se receber nota fiscal com boleto juntos então classificar ambos como true, apenas aceitar multiplos caminhos quando for nota e boleto ou pedido de compra com data de conta a pagar, outros casos precisa ser 1 classificação apenas\n- Se for só um boleto então classificar apenas como aPagar, para boletos, não classificar para NF, só classificar para ambos se realmente tiver amboras, NF e Boleto.\n- Se for só um boleto classifique apenas como boleto, não como outros ou nota fiscal",
+          "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis.\n\n# Input Analysis\nO texto de entrada é um resumo dos documentos existentes.\nO texto de entrada (input) pode conter um único resumo de documento ou múltiplos resumos concatenados (ex: resumo de uma Nota Fiscal seguida de um Boleto).\n\n# Rules for Classification\n1. **ANÁLISE PARCIAL:** Não tente classificar o texto como um todo único. Varra o texto procurando por evidências de cada categoria.\n2. **REGRA DO COMBO (IMPORTANTE):** É muito comum receber um \"Kit Pagamento\" que contém o resumo texto de uma \"Nota Fiscal\" E o resumo texto de um \"Boleto\".\n   - Se encontrar dados de Nota Fiscal (DANFE, Chave de acesso, Produtos) -> Marque 'Nota-Fiscal' como TRUE.\n   - Se encontrar dados de Cobrança (Linha digitável, Banco, Boleto) -> Marque 'Boletos-Guias' como TRUE.\n   - Se houver AMBOS no texto, você DEVE marcar AMBAS as categorias como TRUE.\n3. **EVITAR OUTROS:** Só classifique como \"Outros\" (ou nenhuma categoria) se o texto não tiver ABSOLUTAMENTE NENHUMA característica de nota fiscal, recibo, conta a pagar e demais classificações existentes.\n\n# Step-by-Step Thinking\n- O texto tem chave de acesso ou diz \"DANFE\"? Sim -> Nota-Fiscal.\n- O texto tem linha digitável (números de boleto) ou diz \"Boleto\"? Sim -> Boletos-Guias.\n- Obrigatoriamente você precisa classificar 1 ou mais caminhos mais provável, OBRIGATORIO.",
           "enableAutoFixing": true
         }
       },
@@ -1078,7 +1081,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $json.text }}",
+        "text": "={{ $('AI Agent1').item.json.output }}",
         "hasOutputParser": true,
         "options": {
           "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO"
@@ -1158,11 +1161,13 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        -576,
-        144
+        -608,
+        224
       ],
       "id": "feeecb04-34b4-4e4a-b886-013d8a5c4fce",
-      "name": "Extract from File1"
+      "name": "Extract from File1",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -1544,8 +1549,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        2160
+        1488,
+        2128
       ],
       "id": "a788e0f5-192b-469f-8839-d77e39419903",
       "name": "PEDIDO COMPRA",
@@ -1648,8 +1653,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        1328
+        1488,
+        1296
       ],
       "id": "bec0d12d-bb21-4e3a-827f-96a9d72e2783",
       "name": "HOLERITES",
@@ -1752,8 +1757,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        1488
+        1488,
+        1456
       ],
       "id": "4f58faf7-9116-4eaf-9a0b-d2908cc31675",
       "name": "RECIBOS",
@@ -1856,8 +1861,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        1648
+        1488,
+        1616
       ],
       "id": "0128b1d7-95e2-4dd8-be43-f97c951e6e64",
       "name": "COMPROVANTE PAGAMENTO",
@@ -1960,8 +1965,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        1824
+        1488,
+        1792
       ],
       "id": "f6e8c582-1a4d-4cbd-a7f4-d5b8f73075f6",
       "name": "CHEQUES",
@@ -2064,8 +2069,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        1984
+        1488,
+        1952
       ],
       "id": "3eef9de4-a311-4090-b780-1e642fca1f2f",
       "name": "TRANSFERENCIA PIX",
@@ -2168,8 +2173,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        2320
+        1488,
+        2464
       ],
       "id": "1a0c29e1-8240-41e5-a7e4-f0979f4eac02",
       "name": "OUTROS",
@@ -2316,8 +2321,8 @@
     {
       "parameters": {
         "content": "## Puxa o texto e vê quantidade caracteres",
-        "height": 240,
-        "width": 432
+        "height": 304,
+        "width": 448
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -2540,8 +2545,8 @@
     {
       "parameters": {
         "content": "## Classificador",
-        "height": 1360,
-        "width": 976
+        "height": 1504,
+        "width": 768
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -2805,8 +2810,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2448,
-        1728
+        2000,
+        1616
       ],
       "id": "84a0ba27-92bb-4c18-b81d-ab7a3bbaa9ed",
       "name": "Copy file1",
@@ -3094,8 +3099,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1680,
-        1168
+        1488,
+        1136
       ],
       "id": "663cb474-45c6-4261-9f2c-a58136864172",
       "name": "NOTA FISCAL",
@@ -3133,7 +3138,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -400,
+        -368,
         144
       ],
       "id": "04f93ae5-335a-4881-b2b2-74007cddfc3d",
@@ -3293,9 +3298,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5-mini",
+          "value": "gpt-4.1-mini",
           "mode": "list",
-          "cachedResultName": "gpt-5-mini"
+          "cachedResultName": "gpt-4.1-mini"
         },
         "builtInTools": {},
         "options": {}
@@ -3339,7 +3344,8 @@
           "mappingMode": "defineBelow",
           "value": {
             "idPasta": "={{ $('idPastaDia').item.json.id }}",
-            "codBarras": "={{ $('Loop Over Items').item.json.CODIGO_BARRAS }}"
+            "codBarras": "={{ $('Loop Over Items').item.json.CODIGO_BARRAS }}",
+            "nomeArquivo": "={{ $('Loop Over Items').item.json.NOME_ARQUIVO }} - COMPROVANTE (ARQUIVADO POR IA)"
           },
           "matchingColumns": [],
           "schema": [
@@ -3356,6 +3362,16 @@
             {
               "id": "idPasta",
               "displayName": "idPasta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "nomeArquivo",
+              "displayName": "nomeArquivo",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -3494,7 +3510,7 @@
         "promptType": "define",
         "text": "={{ $json.text }}",
         "options": {
-          "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes"
+          "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar\n- Apenas informações mais relevantes, resumindo bastante seu output\n- Sempre que houver código de barras no boleto é obrigatório informar."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -3510,9 +3526,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-5-mini",
+          "value": "gpt-4.1-mini",
           "mode": "list",
-          "cachedResultName": "gpt-5-mini"
+          "cachedResultName": "gpt-4.1-mini"
         },
         "builtInTools": {},
         "options": {}
@@ -3538,17 +3554,266 @@
         "url": "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyA4EVGzKZUdv4yqjQJN8TjfmP_5Jh-vlgw",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"requests\": [\n    {\n      \"image\": {\n        \"content\": \"\" \n      },\n      \"features\": [\n        {\n          \"type\": \"DOCUMENT_TEXT_DETECTION\"\n        }\n      ]\n    }\n  ]\n}",
+        "jsonBody": "={\n  \"requests\": [\n    {\n      \"image\": {\n        \"content\": \"{{ $json.base64Data }}\" \n      },\n      \"features\": [\n        {\n          \"type\": \"DOCUMENT_TEXT_DETECTION\"\n        }\n      ]\n    }\n  ]\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -880,
+        -1024,
         -576
       ],
       "id": "298fe52b-3075-4412-bfb4-b91cad73abe6",
       "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
+          "mode": "list",
+          "cachedResultName": "LOG ARQUIVOS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
+            "HORA": "={{ $now.format('hh:mm') }}",
+            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
+            "TIPO DE ARQUIVO": "RELATÓRIO CONTAS A PAGAR"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "HORA",
+              "displayName": "HORA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CLIENTE",
+              "displayName": "CLIENTE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "TIPO DE ARQUIVO",
+              "displayName": "TIPO DE ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LINK ARQUIVO",
+              "displayName": "LINK ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CAMINHO QUE FOI SALVO",
+              "displayName": "CAMINHO QUE FOI SALVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "MOTIVO DO ERRO",
+              "displayName": "MOTIVO DO ERRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CORRIGIDO",
+              "displayName": "CORRIGIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1488,
+        2304
+      ],
+      "id": "a49ceb32-0d18-4e93-b1b8-cc1a997a770f",
+      "name": "RELATÓRIO CONTAS",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vwb992tcodcaklq5",
+          "name": "KyberTech"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## PDF com senha",
+        "height": 288,
+        "width": 832
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        64
+      ],
+      "id": "985f918c-4180-4a9c-8b7e-e5b68b6f1674",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "5399986688",
+        "message": "=PDF com senha.\nDados:\n{{ $('Dados de Entrada').item.json.Nome }}\n{{ $('Dados de Entrada').item.json.body.message.senderName }}\n\n\nDigite a senha do PDF: ",
+        "responseType": "freeText",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        32,
+        176
+      ],
+      "id": "9a3c78ce-cc5c-4706-be58-bec6b7f4847a",
+      "name": "Send a text message",
+      "webhookId": "238ca806-a5e4-4c8d-ae35-be35bfc59f14",
+      "credentials": {
+        "telegramApi": {
+          "id": "ouMbTOaEUCUE7jGs",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kybernan.uazapi.com/message/download",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "token",
+              "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
+            },
+            {
+              "name": "return_base64",
+              "value": "true"
+            },
+            {
+              "name": "generate_mp3",
+              "value": "false"
+            },
+            {
+              "name": "transcribe",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        176
+      ],
+      "id": "dd8c79e7-b894-4e75-85ad-826a843a8e82",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64Data",
+        "options": {
+          "mimeType": "={{ $json.mimetype }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        176
+      ],
+      "id": "170e8499-b92e-451f-ac51-a94a42f460b5",
+      "name": "Convert to File5"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {
+          "password": "={{ $('Send a text message').item.json.data.text }}"
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        608,
+        176
+      ],
+      "id": "802b31f1-a47d-455a-85d8-985ab214aeed",
+      "name": "Extract from File2",
+      "alwaysOutputData": true,
+      "onError": "continueErrorOutput"
     }
   ],
   "connections": {
@@ -3894,11 +4159,12 @@
         ],
         [
           {
-            "node": "OUTROS",
+            "node": "RELATÓRIO CONTAS",
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        []
       ]
     },
     "OpenAI Chat Model2": {
@@ -3966,6 +4232,13 @@
         [
           {
             "node": "Menos que 20 caracteres",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message",
             "type": "main",
             "index": 0
           }
@@ -4559,6 +4832,66 @@
           }
         ]
       ]
+    },
+    "RELATÓRIO CONTAS": {
+      "main": [
+        [
+          {
+            "node": "Copy file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "Convert to File5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File5": {
+      "main": [
+        [
+          {
+            "node": "Extract from File2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload file2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -4578,7 +4911,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "4190",
+            "content-length": "3065",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -4642,7 +4975,7 @@
               "wa_fastid": "5519995586796:120363402757807946",
               "wa_isBlocked": false,
               "wa_isGroup": true,
-              "wa_isGroup_admin": false,
+              "wa_isGroup_admin": true,
               "wa_isGroup_announce": false,
               "wa_isGroup_community": false,
               "wa_isGroup_member": true,
@@ -4650,53 +4983,40 @@
               "wa_label": [],
               "wa_lastMessageSender": "269951646593223@lid",
               "wa_lastMessageTextVote": "",
-              "wa_lastMessageType": "ImageMessage",
-              "wa_lastMsgTimestamp": 1764774222000,
+              "wa_lastMessageType": "DocumentMessage",
+              "wa_lastMsgTimestamp": 1764941045000,
               "wa_muteEndTime": 0,
               "wa_name": "MERAKI- BOLETOS",
-              "wa_unreadCount": 27
+              "wa_unreadCount": 29
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
               "chatid": "120363402757807946@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7118-24/594500023_1356535542881415_4229611233827957888_n.enc?ccb=11-4&oh=01_Q5Aa3AFzQYXBVirq85qPmBpxwm0aLOeVwWE0ylj9yC7w-CUwig&oe=6957C2F2&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "image/jpeg",
-                "fileSHA256": "/GW+EkkCIedvflY8fohkt5RzPr0r8PmDHlyUKexmTuQ=",
-                "fileLength": 167654,
-                "height": 1600,
-                "width": 900,
-                "mediaKey": "6s9LCFRD3ibVmbL1n3NCsjmBUgOAhuvoOLb4ELYTqpw=",
-                "fileEncSHA256": "D6OfqEwAw9AZ1RHXbQEGosfpo/uDVwHzGWYF2XdmFBo=",
-                "directPath": "/v/t62.7118-24/594500023_1356535542881415_4229611233827957888_n.enc?ccb=11-4&oh=01_Q5Aa3AFzQYXBVirq85qPmBpxwm0aLOeVwWE0ylj9yC7w-CUwig&oe=6957C2F2&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1764774221,
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAEEAwIF/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC/9oADAMBAAIQAxAAAAD2/PtgLA0GNVDlRli6mgdw2Yam+2ewjpWRZUc512dBzLvNZbRLVTT5SRp512AZZd0HFGfWpo00g740zpDEntBWw1HyCS9BnXYB/8QAFxEBAQEBAAAAAAAAAAAAAAAAIAERMf/aAAgBAgEBPwAYoZww/wD/xAAWEQEBAQAAAAAAAAAAAAAAAAABIDD/2gAIAQMBAT8AyZZZ/8QAKRAAAQMDAwIGAwEAAAAAAAAAAQACEQMEIRIxcQVREyIjMkFhFDSBM//aAAgBAQABPwDcq7fWbXIZUgdlQLnWwLjJ+VTB8UTGyDYaYQAJHeFVaWuM98K2HqvOyc0gyFSOqm09wr10Vzlv9VoZthEfxNEvk7gIbFGQQU86nwqAis9OgNyrc+gzhXzaZuCXNJKstIogNwE0+d2ER5SvaGk9kRFUlUR6zyntLgIVpm3Zwrser7mjkq1EUhkHhAblBOaHCDsjgn6TWw4u2QVn+uzhX1Nrq8ls4VkNNuABCGyCcYHC1atSERsiSCFYu1W1PhdRDvHxOy6fItwDvKBQThAysElNnOUTDgunR+KzhX5d4zdJAwrKfDyZU5AQTxIj6THA1C0DkpsZ5VR2l7ftdPM2rOE+iyqZcJKZTbSEN2Tj6jQgnIN01ZPygd8fKfvnYLp36zU0puxnunDzNP2j/qB8Ko4gDKq+zUqU6CU8Sxf//gADAP/Z",
-                "contextInfo": {
-                  "statusSourceType": 0
-                },
-                "firstScanSidecar": "iKUoX9Q0C8jndQ==",
-                "firstScanLength": 13882,
-                "scansSidecar": "iKUoX9Q0C8jndSNg1XpKgT1Cyx+HyCEo0FYXZffJzm/vkqpOdBj+vg==",
-                "scanLengths": [
-                  13882,
-                  62170,
-                  29383,
-                  62217
-                ],
-                "midQualityFileSHA256": "7ZJfSIP+ShXYlez7XupfofI++IiXmBtP3kw8/+JBhcY=",
-                "imageSourceType": 0
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/548684568_1585268389152602_8768677152824077011_n.enc?ccb=11-4&oh=01_Q5Aa3AHjwCkwg9iu6apYvazkh4_TdDV_bUVOLrvG4JbCMyeQEw&oe=695A5566&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "application/pdf",
+                "title": "Fatura_EMPRESAS_MASTERCARD_122025_ANDREIA_ELAINE_PEREIRA_DE_OLIVEIRA_00162373912458",
+                "fileSHA256": "/5fPU0ZVhplHfEYtmnnUMCKW6lELPKSfzqwUV70eh7E=",
+                "fileLength": 2806612,
+                "mediaKey": "+SGXlJCRooEg7TNNfblCFeeqbNCQiMCXCVcDT43XDOs=",
+                "fileName": "Fatura_EMPRESAS_MASTERCARD_122025_ANDREIA_ELAINE_PEREIRA_DE_OLIVEIRA_00162373912458.PDF",
+                "fileEncSHA256": "I1fUrPI4rF5Y5q5JRuuloY5OGV3zxZDonMpDQ/qc/Nk=",
+                "directPath": "/v/t62.7119-24/548684568_1585268389152602_8768677152824077011_n.enc?ccb=11-4&oh=01_Q5Aa3AHjwCkwg9iu6apYvazkh4_TdDV_bUVOLrvG4JbCMyeQEw&oe=695A5566&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1764941043,
+                "contactVcard": false,
+                "caption": ""
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
               "groupName": "MERAKI- BOLETOS",
-              "id": "5519995586796:3A921EA7B7696D4BC0BB",
+              "id": "5519995586796:4A1BCD09D1E083121101",
               "isGroup": true,
-              "mediaType": "image",
-              "messageTimestamp": 1764774222000,
-              "messageType": "ImageMessage",
-              "messageid": "3A921EA7B7696D4BC0BB",
+              "mediaType": "document",
+              "messageTimestamp": 1764941045000,
+              "messageType": "DocumentMessage",
+              "messageid": "4A1BCD09D1E083121101",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
@@ -4704,7 +5024,7 @@
               "senderName": "Andreia Oliveira",
               "sender_lid": "269951646593223@lid",
               "sender_pn": "5519971187804@s.whatsapp.net",
-              "source": "ios",
+              "source": "unknown",
               "status": "",
               "text": "",
               "track_id": "",
@@ -4722,7 +5042,7 @@
       }
     ]
   },
-  "versionId": "8ac3f68c-6dbd-4454-ad48-9954611a1965",
+  "versionId": "02b78b4f-0f03-418d-a5c9-1b10b0e1fdf9",
   "triggerCount": 1,
   "shared": [
     {
