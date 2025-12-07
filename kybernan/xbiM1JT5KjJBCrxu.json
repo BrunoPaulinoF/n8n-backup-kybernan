@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-05T14:16:47.476Z",
+  "updatedAt": "2025-12-06T21:50:44.125Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -241,18 +241,6 @@
             {
               "keyName": "IdGroup",
               "keyValue": "={{ $('Dados de Entrada').item.json.body.message.chatid }}"
-            },
-            {
-              "keyName": "phone1",
-              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.sender_pn }}"
-            },
-            {
-              "keyName": "phone2",
-              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.sender_pn }}"
-            },
-            {
-              "keyName": "phone3",
-              "keyValue": "={{ $('Dados de Entrada').item.json.body.message.sender_pn }}"
             }
           ]
         },
@@ -4734,7 +4722,7 @@
       "main": [
         [
           {
-            "node": "Get row(s)",
+            "node": "DADOS USUÁRIO",
             "type": "main",
             "index": 0
           }
@@ -4911,7 +4899,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "3065",
+            "content-length": "4328",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -4931,9 +4919,9 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r0228bcee93dfe3",
-              "image": "",
-              "imagePreview": "",
+              "id": "r6efac33af1316d",
+              "image": "https://pps.whatsapp.net/v/t61.24694-24/473401805_956003679398810_2908805559115511425_n.jpg?ccb=11-4&oh=01_Q5Aa3AGDxnwiG3YY59t2JFdbX8hF92GxNOceQ8aVgrDaEJ2DXQ&oe=6933FD57&_nc_sid=5e03e0&_nc_cat=104",
+              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/473401805_956003679398810_2908805559115511425_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3QF1qpRrFuuR_MSnUjidcBeWZvBbfNlxAf2pU97Lm2NCoQ&oe=69419CD7&_nc_sid=5e03e0&_nc_cat=104",
               "lead_assignedAttendant_id": "",
               "lead_email": "",
               "lead_field01": "",
@@ -4964,67 +4952,73 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "MERAKI- BOLETOS",
+              "name": "Bruno P Ferreira",
               "owner": "5519995586796",
-              "phone": "",
+              "phone": "+55 34 9996-9911",
               "wa_archived": false,
-              "wa_chatid": "120363402757807946@g.us",
-              "wa_chatlid": "",
+              "wa_chatid": "553499969911@s.whatsapp.net",
+              "wa_chatlid": "203139739287641@lid",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363402757807946",
+              "wa_fastid": "5519995586796:553499969911",
               "wa_isBlocked": false,
-              "wa_isGroup": true,
-              "wa_isGroup_admin": true,
+              "wa_isGroup": false,
+              "wa_isGroup_admin": false,
               "wa_isGroup_announce": false,
               "wa_isGroup_community": false,
-              "wa_isGroup_member": true,
+              "wa_isGroup_member": false,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "269951646593223@lid",
+              "wa_lastMessageSender": "553499969911@s.whatsapp.net",
               "wa_lastMessageTextVote": "",
-              "wa_lastMessageType": "DocumentMessage",
-              "wa_lastMsgTimestamp": 1764941045000,
+              "wa_lastMessageType": "ImageMessage",
+              "wa_lastMsgTimestamp": 1765057224000,
               "wa_muteEndTime": 0,
-              "wa_name": "MERAKI- BOLETOS",
-              "wa_unreadCount": 29
+              "wa_name": "Bruno P Ferreira",
+              "wa_unreadCount": 1
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363402757807946@g.us",
+              "chatid": "553499969911@s.whatsapp.net",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/548684568_1585268389152602_8768677152824077011_n.enc?ccb=11-4&oh=01_Q5Aa3AHjwCkwg9iu6apYvazkh4_TdDV_bUVOLrvG4JbCMyeQEw&oe=695A5566&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "application/pdf",
-                "title": "Fatura_EMPRESAS_MASTERCARD_122025_ANDREIA_ELAINE_PEREIRA_DE_OLIVEIRA_00162373912458",
-                "fileSHA256": "/5fPU0ZVhplHfEYtmnnUMCKW6lELPKSfzqwUV70eh7E=",
-                "fileLength": 2806612,
-                "mediaKey": "+SGXlJCRooEg7TNNfblCFeeqbNCQiMCXCVcDT43XDOs=",
-                "fileName": "Fatura_EMPRESAS_MASTERCARD_122025_ANDREIA_ELAINE_PEREIRA_DE_OLIVEIRA_00162373912458.PDF",
-                "fileEncSHA256": "I1fUrPI4rF5Y5q5JRuuloY5OGV3zxZDonMpDQ/qc/Nk=",
-                "directPath": "/v/t62.7119-24/548684568_1585268389152602_8768677152824077011_n.enc?ccb=11-4&oh=01_Q5Aa3AHjwCkwg9iu6apYvazkh4_TdDV_bUVOLrvG4JbCMyeQEw&oe=695A5566&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1764941043,
-                "contactVcard": false,
-                "caption": ""
+                "URL": "https://mmg.whatsapp.net/v/t62.7118-24/548585654_2024601661415986_3011327187587352723_n.enc?ccb=11-4&oh=01_Q5Aa3QEPYtHz5Hy8KpJmxY0nDgK_tF0-H2WttBWwJdXOvL6kwQ&oe=695C0241&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "image/jpeg",
+                "fileSHA256": "h+twXyf+pS7wE45B0oK8iF3+7fVIBxMu8pd9l/dSank=",
+                "fileLength": 213950,
+                "height": 1600,
+                "width": 900,
+                "mediaKey": "yJlcqw3xFT2ShRqQ4/RVlDu+hGPqgfOZZQuIgDlmtDQ=",
+                "fileEncSHA256": "HK8zG9p/AKNuKtTmDOHctlYKMcAY2S5hhVxqzfQzU9Y=",
+                "directPath": "/v/t62.7118-24/548585654_2024601661415986_3011327187587352723_n.enc?ccb=11-4&oh=01_Q5Aa3QEPYtHz5Hy8KpJmxY0nDgK_tF0-H2WttBWwJdXOvL6kwQ&oe=695C0241&_nc_sid=5e03e0&_nc_hot=1765057223",
+                "mediaKeyTimestamp": 1765057222,
+                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIACkDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAMBBAUCBv/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAA8+SyVQzggA76saRh9ayzKLNcuX87RFrcuaqVbVW51LVWZrqKLpp6+5uEwE1WYCuAT//EABQRAQAAAAAAAAAAAAAAAAAAADD/2gAIAQIBAT8Af//EABkRAQACAwAAAAAAAAAAAAAAAAERIAIQIf/aAAgBAwEBPwC6c25MRX//xAArEAABAwMCBAQHAAAAAAAAAAABAAIRAxIhBDEFE0FRECAjYSIyQlJxgaH/2gAIAQEAAT8A8wElWsnIKc1v0gq09vFsg43TuYY+E49kOaOhQNQDZFplWrh7Q6ubhMBOsj5QnGn9qfYdmrVAAAwoXDzFYmRsnEkdE4HOydidlqzgZU+64ePWP4Ub56p+JEp/WD/FqxsrVpKLWV/0qwtaSDhOe0jLlSIeXZMKvSa4hchnZXQ+QqtT0jc4oOGSXOI7rTvEm1xKc6SrkXZVYywoPIYWRgrT4lF2Vcv//gADAP/Z",
+                "contextInfo": {
+                  "forwardingScore": 2,
+                  "isForwarded": true,
+                  "pairedMediaType": 0,
+                  "forwardOrigin": 0
+                },
+                "imageSourceType": 0
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "MERAKI- BOLETOS",
-              "id": "5519995586796:4A1BCD09D1E083121101",
-              "isGroup": true,
-              "mediaType": "document",
-              "messageTimestamp": 1764941045000,
-              "messageType": "DocumentMessage",
-              "messageid": "4A1BCD09D1E083121101",
+              "groupName": "Unknown",
+              "id": "5519995586796:A51FBB0869A6BCC2991213D7E166E174",
+              "isGroup": false,
+              "mediaType": "image",
+              "messageTimestamp": 1765057224000,
+              "messageType": "ImageMessage",
+              "messageid": "A51FBB0869A6BCC2991213D7E166E174",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "269951646593223@lid",
-              "senderName": "Andreia Oliveira",
-              "sender_lid": "269951646593223@lid",
-              "sender_pn": "5519971187804@s.whatsapp.net",
-              "source": "unknown",
+              "sender": "553499969911@s.whatsapp.net",
+              "senderName": "Bruno P Ferreira",
+              "sender_lid": "137499217248386@lid",
+              "sender_pn": "553499969911@s.whatsapp.net",
+              "source": "android",
               "status": "",
               "text": "",
               "track_id": "",
@@ -5042,7 +5036,7 @@
       }
     ]
   },
-  "versionId": "02b78b4f-0f03-418d-a5c9-1b10b0e1fdf9",
+  "versionId": "65f337e8-7e4c-444b-ab5e-59b578e45809",
   "triggerCount": 1,
   "shared": [
     {
