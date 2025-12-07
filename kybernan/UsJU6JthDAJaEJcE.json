@@ -1,37 +1,11 @@
 {
-  "updatedAt": "2025-12-06T22:00:33.089Z",
+  "updatedAt": "2025-12-07T18:58:31.363Z",
   "createdAt": "2025-12-04T13:56:51.420Z",
   "id": "UsJU6JthDAJaEJcE",
   "name": "dispara msg grupos",
   "active": false,
   "isArchived": false,
   "nodes": [
-    {
-      "parameters": {
-        "content": "## Pega todos IDs"
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        0,
-        -128
-      ],
-      "id": "b21f4286-ee7b-47c2-a815-b60a67f56adb",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "content": "## seleciona qual mensagem mandar"
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        352,
-        -128
-      ],
-      "id": "bd25d438-6d13-42cd-b2c7-a902da438198",
-      "name": "Sticky Note1"
-    },
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
@@ -93,10 +67,34 @@
         "assignments": {
           "assignments": [
             {
+              "id": "07735b4d-d6fb-437f-841b-ebd294e175dd",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            },
+            {
               "id": "986785f6-0b1b-4b62-95c0-fe0979c17203",
               "name": "wa_chatid",
               "value": "={{ $json.wa_chatid }}",
               "type": "string"
+            },
+            {
+              "id": "5585de0f-1329-416d-9064-9c0846e03a24",
+              "name": "wa_isGroup",
+              "value": "={{ $json.wa_isGroup }}",
+              "type": "boolean"
+            },
+            {
+              "id": "8393165c-e3a2-445d-bd24-7ba6ddabd2f3",
+              "name": "phone",
+              "value": "={{ $json.phone.replace(/[\\+\\s\\-]/g, \"\") }}",
+              "type": "string"
+            },
+            {
+              "id": "c5b94904-8f49-4847-b999-6c77fe0a2ecd",
+              "name": "wa_lastMsgTimestamp",
+              "value": "={{ Math.floor((Date.now() - $json.wa_lastMsgTimestamp) / (1000 * 60 * 60 * 24 )) }}",
+              "type": "number"
             }
           ]
         },
@@ -136,8 +134,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        976,
-        0
+        1728,
+        -752
       ],
       "id": "3a55e5bc-182b-4e60-b939-bfeb895b3716",
       "name": "envia mensagem para número"
@@ -167,11 +165,280 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1824,
-        0
+        1392,
+        -752
       ],
       "id": "a2dc08f0-04af-4280-81d4-ea6da20df047",
       "name": "ENVIA IMAGEM"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data",
+        "options": {
+          "fileName": "arquivo"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        -752
+      ],
+      "id": "504c14e8-0ca0-455d-abd8-e272f88f7653",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {
+          "keepSource": "both"
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        1168,
+        -752
+      ],
+      "id": "e67b4f28-d537-4105-9b79-fe666206bee6",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d8ee0f88-29fa-4de2-ac90-c6aff9f137a6",
+              "leftValue": "={{ $json.wa_isGroup }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "c4f601a4-3372-4190-9af6-b8fe156a275d",
+      "name": "grupo"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "Zjom9Cj180s1f4bh",
+          "mode": "list",
+          "cachedResultName": "Números de whatsapp",
+          "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/Zjom9Cj180s1f4bh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numeroID",
+              "keyValue": "={{ $json.wa_chatid }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "numeroID": "={{ $json.wa_chatid }}",
+            "Nome": "={{ $json.name }}",
+            "tempo": "={{ $json.wa_lastMsgTimestamp }}",
+            "enviado": false
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "numeroID",
+              "displayName": "numeroID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Grupo",
+              "displayName": "Grupo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "tempo",
+              "displayName": "tempo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "enviado",
+              "displayName": "enviado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        -128
+      ],
+      "id": "a7fb4f88-ba25-4bc3-b9bf-9ae3b373d477",
+      "name": "Upsert row(s)"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "Zjom9Cj180s1f4bh",
+          "mode": "list",
+          "cachedResultName": "Números de whatsapp",
+          "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/Zjom9Cj180s1f4bh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numeroID",
+              "keyValue": "={{ $json.phone }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "numeroID": "={{ $json.phone }}",
+            "Nome": "={{ $json.name }}",
+            "tempo": "={{ $json.wa_lastMsgTimestamp }}",
+            "enviado": false,
+            "Grupo": false
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "numeroID",
+              "displayName": "numeroID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Grupo",
+              "displayName": "Grupo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "tempo",
+              "displayName": "tempo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "enviado",
+              "displayName": "enviado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        128
+      ],
+      "id": "3f2beb8e-2c0c-4873-8c4a-6b86240fb315",
+      "name": "Upsert row(s)1"
+    },
+    {
+      "parameters": {
+        "content": "## Adiciona números no data table",
+        "height": 480,
+        "width": 1440,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        -176
+      ],
+      "id": "8d8b17f9-5caf-4dac-a6f2-3c6ab6334da0",
+      "name": "Sticky Note"
     },
     {
       "parameters": {
@@ -190,44 +457,44 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1184,
-        0
+        752,
+        -752
       ],
       "id": "279860b1-1d28-4917-b46b-0e685e01ee95",
-      "name": "base64"
+      "name": "base64FOTO"
     },
     {
       "parameters": {
-        "operation": "toBinary",
-        "sourceProperty": "data",
-        "options": {
-          "fileName": "arquivo"
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
         }
       },
-      "type": "n8n-nodes-base.convertToFile",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
       "position": [
-        1392,
-        0
+        0,
+        -720
       ],
-      "id": "504c14e8-0ca0-455d-abd8-e272f88f7653",
-      "name": "Convert to File"
+      "id": "a8f843af-e9a6-4bc5-85dc-c40f01f7b467",
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "operation": "binaryToPropery",
-        "options": {
-          "keepSource": "both"
-        }
+        "amount": "={{ Math.floor(Math.random() * 59) + 1 }}"
       },
-      "type": "n8n-nodes-base.extractFromFile",
+      "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1600,
-        0
+        240,
+        -720
       ],
-      "id": "e67b4f28-d537-4105-9b79-fe666206bee6",
-      "name": "Extract from File"
+      "id": "a88b6de4-9ace-4b8f-b355-bd474ca0fe48",
+      "name": "Wait",
+      "webhookId": "8c5c796f-f471-4bec-9c57-7adbda3564a8"
     }
   ],
   "connections": {
@@ -266,23 +533,18 @@
     },
     "Edit Fields": {
       "main": [
-        []
+        [
+          {
+            "node": "grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "envia mensagem para número": {
       "main": [
         []
-      ]
-    },
-    "base64": {
-      "main": [
-        [
-          {
-            "node": "Convert to File",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     },
     "Convert to File": {
@@ -306,6 +568,51 @@
           }
         ]
       ]
+    },
+    "ENVIA IMAGEM": {
+      "main": [
+        []
+      ]
+    },
+    "grupo": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upsert row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "base64FOTO": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -314,7 +621,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "8888e217-fbc1-4bfa-be90-39260919abb7",
+  "versionId": "227e3632-f761-47f7-966d-135fe9aff997",
   "triggerCount": 0,
   "shared": [
     {
