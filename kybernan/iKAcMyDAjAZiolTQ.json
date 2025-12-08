@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-28T12:27:37.038Z",
+  "updatedAt": "2025-12-08T02:17:33.136Z",
   "createdAt": "2025-11-26T23:55:14.200Z",
   "id": "iKAcMyDAjAZiolTQ",
   "name": "BACKUP SHEET CLIENTES BPO GRUPOS",
@@ -577,45 +577,8 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "pinData": {
-    "Google Sheets Trigger": [
-      {
-        "json": {
-          "row_number": 7,
-          "id": 7,
-          "IdGroup": "120363401866070546@g.us",
-          "NomeGrupo": "LELEY FOODS - BPO/KY",
-          "phone1": 34999969911,
-          "phone2": 19981804818,
-          "phone3": "",
-          "email": "",
-          "Folder": "",
-          "apiERP": "",
-          "ERP": "maxiprod",
-          "createdAt": "2025-11-26T15:10:30.054Z",
-          "updatedAt": "2025-11-26T15:10:30.054Z"
-        }
-      }
-    ],
-    "Schedule Trigger": [
-      {
-        "json": {
-          "timestamp": "2025-11-26T22:50:23.003-03:00",
-          "Readable date": "November 26th 2025, 10:50:23 pm",
-          "Readable time": "10:50:23 pm",
-          "Day of week": "Wednesday",
-          "Year": "2025",
-          "Month": "November",
-          "Day of month": "26",
-          "Hour": "22",
-          "Minute": "50",
-          "Second": "23",
-          "Timezone": "America/Sao_Paulo (UTC-03:00)"
-        }
-      }
-    ]
-  },
-  "versionId": "aef8f1ee-1b64-4abe-9ed5-c8185d520db9",
+  "pinData": {},
+  "versionId": "857cc948-8f69-4f3d-ad35-08a0565236b8",
   "triggerCount": 2,
   "shared": [
     {
