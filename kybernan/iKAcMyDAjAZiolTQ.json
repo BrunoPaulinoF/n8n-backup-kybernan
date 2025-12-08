@@ -579,6 +579,7 @@
   },
   "pinData": {},
   "versionId": "857cc948-8f69-4f3d-ad35-08a0565236b8",
+  "activeVersionId": "857cc948-8f69-4f3d-ad35-08a0565236b8",
   "triggerCount": 2,
   "shared": [
     {
@@ -589,5 +590,566 @@
       "projectId": "72MghKyBe7pL4bex"
     }
   ],
+  "activeVersion": {
+    "updatedAt": "2025-12-08T02:17:33.144Z",
+    "createdAt": "2025-12-08T02:17:33.144Z",
+    "versionId": "857cc948-8f69-4f3d-ad35-08a0565236b8",
+    "workflowId": "iKAcMyDAjAZiolTQ",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "minutes"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.3,
+        "position": [
+          0,
+          16
+        ],
+        "id": "86a91432-c239-4082-84f5-4325f688a7c8",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "dataTableId": {
+            "__rl": true,
+            "value": "TvERETBAGi000bZb",
+            "mode": "list",
+            "cachedResultName": "DadosClienteKybernan",
+            "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/TvERETBAGi000bZb"
+          },
+          "returnAll": true
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          400,
+          128
+        ],
+        "id": "02ecdbb4-f0e6-48fd-9189-ff09cab1082f",
+        "name": "Get row(s)",
+        "executeOnce": true
+      },
+      {
+        "parameters": {
+          "documentId": {
+            "__rl": true,
+            "value": "1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ",
+            "mode": "list",
+            "cachedResultName": "Cadastro Automação BPO",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Página1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ/edit#gid=0"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          400,
+          -80
+        ],
+        "id": "5cd4c3b7-318e-4b07-a008-b63ede374c55",
+        "name": "Get row(s) in sheet",
+        "executeOnce": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "vwb992tcodcaklq5",
+            "name": "KyberTech"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "combine",
+          "advanced": true,
+          "mergeByFields": {
+            "values": [
+              {
+                "field1": "id",
+                "field2": "id"
+              }
+            ]
+          },
+          "joinMode": "keepNonMatches",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          704,
+          32
+        ],
+        "id": "2b773acb-d62b-4cf6-bdbc-6dff1159d224",
+        "name": "Merge"
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ",
+            "mode": "list",
+            "cachedResultName": "Cadastro Automação BPO",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Página1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ/edit#gid=0"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NomeGrupo": "={{ $json.NomeGrupo }}",
+              "id": "={{ $json.id }}",
+              "IdGroup": "={{ $json.IdGroup }}",
+              "phone1": "={{ $json.phone1 }}",
+              "phone2": "={{ $json.phone2 }}",
+              "phone3": "={{ $json.phone3 }}",
+              "email": "={{ $json.email }}",
+              "Folder": "={{ $json.Folder }}",
+              "apiERP": "={{ $json.apiERP }}",
+              "ERP": "={{ $json.ERP }}",
+              "createdAt": "={{ $json.createdAt }}",
+              "updatedAt": "={{ $json.updatedAt }}"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "IdGroup",
+                "displayName": "IdGroup",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "NomeGrupo",
+                "displayName": "NomeGrupo",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "phone1",
+                "displayName": "phone1",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "phone2",
+                "displayName": "phone2",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "phone3",
+                "displayName": "phone3",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "email",
+                "displayName": "email",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "ERP",
+                "displayName": "ERP",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "apiERP",
+                "displayName": "apiERP",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Folder",
+                "displayName": "Folder",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "createdAt",
+                "displayName": "createdAt",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "updatedAt",
+                "displayName": "updatedAt",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.7,
+        "position": [
+          1024,
+          32
+        ],
+        "id": "1b00ba49-dffa-49f2-8f69-db6dfa38c915",
+        "name": "Append row in sheet1",
+        "executeOnce": true,
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "vwb992tcodcaklq5",
+            "name": "KyberTech"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "pollTimes": {
+            "item": [
+              {
+                "mode": "everyMinute"
+              }
+            ]
+          },
+          "documentId": {
+            "__rl": true,
+            "value": "1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ",
+            "mode": "list",
+            "cachedResultName": "Cadastro Automação BPO",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Página1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-d8P_Z0AP-ogoLfNQ02ii6bCS0c3KLvhwSP2Mnsf-eQ/edit#gid=0"
+          },
+          "event": "rowUpdate",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheetsTrigger",
+        "typeVersion": 1,
+        "position": [
+          -16,
+          496
+        ],
+        "id": "50ae974d-6fa3-44d5-a56a-fffbb2af14e6",
+        "name": "Google Sheets Trigger",
+        "credentials": {
+          "googleSheetsTriggerOAuth2Api": {
+            "id": "UBIMx5R0iQsfzfIX",
+            "name": "KyberTech"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "dataTableId": {
+            "__rl": true,
+            "value": "TvERETBAGi000bZb",
+            "mode": "list",
+            "cachedResultName": "DadosClienteKybernan",
+            "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/TvERETBAGi000bZb"
+          },
+          "filters": {
+            "conditions": [
+              {
+                "keyValue": "={{ $json.id }}"
+              }
+            ]
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "NomeGrupo": "={{ $json.NomeGrupo }}",
+              "IdGroup": "={{ $json.IdGroup }}",
+              "phone1": "={{ $json.phone1 }}",
+              "phone2": "={{ $json.phone2 }}",
+              "phone3": "={{ $json.phone3 }}",
+              "email": "={{ $json.email }}",
+              "Folder": "={{ $json.Folder }}",
+              "apiERP": "={{ $json.apiERP }}",
+              "ERP": "={{ $json.ERP }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "NomeGrupo",
+                "displayName": "NomeGrupo",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "IdGroup",
+                "displayName": "IdGroup",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "phone1",
+                "displayName": "phone1",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "phone2",
+                "displayName": "phone2",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "phone3",
+                "displayName": "phone3",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "email",
+                "displayName": "email",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "Folder",
+                "displayName": "Folder",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "apiERP",
+                "displayName": "apiERP",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              },
+              {
+                "id": "ERP",
+                "displayName": "ERP",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "readOnly": false,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.dataTable",
+        "typeVersion": 1,
+        "position": [
+          192,
+          496
+        ],
+        "id": "c852833c-072d-4475-aa5c-9d2048a7f973",
+        "name": "Update row(s)"
+      },
+      {
+        "parameters": {
+          "content": "## Atualiza Linhas do Sheet para Table\n",
+          "height": 224,
+          "width": 512,
+          "color": 3
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -80,
+          432
+        ],
+        "id": "91487958-96fc-4bab-9525-a9be7b05097c",
+        "name": "Sticky Note"
+      },
+      {
+        "parameters": {
+          "content": "## Insere novas linhas da table para sheet\n",
+          "height": 416,
+          "width": 1296,
+          "color": 5
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -80,
+          -128
+        ],
+        "id": "48038e7f-77f5-498d-a797-4961174449ba",
+        "name": "Sticky Note1"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get row(s) in sheet",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Get row(s)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get row(s)": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Get row(s) in sheet": {
+        "main": [
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge": {
+        "main": [
+          [
+            {
+              "node": "Append row in sheet1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google Sheets Trigger": {
+        "main": [
+          [
+            {
+              "node": "Update row(s)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Kybernan Tech",
+    "name": null,
+    "description": null
+  },
   "tags": []
 }
