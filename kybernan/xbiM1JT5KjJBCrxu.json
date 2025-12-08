@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-06T21:50:44.125Z",
+  "updatedAt": "2025-12-08T02:42:43.604Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -460,188 +460,6 @@
     },
     {
       "parameters": {
-        "resource": "fileFolder",
-        "searchMethod": "query",
-        "queryString": "name contains 'controle'",
-        "returnAll": true,
-        "filter": {
-          "folderId": {
-            "__rl": true,
-            "value": "={{ $json.Folder }}",
-            "mode": "id"
-          },
-          "whatToSearch": "folders"
-        },
-        "options": {
-          "fields": [
-            "id",
-            "name"
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        3056,
-        368
-      ],
-      "id": "7288f54b-101a-47c9-8c92-38005813c165",
-      "name": "encontraControle",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "fileFolder",
-        "searchMethod": "query",
-        "queryString": "=name contains '{{ $('Loop Over Items').item.json.ANO }}'",
-        "returnAll": true,
-        "filter": {
-          "folderId": {
-            "__rl": true,
-            "value": "={{ $json.id }}",
-            "mode": "id"
-          },
-          "whatToSearch": "folders"
-        },
-        "options": {
-          "fields": [
-            "id",
-            "name"
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        3344,
-        368
-      ],
-      "id": "a83bd865-f0b3-4592-b765-90424dd8b369",
-      "name": "encontraAno",
-      "alwaysOutputData": true,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "fileFolder",
-        "searchMethod": "query",
-        "queryString": "=name contains '{{ $('Loop Over Items').item.json.MES }}'",
-        "returnAll": true,
-        "filter": {
-          "folderId": {
-            "__rl": true,
-            "value": "={{ $json.id }}",
-            "mode": "id"
-          },
-          "whatToSearch": "folders"
-        },
-        "options": {
-          "fields": [
-            "id",
-            "name"
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        4208,
-        352
-      ],
-      "id": "63b143aa-9d5a-41c1-9f3b-e749c16a1670",
-      "name": "encontraMês",
-      "alwaysOutputData": true,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "fileFolder",
-        "searchMethod": "query",
-        "queryString": "=name contains '{{ $('Loop Over Items').item.json.DATA }}'",
-        "returnAll": true,
-        "filter": {
-          "folderId": {
-            "__rl": true,
-            "value": "={{ $json.id }}",
-            "mode": "id"
-          },
-          "whatToSearch": "folders"
-        },
-        "options": {
-          "fields": [
-            "id",
-            "name"
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        5040,
-        336
-      ],
-      "id": "163697c2-7261-42ea-b487-6c963a5b05e5",
-      "name": "encontraDia",
-      "alwaysOutputData": true,
-      "executeOnce": true,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "ea5837ba-5aa9-42b0-bfda-da89345ec33e",
-              "leftValue": "={{ $json }}",
-              "rightValue": "",
-              "operator": {
-                "type": "object",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        5328,
-        336
-      ],
-      "id": "cce7d4c9-00e2-47a1-9571-5fe4675dbfee",
-      "name": "PastaDiaExiste?"
-    },
-    {
-      "parameters": {
         "operation": "pdf",
         "options": {}
       },
@@ -697,8 +515,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1216,
-        -288
+        -2080,
+        32
       ],
       "id": "023fa18a-cac6-4e2a-8dc2-78bd53dc51be",
       "name": "HTTP Request2"
@@ -714,8 +532,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -1008,
-        -288
+        -1872,
+        32
       ],
       "id": "2351b7f9-ae4d-456f-a70d-6c9e8c67460b",
       "name": "Convert to File1"
@@ -838,8 +656,8 @@
       "type": "@n8n/n8n-nodes-langchain.textClassifier",
       "typeVersion": 1.1,
       "position": [
-        976,
-        1200
+        864,
+        1120
       ],
       "id": "9e05b0c8-d3f2-49a0-a84c-bace19459f3e",
       "name": "Text Classifier"
@@ -866,173 +684,6 @@
       ],
       "id": "4ba8a991-1a84-40c6-aacd-10b6f73f032b",
       "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.ilovepdf.com/v1/auth",
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "public_key",
-              "value": "project_public_6e99f304b7b0f32194a219829ae0da16_1TjZUf8d65af7f20c2bb97ef86ef511d10f50"
-            },
-            {
-              "name": "secret_key",
-              "value": "secret_key_2b4e29231feda1bacf76a575828fdba7_8l_xca3740dd3253a8b56bbc5e54cd6c1664f"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        304,
-        -208
-      ],
-      "id": "7c480619-edba-46d5-adfa-a4d7ca0f9012",
-      "name": "Gerar JWT"
-    },
-    {
-      "parameters": {
-        "url": "https://api.ilovepdf.com/v1/start/pdfocr",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "=Bearer {{ $json.token }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {}
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        496,
-        -208
-      ],
-      "id": "a159f4c6-0a56-4f85-a6d1-10b8dcad4f12",
-      "name": "CriaTarefaOcr"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://{{ $json.server }}/v1/upload",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "task",
-              "value": "={{ $json.task }}"
-            },
-            {
-              "parameterType": "formBinaryData",
-              "name": "file",
-              "inputDataFieldName": "data"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        960,
-        -208
-      ],
-      "id": "feb10a82-73c9-4f41-a429-449f70cc61d7",
-      "name": "UploadPdf"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://{{ $('CriaTarefaOcr').item.json.server }}/v1/process",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"task\": \"{{ $('CriaTarefaOcr').item.json.task }}\",\n  \"tool\": \"pdfocr\",\n  \"files\": [\n    {\n      \"server_filename\": \"{{ $json.server_filename }}\",\n      \"filename\": \"file\"\n    }\n  ],\n  \"ocr_languages\": [\n    \"por\"\n  ]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        1120,
-        -208
-      ],
-      "id": "7b36388b-33ab-4225-997e-aff2a0bf4970",
-      "name": "ProcessPdfToOcr"
-    },
-    {
-      "parameters": {
-        "url": "=https://{{ $('CriaTarefaOcr').item.json.server }}/v1/download/{{ $('CriaTarefaOcr').item.json.task }}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
-            }
-          ]
-        },
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        1296,
-        -112
-      ],
-      "id": "3b4dec12-071f-4d72-83b9-701d00d7286e",
-      "name": "DownloadPdfOcr"
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineAll",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        736,
-        -320
-      ],
-      "id": "25116963-8a16-4f85-b974-b481173f9cee",
-      "name": "Merge"
     },
     {
       "parameters": {
@@ -1078,8 +729,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        1856,
-        352
+        1696,
+        752
       ],
       "id": "fee0a4a4-dc7a-4c9d-8313-2cb40fef7eb0",
       "name": "AI Agent"
@@ -1098,8 +749,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        1840,
-        592
+        1680,
+        992
       ],
       "id": "2eebaf89-ee86-4e10-afb7-6fd57143d3d4",
       "name": "OpenAI Chat Model2",
@@ -1118,8 +769,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2048,
-        528
+        1888,
+        928
       ],
       "id": "918eadd9-256b-4061-b8cc-0061a3cd26cb",
       "name": "Structured Output Parser"
@@ -1167,8 +818,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1296,
-        -400
+        -2160,
+        -80
       ],
       "id": "6bd77148-c4c2-4a94-9b49-c1bd6853e36f",
       "name": "Sticky Note3"
@@ -1206,74 +857,6 @@
       ],
       "id": "4d4f66fe-732f-4ec1-ba67-e849af83f79b",
       "name": "temPasta"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "ea5837ba-5aa9-42b0-bfda-da89345ec33e",
-              "leftValue": "={{ $json }}",
-              "rightValue": "",
-              "operator": {
-                "type": "object",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        4496,
-        352
-      ],
-      "id": "d585e58b-5637-4ecc-af2a-1ed8f99866fc",
-      "name": "PastaDiaExiste?1"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "ea5837ba-5aa9-42b0-bfda-da89345ec33e",
-              "leftValue": "={{ $json }}",
-              "rightValue": "",
-              "operator": {
-                "type": "object",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        3616,
-        368
-      ],
-      "id": "036454ae-d3fc-4ee1-916b-8d1c047f9638",
-      "name": "PastaDiaExiste?2"
     },
     {
       "parameters": {
@@ -1345,105 +928,6 @@
       ],
       "id": "58174c50-92b5-4c4d-98bc-9adaa7f9448b",
       "name": "Dados de Entrada"
-    },
-    {
-      "parameters": {
-        "resource": "folder",
-        "name": "={{ $('Loop Over Items').item.json.ANO }}",
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "={{ $('encontraControle').item.json.id }}",
-          "mode": "id"
-        },
-        "options": {
-          "simplifyOutput": true
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        3776,
-        528
-      ],
-      "id": "5acd9ed9-27bb-4396-9e1b-554940bd1a73",
-      "name": "Cria Pasta Ano",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "folder",
-        "name": "={{ $('Loop Over Items').item.json.MES }}",
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "={{ $('idPastaAno').item.json.id }}",
-          "mode": "id"
-        },
-        "options": {
-          "simplifyOutput": true
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        4640,
-        544
-      ],
-      "id": "b8bd4d4c-b653-4c16-9ef5-2808536dd22c",
-      "name": "Cria Pasta Mes",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "folder",
-        "name": "={{ $('Loop Over Items').item.json.DATA }}",
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "={{ $('idPastaMes').item.json.id }}",
-          "mode": "id"
-        },
-        "options": {
-          "simplifyOutput": true
-        }
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        5536,
-        528
-      ],
-      "id": "b511ab3a-9edd-471e-a693-897f33f00381",
-      "name": "Cria Pasta Dia",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
     },
     {
       "parameters": {
@@ -1537,8 +1021,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        2128
+        1376,
+        2048
       ],
       "id": "a788e0f5-192b-469f-8839-d77e39419903",
       "name": "PEDIDO COMPRA",
@@ -1641,8 +1125,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        1296
+        1376,
+        1248
       ],
       "id": "bec0d12d-bb21-4e3a-827f-96a9d72e2783",
       "name": "HOLERITES",
@@ -1745,8 +1229,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        1456
+        1376,
+        1392
       ],
       "id": "4f58faf7-9116-4eaf-9a0b-d2908cc31675",
       "name": "RECIBOS",
@@ -1849,8 +1333,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        1616
+        1376,
+        1536
       ],
       "id": "0128b1d7-95e2-4dd8-be43-f97c951e6e64",
       "name": "COMPROVANTE PAGAMENTO",
@@ -1953,8 +1437,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        1792
+        1376,
+        1712
       ],
       "id": "f6e8c582-1a4d-4cbd-a7f4-d5b8f73075f6",
       "name": "CHEQUES",
@@ -2047,6 +1531,26 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "MOTIVO DO ERRO",
+              "displayName": "MOTIVO DO ERRO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "CORRIGIDO",
+              "displayName": "CORRIGIDO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -2057,8 +1561,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        1952
+        1376,
+        1872
       ],
       "id": "3eef9de4-a311-4090-b780-1e642fca1f2f",
       "name": "TRANSFERENCIA PIX",
@@ -2161,8 +1665,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        2464
+        1376,
+        2384
       ],
       "id": "1a0c29e1-8240-41e5-a7e4-f0979f4eac02",
       "name": "OUTROS",
@@ -2218,65 +1722,6 @@
     },
     {
       "parameters": {
-        "pdfName": "arquivo"
-      },
-      "type": "n8n-nodes-pdfkit.pdfKit",
-      "typeVersion": 1,
-      "position": [
-        -768,
-        -288
-      ],
-      "id": "6920d41b-fb84-4bc1-8f96-63476949304e",
-      "name": "PDFKit"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "bbdfcb0e-b11a-4cb9-ae83-00547a243bf0",
-              "name": "id",
-              "value": "={{ $json.id }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3920,
-        352
-      ],
-      "id": "5fa71fde-da89-4c8d-ae7c-d6416a6e1517",
-      "name": "idPastaAno"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "bbdfcb0e-b11a-4cb9-ae83-00547a243bf0",
-              "name": "id",
-              "value": "={{ $json.id }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        4768,
-        336
-      ],
-      "id": "0a9a9088-44bc-4860-b70d-94417b846ee7",
-      "name": "idPastaMes"
-    },
-    {
-      "parameters": {
         "content": "## É excel?\n",
         "height": 240,
         "width": 624
@@ -2300,8 +1745,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1360,
-        -48
+        -1200,
+        416
       ],
       "id": "9f458b65-0915-4ac1-b27b-39fb7f3e3d9d",
       "name": "Sticky Note5"
@@ -2435,88 +1880,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://kybernan.uazapi.com/message/download",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "token",
-              "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
-            }
-          ]
-        },
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "id",
-              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
-            },
-            {
-              "name": "return_base64",
-              "value": "true"
-            },
-            {
-              "name": "generate_mp3",
-              "value": "false"
-            },
-            {
-              "name": "transcribe",
-              "value": "false"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        -96,
-        -416
-      ],
-      "id": "1ef4c0a6-e978-4795-bd56-569e5d94a6a5",
-      "name": "HTTP Request4"
-    },
-    {
-      "parameters": {
-        "operation": "toBinary",
-        "sourceProperty": "base64Data",
-        "options": {
-          "mimeType": "={{ $json.mimetype }}"
-        }
-      },
-      "type": "n8n-nodes-base.convertToFile",
-      "typeVersion": 1.1,
-      "position": [
-        112,
-        -416
-      ],
-      "id": "5c2bb384-df36-4671-8d91-6407aa0f469b",
-      "name": "Convert to File3"
-    },
-    {
-      "parameters": {
-        "content": "## FAZ OCR",
-        "height": 512,
-        "width": 1568,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -128,
-        -480
-      ],
-      "id": "ad97d6b3-115c-44e9-9503-9022aa32e58c",
-      "name": "Sticky Note7"
-    },
-    {
-      "parameters": {
         "content": "## Junta texto, arquivo e dados",
         "height": 528,
         "width": 528
@@ -2534,13 +1897,13 @@
       "parameters": {
         "content": "## Classificador",
         "height": 1504,
-        "width": 768
+        "width": 752
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        928,
-        1120
+        816,
+        1040
       ],
       "id": "65f438e5-747a-4e11-a0a6-0b3f8dab987f",
       "name": "Sticky Note9"
@@ -2548,141 +1911,17 @@
     {
       "parameters": {
         "content": "## Boletos",
-        "height": 576,
-        "width": 4512
+        "height": 544,
+        "width": 1184
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1792,
-        240
+        1632,
+        640
       ],
       "id": "a04f1d7a-762b-4f4f-9010-783f4131bd8d",
       "name": "Sticky Note10"
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ",
-          "mode": "list",
-          "cachedResultName": "LOG ARQUIVOS",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Página1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-MrdPnHE7cmjj_D7spbWq2u0CkatoBgCqvja3aHv4BQ/edit#gid=0"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "DATA": "={{ $today.format('dd-MM-yyyy') }}",
-            "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "CAMINHO QUE FOI SALVO": "={{ $('Get row(s)').item.json.NomeGrupo }} / {{ $('Loop Over Items').item.json.ANO }} / {{ $('Loop Over Items').item.json.MES }} / {{ $('Loop Over Items').item.json.DATA }}",
-            "LINK ARQUIVO": "=https://drive.google.com/file/d/{{ $json.id }}/view",
-            "TIPO DE ARQUIVO": "BOLETO"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "DATA",
-              "displayName": "DATA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "HORA",
-              "displayName": "HORA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CLIENTE",
-              "displayName": "CLIENTE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "TIPO DE ARQUIVO",
-              "displayName": "TIPO DE ARQUIVO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "LINK ARQUIVO",
-              "displayName": "LINK ARQUIVO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "CAMINHO QUE FOI SALVO",
-              "displayName": "CAMINHO QUE FOI SALVO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "MOTIVO DO ERRO",
-              "displayName": "MOTIVO DO ERRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "CORRIGIDO",
-              "displayName": "CORRIGIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        5920,
-        576
-      ],
-      "id": "ed9b4517-7767-41b4-9602-6956668c6dae",
-      "name": "log arquivos1",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "vwb992tcodcaklq5",
-          "name": "KyberTech"
-        }
-      }
     },
     {
       "parameters": {
@@ -2697,8 +1936,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2048,
-        656
+        1888,
+        1056
       ],
       "id": "d3cd5c1f-6e1a-4a3d-a37b-1849ef108daa",
       "name": "OpenAI Chat Model",
@@ -2711,67 +1950,17 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        2736,
-        352
-      ],
-      "id": "af41894a-e84e-4e45-b04c-0d5a1147e854",
-      "name": "Loop Over Items"
-    },
-    {
-      "parameters": {
         "fieldToSplitOut": "output",
         "options": {}
       },
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        2256,
-        352
+        2096,
+        752
       ],
       "id": "efbc1974-6b5e-4797-9ab2-394a1942c724",
       "name": "Split Out"
-    },
-    {
-      "parameters": {
-        "operation": "copy",
-        "fileId": {
-          "__rl": true,
-          "value": "={{ $('Upload file2').item.json.id }}",
-          "mode": "id"
-        },
-        "name": "={{ $('Loop Over Items').item.json.NOME_ARQUIVO }} (ARQUIVADO POR IA)",
-        "sameFolder": false,
-        "driveId": {
-          "__rl": true,
-          "mode": "list",
-          "value": "My Drive"
-        },
-        "folderId": {
-          "__rl": true,
-          "value": "={{ $json.id }}",
-          "mode": "id"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        5904,
-        320
-      ],
-      "id": "06462904-6a46-4c7c-a310-24d70fbe78b0",
-      "name": "Copy file",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "tHbNUSv81dsDoIWb",
-          "name": "Kybernan-BPO"
-        }
-      }
     },
     {
       "parameters": {
@@ -2798,8 +1987,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        2000,
-        1616
+        1888,
+        1536
       ],
       "id": "84a0ba27-92bb-4c18-b81d-ab7a3bbaa9ed",
       "name": "Copy file1",
@@ -2819,8 +2008,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        2512,
-        352
+        2352,
+        752
       ],
       "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
       "name": "Merge2"
@@ -2859,8 +2048,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1264,
-        64
+        -1104,
+        528
       ],
       "id": "1a00927b-11cf-44c2-9d1c-da346e0bc0ec",
       "name": "HTTP Request5"
@@ -3000,7 +2189,7 @@
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
             "TIPO DE ARQUIVO": "NOTA FISCAL",
             "CAMINHO QUE FOI SALVO": "=PASTA DE NOTAS FISCAIS",
-            "LINK ARQUIVO": "=https://drive.google.com/file/d/{{ $json.id }}/view"
+            "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -3057,26 +2246,6 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
-            },
-            {
-              "id": "MOTIVO DO ERRO",
-              "displayName": "MOTIVO DO ERRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "CORRIGIDO",
-              "displayName": "CORRIGIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -3087,8 +2256,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        1136
+        1376,
+        1104
       ],
       "id": "663cb474-45c6-4261-9f2c-a58136864172",
       "name": "NOTA FISCAL",
@@ -3172,8 +2341,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -3872,
-        608
+        -3840,
+        704
       ],
       "id": "acddbb94-728b-4409-a75f-1097a677dfad",
       "name": "Loop Over Items1"
@@ -3213,8 +2382,8 @@
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1,
       "position": [
-        -3664,
-        640
+        -3632,
+        736
       ],
       "id": "6465a5b5-be23-4e89-8776-4a474aa9a1f6",
       "name": "Get row(s)1",
@@ -3227,8 +2396,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -3872,
-        384
+        -3840,
+        480
       ],
       "id": "939bacb5-4fc1-408b-8b14-e76b13dea785",
       "name": "normalizaNumero"
@@ -3261,8 +2430,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -3488,
-        640
+        -3456,
+        736
       ],
       "id": "038c3e36-bc0f-4db3-9170-cec274ccad28",
       "name": "seNumeroExisteSegue"
@@ -3276,8 +2445,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -3920,
-        272
+        -3904,
+        384
       ],
       "id": "5e686850-6293-41e6-8d9b-12f758a69e63",
       "name": "Sticky Note11"
@@ -3296,8 +2465,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        992,
-        1680
+        880,
+        1600
       ],
       "id": "3beb4822-f5df-4b4d-841d-6041c9035b66",
       "name": "OpenAI Chat Model1",
@@ -3307,103 +2476,6 @@
           "name": "Kybernan-Arquivador"
         }
       }
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        3040,
-        64
-      ],
-      "id": "d0391e02-d3b5-4f3e-a6cf-2a8c95a921b1",
-      "name": "No Operation, do nothing"
-    },
-    {
-      "parameters": {
-        "dataTableId": {
-          "__rl": true,
-          "value": "hF9yxdAPWHZWy2CV",
-          "mode": "list",
-          "cachedResultName": "CODIGO DE BARRAS",
-          "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/hF9yxdAPWHZWy2CV"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "idPasta": "={{ $('idPastaDia').item.json.id }}",
-            "codBarras": "={{ $('Loop Over Items').item.json.CODIGO_BARRAS }}",
-            "nomeArquivo": "={{ $('Loop Over Items').item.json.NOME_ARQUIVO }} - COMPROVANTE (ARQUIVADO POR IA)"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "codBarras",
-              "displayName": "codBarras",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "idPasta",
-              "displayName": "idPasta",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            },
-            {
-              "id": "nomeArquivo",
-              "displayName": "nomeArquivo",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "readOnly": false,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.dataTable",
-      "typeVersion": 1,
-      "position": [
-        6144,
-        592
-      ],
-      "id": "26532152-493d-46c4-9345-7580e4d24544",
-      "name": "Insert row"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "bbdfcb0e-b11a-4cb9-ae83-00547a243bf0",
-              "name": "id",
-              "value": "={{ $json.id }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        5664,
-        336
-      ],
-      "id": "5581deac-20a3-4fca-b7d0-5d3e5318240a",
-      "name": "idPastaDia"
     },
     {
       "parameters": {
@@ -3538,24 +2610,6 @@
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyA4EVGzKZUdv4yqjQJN8TjfmP_5Jh-vlgw",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"requests\": [\n    {\n      \"image\": {\n        \"content\": \"{{ $json.base64Data }}\" \n      },\n      \"features\": [\n        {\n          \"type\": \"DOCUMENT_TEXT_DETECTION\"\n        }\n      ]\n    }\n  ]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        -1024,
-        -576
-      ],
-      "id": "298fe52b-3075-4412-bfb4-b91cad73abe6",
-      "name": "HTTP Request1"
-    },
-    {
-      "parameters": {
         "operation": "append",
         "documentId": {
           "__rl": true,
@@ -3666,8 +2720,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1488,
-        2304
+        1376,
+        2224
       ],
       "id": "a49ceb32-0d18-4e93-b1b8-cc1a997a770f",
       "name": "RELATÓRIO CONTAS",
@@ -3687,8 +2741,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -32,
-        64
+        64,
+        -288
       ],
       "id": "985f918c-4180-4a9c-8b7e-e5b68b6f1674",
       "name": "Sticky Note13"
@@ -3706,8 +2760,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        32,
-        176
+        128,
+        -176
       ],
       "id": "9a3c78ce-cc5c-4706-be58-bec6b7f4847a",
       "name": "Send a text message",
@@ -3762,8 +2816,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        208,
-        176
+        304,
+        -176
       ],
       "id": "dd8c79e7-b894-4e75-85ad-826a843a8e82",
       "name": "HTTP Request7"
@@ -3779,8 +2833,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        400,
-        176
+        496,
+        -176
       ],
       "id": "170e8499-b92e-451f-ac51-a94a42f460b5",
       "name": "Convert to File5"
@@ -3795,13 +2849,133 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        608,
-        176
+        704,
+        -176
       ],
       "id": "802b31f1-a47d-455a-85d8-985ab214aeed",
       "name": "Extract from File2",
       "alwaysOutputData": true,
       "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -1616,
+        -16
+      ],
+      "id": "a61bf8f4-a258-4ce8-8079-974cef3fb1db",
+      "name": "Analyze image1",
+      "credentials": {
+        "openAiApi": {
+          "id": "fRrIyxCKgTlReSWb",
+          "name": "Kybernan-Arquivador"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "MV2sF6k5w8fkmTQI",
+          "mode": "list"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "body_message_messageid": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
+          },
+          "matchingColumns": [
+            "body_message_messageid"
+          ],
+          "schema": [
+            {
+              "id": "body_message_messageid",
+              "displayName": "body_message_messageid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        208
+      ],
+      "name": "Call Faz OCR Arquivador",
+      "id": "047e48c8-4558-4ead-972f-923934f01796"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "cD9AOYpxNXPlrKl1",
+          "mode": "list"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NomeGrupo": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "id": "={{ $('Upload file2').item.json.id }}"
+          },
+          "matchingColumns": [
+            "NomeGrupo",
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "NomeGrupo",
+              "displayName": "NomeGrupo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        2608,
+        752
+      ],
+      "name": "Call Arquiva Boletos Loop",
+      "id": "1d1caef0-46d6-40dc-a7b2-c2c6c5b60412"
     }
   ],
   "connections": {
@@ -3893,68 +3067,6 @@
         ]
       ]
     },
-    "encontraControle": {
-      "main": [
-        [
-          {
-            "node": "encontraAno",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "encontraAno": {
-      "main": [
-        [
-          {
-            "node": "PastaDiaExiste?2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "encontraMês": {
-      "main": [
-        [
-          {
-            "node": "PastaDiaExiste?1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "encontraDia": {
-      "main": [
-        [
-          {
-            "node": "PastaDiaExiste?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "PastaDiaExiste?": {
-      "main": [
-        [
-          {
-            "node": "idPastaDia",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Cria Pasta Dia",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Extract from File": {
       "main": [
         [
@@ -3992,7 +3104,12 @@
       "main": [
         [
           {
-            "node": "PDFKit",
+            "node": "Analyze image1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload file2",
             "type": "main",
             "index": 0
           }
@@ -4017,72 +3134,6 @@
             "node": "Merge1",
             "type": "main",
             "index": 2
-          }
-        ]
-      ]
-    },
-    "Gerar JWT": {
-      "main": [
-        [
-          {
-            "node": "CriaTarefaOcr",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "UploadPdf": {
-      "main": [
-        [
-          {
-            "node": "ProcessPdfToOcr",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "ProcessPdfToOcr": {
-      "main": [
-        [
-          {
-            "node": "DownloadPdfOcr",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "CriaTarefaOcr": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "UploadPdf",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "DownloadPdfOcr": {
-      "main": [
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -4249,80 +3300,11 @@
         ]
       ]
     },
-    "PastaDiaExiste?1": {
-      "main": [
-        [
-          {
-            "node": "idPastaMes",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Cria Pasta Mes",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "PastaDiaExiste?2": {
-      "main": [
-        [
-          {
-            "node": "idPastaAno",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Cria Pasta Ano",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Dados de Entrada": {
       "main": [
         [
           {
             "node": "Ana?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Cria Pasta Ano": {
-      "main": [
-        [
-          {
-            "node": "idPastaAno",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Cria Pasta Mes": {
-      "main": [
-        [
-          {
-            "node": "idPastaMes",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Cria Pasta Dia": {
-      "main": [
-        [
-          {
-            "node": "idPastaDia",
             "type": "main",
             "index": 0
           }
@@ -4352,44 +3334,6 @@
         [
           {
             "node": "Extract from File1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "PDFKit": {
-      "main": [
-        [
-          {
-            "node": "Extract from File1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "idPastaAno": {
-      "main": [
-        [
-          {
-            "node": "encontraMês",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "idPastaMes": {
-      "main": [
-        [
-          {
-            "node": "encontraDia",
             "type": "main",
             "index": 0
           }
@@ -4434,68 +3378,12 @@
         ]
       ]
     },
-    "HTTP Request4": {
-      "main": [
-        [
-          {
-            "node": "Convert to File3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Convert to File3": {
-      "main": [
-        [
-          {
-            "node": "Gerar JWT",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "OpenAI Chat Model": {
       "ai_languageModel": [
         [
           {
             "node": "Structured Output Parser",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items": {
-      "main": [
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "encontraControle",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "log arquivos1": {
-      "main": [
-        [
-          {
-            "node": "Insert row",
-            "type": "main",
             "index": 0
           }
         ]
@@ -4512,17 +3400,6 @@
         ]
       ]
     },
-    "Copy file": {
-      "main": [
-        [
-          {
-            "node": "log arquivos1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Copy file1": {
       "main": [
         []
@@ -4532,7 +3409,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Call Arquiva Boletos Loop",
             "type": "main",
             "index": 0
           }
@@ -4652,7 +3529,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request4",
+            "node": "Call Faz OCR Arquivador",
             "type": "main",
             "index": 0
           }
@@ -4742,28 +3619,6 @@
           {
             "node": "Text Classifier",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Insert row": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "idPastaDia": {
-      "main": [
-        [
-          {
-            "node": "Copy file",
-            "type": "main",
             "index": 0
           }
         ]
@@ -4880,6 +3735,33 @@
           }
         ]
       ]
+    },
+    "TRANSFERENCIA PIX": {
+      "main": [
+        []
+      ]
+    },
+    "Analyze image1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Faz OCR Arquivador": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -4899,7 +3781,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "4328",
+            "content-length": "4022",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -4919,9 +3801,9 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r6efac33af1316d",
-              "image": "https://pps.whatsapp.net/v/t61.24694-24/473401805_956003679398810_2908805559115511425_n.jpg?ccb=11-4&oh=01_Q5Aa3AGDxnwiG3YY59t2JFdbX8hF92GxNOceQ8aVgrDaEJ2DXQ&oe=6933FD57&_nc_sid=5e03e0&_nc_cat=104",
-              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/473401805_956003679398810_2908805559115511425_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3QF1qpRrFuuR_MSnUjidcBeWZvBbfNlxAf2pU97Lm2NCoQ&oe=69419CD7&_nc_sid=5e03e0&_nc_cat=104",
+              "id": "r05f4051753580a",
+              "image": "",
+              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/549351847_1539700660385093_2114147981921870226_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3AH0v3d7OEjwjIoySrP-ONaDoWmqLY5MxzyokxCpL2EjdQ&oe=694128B4&_nc_sid=5e03e0&_nc_cat=106",
               "lead_assignedAttendant_id": "",
               "lead_email": "",
               "lead_field01": "",
@@ -4952,75 +3834,71 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "Bruno P Ferreira",
+              "name": "RECANTO DO LAGO - BPO/KY",
               "owner": "5519995586796",
-              "phone": "+55 34 9996-9911",
+              "phone": "",
               "wa_archived": false,
-              "wa_chatid": "553499969911@s.whatsapp.net",
-              "wa_chatlid": "203139739287641@lid",
+              "wa_chatid": "120363388861527002@g.us",
+              "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:553499969911",
+              "wa_fastid": "5519995586796:120363388861527002",
               "wa_isBlocked": false,
-              "wa_isGroup": false,
-              "wa_isGroup_admin": false,
+              "wa_isGroup": true,
+              "wa_isGroup_admin": true,
               "wa_isGroup_announce": false,
               "wa_isGroup_community": false,
-              "wa_isGroup_member": false,
+              "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "553499969911@s.whatsapp.net",
-              "wa_lastMessageTextVote": "",
-              "wa_lastMessageType": "ImageMessage",
-              "wa_lastMsgTimestamp": 1765057224000,
+              "wa_lastMessageSender": "265768348459066@lid",
+              "wa_lastMessageTextVote": "Elias",
+              "wa_lastMessageType": "DocumentMessage",
+              "wa_lastMsgTimestamp": 1765148884000,
               "wa_muteEndTime": 0,
-              "wa_name": "Bruno P Ferreira",
-              "wa_unreadCount": 1
+              "wa_name": "RECANTO DO LAGO - BPO/KY",
+              "wa_unreadCount": 79
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "553499969911@s.whatsapp.net",
+              "chatid": "120363388861527002@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7118-24/548585654_2024601661415986_3011327187587352723_n.enc?ccb=11-4&oh=01_Q5Aa3QEPYtHz5Hy8KpJmxY0nDgK_tF0-H2WttBWwJdXOvL6kwQ&oe=695C0241&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "image/jpeg",
-                "fileSHA256": "h+twXyf+pS7wE45B0oK8iF3+7fVIBxMu8pd9l/dSank=",
-                "fileLength": 213950,
-                "height": 1600,
-                "width": 900,
-                "mediaKey": "yJlcqw3xFT2ShRqQ4/RVlDu+hGPqgfOZZQuIgDlmtDQ=",
-                "fileEncSHA256": "HK8zG9p/AKNuKtTmDOHctlYKMcAY2S5hhVxqzfQzU9Y=",
-                "directPath": "/v/t62.7118-24/548585654_2024601661415986_3011327187587352723_n.enc?ccb=11-4&oh=01_Q5Aa3QEPYtHz5Hy8KpJmxY0nDgK_tF0-H2WttBWwJdXOvL6kwQ&oe=695C0241&_nc_sid=5e03e0&_nc_hot=1765057223",
-                "mediaKeyTimestamp": 1765057222,
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIACkDASIAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAAMBBAUCBv/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAA8+SyVQzggA76saRh9ayzKLNcuX87RFrcuaqVbVW51LVWZrqKLpp6+5uEwE1WYCuAT//EABQRAQAAAAAAAAAAAAAAAAAAADD/2gAIAQIBAT8Af//EABkRAQACAwAAAAAAAAAAAAAAAAERIAIQIf/aAAgBAwEBPwC6c25MRX//xAArEAABAwMCBAQHAAAAAAAAAAABAAIRAxIhBDEFE0FRECAjYSIyQlJxgaH/2gAIAQEAAT8A8wElWsnIKc1v0gq09vFsg43TuYY+E49kOaOhQNQDZFplWrh7Q6ubhMBOsj5QnGn9qfYdmrVAAAwoXDzFYmRsnEkdE4HOydidlqzgZU+64ePWP4Ub56p+JEp/WD/FqxsrVpKLWV/0qwtaSDhOe0jLlSIeXZMKvSa4hchnZXQ+QqtT0jc4oOGSXOI7rTvEm1xKc6SrkXZVYywoPIYWRgrT4lF2Vcv//gADAP/Z",
-                "contextInfo": {
-                  "forwardingScore": 2,
-                  "isForwarded": true,
-                  "pairedMediaType": 0,
-                  "forwardOrigin": 0
-                },
-                "imageSourceType": 0
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/596558017_883524387435285_6735897407039145944_n.enc?ccb=11-4&oh=01_Q5Aa3QFh_MlfQWCtS9bC570-ye-mzQrCV4tQuM3sgdNyv2VQiw&oe=695D9399&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "application/pdf",
+                "title": "SICOOB_2025_07_12_20_07_51_PIX",
+                "fileSHA256": "B739caZcCT0nnKkAvJZzy0bAgk6gto0mEpViZN9eAj8=",
+                "fileLength": 432443,
+                "pageCount": 1,
+                "mediaKey": "0h5Q/p47mgB3R9l3KijGtLEIndSvXFSu/t8flNz6VEs=",
+                "fileName": "SICOOB_2025_07_12_20_07_51_PIX.pdf",
+                "fileEncSHA256": "SJ/UD9Ta50q2I2nOcEy+OMYRnZRyvsJA5U+uDAv5OZ4=",
+                "directPath": "/v/t62.7119-24/596558017_883524387435285_6735897407039145944_n.enc?ccb=11-4&oh=01_Q5Aa3QFh_MlfQWCtS9bC570-ye-mzQrCV4tQuM3sgdNyv2VQiw&oe=695D9399&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1765148883,
+                "contactVcard": false,
+                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIACUDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAIDBAEG/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPTTfMd0ZNKOAqZtXLM2hugdJZTqozJQ6ARSskp1+qACyAZgRwF//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAgEBPwB//8QAFhEAAwAAAAAAAAAAAAAAAAAAESAw/9oACAEDAQE/AEE//8QAKRAAAQMDAwIFBQAAAAAAAAAAAQACEQMQIRITMVFSBDIzQZEkQmFxof/aAAgBAQABPwBVNR8jwF9T3MQMjnNjwqrQHDQ2euUdXG2PlUw0eXmzyQMI13A+mt9x+xMmJIE/izzpHEpoBExC0joFAtWEt4TAHGCHfK2W9T8pjQwQJtVALckj9IUcYe4LaPe5AQImbeIBLRBhUw881IC23EeoU1jmnLybVQS3AlBrvel/U3A4i7wS3BgrRV70NYGSChPvb//+AAMA/9k=",
+                "caption": "Elias"
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "Unknown",
-              "id": "5519995586796:A51FBB0869A6BCC2991213D7E166E174",
-              "isGroup": false,
-              "mediaType": "image",
-              "messageTimestamp": 1765057224000,
-              "messageType": "ImageMessage",
-              "messageid": "A51FBB0869A6BCC2991213D7E166E174",
+              "groupName": "RECANTO DO LAGO - BPO/KY",
+              "id": "5519995586796:4A91991FAB8F24BD9E0A",
+              "isGroup": true,
+              "mediaType": "document",
+              "messageTimestamp": 1765148884000,
+              "messageType": "DocumentMessage",
+              "messageid": "4A91991FAB8F24BD9E0A",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "553499969911@s.whatsapp.net",
-              "senderName": "Bruno P Ferreira",
-              "sender_lid": "137499217248386@lid",
-              "sender_pn": "553499969911@s.whatsapp.net",
-              "source": "android",
+              "sender": "265768348459066@lid",
+              "senderName": "Nataliana Deus é Incrivel",
+              "sender_lid": "265768348459066@lid",
+              "sender_pn": "5519996951885@s.whatsapp.net",
+              "source": "unknown",
               "status": "",
-              "text": "",
+              "text": "Elias",
               "track_id": "",
               "track_source": "",
               "type": "media",
@@ -5036,7 +3914,7 @@
       }
     ]
   },
-  "versionId": "65f337e8-7e4c-444b-ab5e-59b578e45809",
+  "versionId": "fb252e4c-3978-4438-8cb0-d832489410d8",
   "triggerCount": 1,
   "shared": [
     {
