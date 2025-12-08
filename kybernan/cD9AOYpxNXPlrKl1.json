@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-08T02:39:54.662Z",
+  "updatedAt": "2025-12-08T14:34:21.140Z",
   "createdAt": "2025-12-08T00:17:12.407Z",
   "id": "cD9AOYpxNXPlrKl1",
   "name": "Arquiva Boletos Loop",
@@ -166,6 +166,7 @@
       ],
       "id": "ed9b4517-7767-41b4-9602-6956668c6dae",
       "name": "log arquivos1",
+      "executeOnce": true,
       "credentials": {
         "googleSheetsOAuth2Api": {
           "id": "vwb992tcodcaklq5",
@@ -195,10 +196,11 @@
       "typeVersion": 3,
       "position": [
         4640,
-        544
+        576
       ],
       "id": "b8bd4d4c-b653-4c16-9ef5-2808536dd22c",
       "name": "Cria Pasta Mes",
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -232,6 +234,7 @@
       ],
       "id": "5acd9ed9-27bb-4396-9e1b-554940bd1a73",
       "name": "Cria Pasta Ano",
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -260,11 +263,12 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        5536,
-        528
+        5520,
+        560
       ],
       "id": "b511ab3a-9edd-471e-a693-897f33f00381",
       "name": "Cria Pasta Dia",
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -281,7 +285,7 @@
         "filter": {
           "folderId": {
             "__rl": true,
-            "value": "={{ $json.Folder }}",
+            "value": "={{ $json.folder }}",
             "mode": "id"
           },
           "whatToSearch": "folders"
@@ -301,6 +305,7 @@
       ],
       "id": "7288f54b-101a-47c9-8c92-38005813c165",
       "name": "encontraControle",
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -338,6 +343,7 @@
       "id": "a83bd865-f0b3-4592-b765-90424dd8b369",
       "name": "encontraAno",
       "alwaysOutputData": true,
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -409,6 +415,7 @@
       "id": "63b143aa-9d5a-41c1-9f3b-e749c16a1670",
       "name": "encontraMês",
       "alwaysOutputData": true,
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -471,7 +478,8 @@
         352
       ],
       "id": "5fa71fde-da89-4c8d-ae7c-d6416a6e1517",
-      "name": "idPastaAno"
+      "name": "idPastaAno",
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -579,7 +587,8 @@
         336
       ],
       "id": "0a9a9088-44bc-4860-b70d-94417b846ee7",
-      "name": "idPastaMes"
+      "name": "idPastaMes",
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -602,7 +611,8 @@
         336
       ],
       "id": "5581deac-20a3-4fca-b7d0-5d3e5318240a",
-      "name": "idPastaDia"
+      "name": "idPastaDia",
+      "executeOnce": true
     },
     {
       "parameters": {
@@ -634,6 +644,7 @@
       ],
       "id": "06462904-6a46-4c7c-a310-24d70fbe78b0",
       "name": "Copy file",
+      "executeOnce": true,
       "credentials": {
         "googleDriveOAuth2Api": {
           "id": "tHbNUSv81dsDoIWb",
@@ -663,6 +674,24 @@
             {
               "name": "id",
               "type": "any"
+            },
+            {
+              "name": "DATA"
+            },
+            {
+              "name": "MES"
+            },
+            {
+              "name": "ANO"
+            },
+            {
+              "name": "NOME_ARQUIVO"
+            },
+            {
+              "name": "CODIGO_BARRAS"
+            },
+            {
+              "name": "folder"
             }
           ]
         }
@@ -675,6 +704,38 @@
         2528,
         352
       ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        5392,
+        560
+      ],
+      "id": "6dec1e3b-0ac2-4716-bc88-d5e5f903d096",
+      "name": "Merge",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        4496,
+        576
+      ],
+      "id": "0d4de1a6-eb1e-4e4e-97a1-4266c7d8301c",
+      "name": "Merge1",
+      "executeOnce": true
     }
   ],
   "connections": {
@@ -707,6 +768,11 @@
             "node": "PastaDiaExiste?1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -733,7 +799,7 @@
         ],
         [
           {
-            "node": "Cria Pasta Dia",
+            "node": "Merge",
             "type": "main",
             "index": 0
           }
@@ -751,7 +817,7 @@
         ],
         [
           {
-            "node": "Cria Pasta Mes",
+            "node": "Merge1",
             "type": "main",
             "index": 0
           }
@@ -827,6 +893,11 @@
             "node": "encontraDia",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -903,6 +974,28 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Cria Pasta Dia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Cria Pasta Mes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -910,8 +1003,24 @@
   },
   "staticData": null,
   "meta": null,
-  "pinData": {},
-  "versionId": "8572fb6c-f99e-40f2-a666-04a881d3ee06",
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "NomeGrupo": "MERAKI- BOLETOS",
+          "id": "1NFr0571ihSXDFHq_d0tsEReNh4ZrO6t5",
+          "DATA": "02",
+          "MES": "DEZ",
+          "ANO": "2025",
+          "NOME_ARQUIVO": "02.12 - RSVS LAUNDRY LTD",
+          "CODIGO_BARRAS": "4619111000000000348314875201391289000003400",
+          "folder": "19nzQ0vXxb3_Y_v2eRTXfLYIxTkmHYIde"
+        },
+        "binary": {}
+      }
+    ]
+  },
+  "versionId": "a192d940-c55c-4489-8cee-57a2a1e6161a",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
