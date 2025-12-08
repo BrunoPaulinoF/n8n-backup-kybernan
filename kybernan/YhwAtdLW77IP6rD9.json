@@ -491,7 +491,7 @@
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": [
-        0
+        8
       ]
     }
   },
@@ -500,6 +500,7 @@
   },
   "pinData": {},
   "versionId": "3735010c-3de9-48b5-a67b-e9774d81799f",
+  "activeVersionId": "3735010c-3de9-48b5-a67b-e9774d81799f",
   "triggerCount": 1,
   "shared": [
     {
@@ -510,5 +511,494 @@
       "projectId": "72MghKyBe7pL4bex"
     }
   ],
+  "activeVersion": {
+    "updatedAt": "2025-11-26T23:51:06.146Z",
+    "createdAt": "2025-11-26T23:51:06.146Z",
+    "versionId": "3735010c-3de9-48b5-a67b-e9774d81799f",
+    "workflowId": "YhwAtdLW77IP6rD9",
+    "nodes": [
+      {
+        "parameters": {
+          "filters": {},
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-base.n8n",
+        "typeVersion": 1,
+        "position": [
+          -496,
+          128
+        ],
+        "id": "49d89fd3-a9f1-497b-9a2f-1fdf20ebe36e",
+        "name": "obter todos",
+        "credentials": {
+          "n8nApi": {
+            "id": "X8QlRub4cVs9hV9q",
+            "name": "n8n account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "operation": "get",
+          "owner": {
+            "__rl": true,
+            "value": "={{ $('Edit Fields').item.json.owner }}",
+            "mode": "name"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "={{ $('Edit Fields').item.json.repository }}",
+            "mode": "name"
+          },
+          "filePath": "=kybernan/{{ $('obter todos').item.json.id }}.json",
+          "additionalParameters": {}
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          -128,
+          -32
+        ],
+        "id": "4d53f80e-5e41-4c30-8e11-c6cb5c2db1e3",
+        "name": "GitHub",
+        "webhookId": "130a8c7a-49d2-48bf-b8da-2ce101027489",
+        "alwaysOutputData": true,
+        "credentials": {
+          "githubApi": {
+            "id": "fz15qtvs9TYx0exm",
+            "name": "GitHub account"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "572ded5f-da82-4988-8174-fe302369ace1",
+                "name": "owner",
+                "value": "BrunoPaulinoF",
+                "type": "string"
+              },
+              {
+                "id": "dc2c4956-2e9f-4a1d-9fb0-072348e2f7a4",
+                "name": "repository",
+                "value": "n8n-backup-kybernan",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -672,
+          128
+        ],
+        "id": "d01537cd-65ea-4b9a-9bac-b4db66c154a6",
+        "name": "Edit Fields"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "6cae5284-8810-4467-b1a5-0702758a2921",
+                "name": "data",
+                "value": "={{ $json }}",
+                "type": "object"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -128,
+          256
+        ],
+        "id": "4efcebaa-735d-453a-bde3-515f012596fc",
+        "name": "workflow data"
+      },
+      {
+        "parameters": {
+          "operation": "toJson",
+          "mode": "each",
+          "options": {
+            "format": true,
+            "fileName": "={{ $json.id }}.json"
+          }
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1040,
+          432
+        ],
+        "id": "61045655-a7eb-4eb9-b0ee-4f160aa51770",
+        "name": "Convert to File"
+      },
+      {
+        "parameters": {
+          "operation": "fromJson",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          128,
+          -32
+        ],
+        "id": "00973437-aeda-49cb-a345-a475bca347a4",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "mergeByFields": {
+            "values": [
+              {
+                "field1": "data.id",
+                "field2": "data.id"
+              }
+            ]
+          },
+          "resolve": "preferInput2",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.compareDatasets",
+        "typeVersion": 2.3,
+        "position": [
+          528,
+          112
+        ],
+        "id": "ab14bbf0-fccd-4116-8d4e-adb1d6c7c711",
+        "name": "Compare Datasets"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={{ $json.data }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          832,
+          432
+        ],
+        "id": "81da702d-c8ae-4a99-9cd9-17f688fb2d88",
+        "name": "workflow"
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "owner": {
+            "__rl": true,
+            "value": "={{ $('Edit Fields').first().json.owner }}",
+            "mode": "name"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "={{ $('Edit Fields').first().json.repository }}",
+            "mode": "name"
+          },
+          "filePath": "=kybernan/{{ $('workflow').item.json.id }}.json",
+          "binaryData": true,
+          "commitMessage": "={{ $('workflow').item.json.name }} {{ $now.toString() }}"
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          1248,
+          432
+        ],
+        "id": "09fb180b-3f67-4663-87d7-07032fd8b3d1",
+        "name": "GitHub Create File",
+        "webhookId": "ae86c1b6-0bfa-4bb5-89e6-cae5a628548c",
+        "credentials": {
+          "githubApi": {
+            "id": "fz15qtvs9TYx0exm",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "toJson",
+          "mode": "each",
+          "options": {
+            "format": true,
+            "fileName": "={{ $json.id }}.json"
+          }
+        },
+        "type": "n8n-nodes-base.convertToFile",
+        "typeVersion": 1.1,
+        "position": [
+          1088,
+          192
+        ],
+        "id": "93382474-39e3-47bc-ab9e-80461069aaab",
+        "name": "Convert to File1"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={{ $json.data }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          832,
+          192
+        ],
+        "id": "21a1ebc3-122f-43ea-8f14-a25d936703b0",
+        "name": "workflow1"
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "operation": "edit",
+          "owner": {
+            "__rl": true,
+            "value": "={{ $('Edit Fields').first().json.owner }}",
+            "mode": "name"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "={{ $('Edit Fields').first().json.repository }}",
+            "mode": "name"
+          },
+          "filePath": "=kybernan/{{ $('workflow1').item.json.id }}.json",
+          "binaryData": true,
+          "commitMessage": "={{ $('workflow1').item.json.name }} {{ $now.toString() }}"
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          1328,
+          192
+        ],
+        "id": "531657a5-9a33-4390-a8c0-c976d893d40a",
+        "name": "GitHub Edit File",
+        "webhookId": "ae86c1b6-0bfa-4bb5-89e6-cae5a628548c",
+        "credentials": {
+          "githubApi": {
+            "id": "fz15qtvs9TYx0exm",
+            "name": "GitHub account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "5c252c8c-cec5-4b5e-8417-c8e0d4b79837",
+                "leftValue": "={{ $json.data.isArchived }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "false",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          128,
+          256
+        ],
+        "id": "a27cc4f4-5a64-4d0a-928d-c1583c8a8ea4",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "hours",
+                "hoursInterval": 8
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -880,
+          128
+        ],
+        "id": "8ee3e38a-4b7e-4849-8f4a-085a980bdd5d",
+        "name": "Schedule Trigger"
+      }
+    ],
+    "connections": {
+      "obter todos": {
+        "main": [
+          [
+            {
+              "node": "GitHub",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "workflow data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GitHub": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "obter todos",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "workflow data": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File": {
+        "main": [
+          [
+            {
+              "node": "GitHub Create File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "Compare Datasets",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Compare Datasets": {
+        "main": [
+          [],
+          [],
+          [
+            {
+              "node": "workflow1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "workflow": {
+        "main": [
+          [
+            {
+              "node": "Convert to File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Convert to File1": {
+        "main": [
+          [
+            {
+              "node": "GitHub Edit File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "workflow1": {
+        "main": [
+          [
+            {
+              "node": "Convert to File1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Compare Datasets",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Kybernan Tech",
+    "name": null,
+    "description": null
+  },
   "tags": []
 }
