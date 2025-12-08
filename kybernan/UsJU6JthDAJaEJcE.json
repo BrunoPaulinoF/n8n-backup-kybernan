@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-07T18:58:31.363Z",
+  "updatedAt": "2025-12-08T02:51:06.724Z",
   "createdAt": "2025-12-04T13:56:51.420Z",
   "id": "UsJU6JthDAJaEJcE",
   "name": "dispara msg grupos",
@@ -124,7 +124,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n\"text\": \"teste\",\n\"number\": \"5534999969911\",\n\"serviceId\": \"1fc282cb-028d-406e-9769-58bee2b4d6c5\",\n\"origin\": \"bot\",\n\"dontOpenticket\": true\n}",
+        "jsonBody": "={\n    \"text\": \"{{ $('dadosUser').item.json.Mensagem }}\",\n    \"number\": \"{{ $('dadosUser').item.json.numeroID }}\",\n    \"serviceId\": \"1fc282cb-028d-406e-9769-58bee2b4d6c5\",\n    \"file\": {\n        \"base64\": \"{{ $json.data }}\",\n        \"mimetype\": \"image/jpeg\",\n        \"name\": \"arquivo\"\n    }\n}",
         "options": {
           "redirect": {
             "redirect": {}
@@ -134,39 +134,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1728,
-        -752
-      ],
-      "id": "3a55e5bc-182b-4e60-b939-bfeb895b3716",
-      "name": "envia mensagem para número"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://imperatus.digisac.app/api/v1/messages",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer 61fc0e50638781036ad4be9dd0d435f1bd1a59a1"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n    \"text\": \"João Elias - Jurídico:\\nQueridos clientes,\\n\\nA Kybernan entrará em uma breve pausa para descanso entre 24/12 e 02/01, retornando às atividades no dia 05/01.\\n\\nAgradecemos profundamente a parceria, a confiança e cada projeto compartilhado conosco ao longo deste ano. Que este período seja de luz, aconchego e boas celebrações para você e sua família.\\n\\nPara casos urgentes, o Igor estará de plantão e poderá ser contactado pelo número: ‪+55 19 99299-2100‬.\\n\\nDesejamos um Ano Novo cheio de paz e repleto de realizações.\\n\\nBoas festas!\\n\\n— Equipe Kybernan\",\n    \"number\": \"5534999969911\",\n    \"serviceId\": \"1fc282cb-028d-406e-9769-58bee2b4d6c5\",\n    \"file\": {\n        \"base64\": \"{{ $json.data }}\",\n        \"mimetype\": \"image/jpeg\",\n        \"name\": \"arquivo\"\n    }\n}",
-        "options": {
-          "redirect": {
-            "redirect": {}
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        1392,
-        -752
+        2080,
+        -640
       ],
       "id": "a2dc08f0-04af-4280-81d4-ea6da20df047",
       "name": "ENVIA IMAGEM"
@@ -182,8 +151,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        960,
-        -752
+        1392,
+        -640
       ],
       "id": "504c14e8-0ca0-455d-abd8-e272f88f7653",
       "name": "Convert to File"
@@ -198,8 +167,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        1168,
-        -752
+        1616,
+        -640
       ],
       "id": "e67b4f28-d537-4105-9b79-fe666206bee6",
       "name": "Extract from File"
@@ -261,7 +230,8 @@
             "numeroID": "={{ $json.wa_chatid }}",
             "Nome": "={{ $json.name }}",
             "tempo": "={{ $json.wa_lastMsgTimestamp }}",
-            "enviado": false
+            "enviado": false,
+            "Grupo": "={{ true }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -457,8 +427,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        752,
-        -752
+        1184,
+        -640
       ],
       "id": "279860b1-1d28-4917-b46b-0e685e01ee95",
       "name": "base64FOTO"
@@ -476,8 +446,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        0,
-        -720
+        -80,
+        -640
       ],
       "id": "a8f843af-e9a6-4bc5-85dc-c40f01f7b467",
       "name": "Schedule Trigger"
@@ -489,12 +459,263 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        240,
-        -720
+        1824,
+        -640
       ],
       "id": "a88b6de4-9ace-4b8f-b355-bd474ca0fe48",
       "name": "Wait",
       "webhookId": "8c5c796f-f471-4bec-9c57-7adbda3564a8"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "Zjom9Cj180s1f4bh",
+          "mode": "list",
+          "cachedResultName": "Números de whatsapp",
+          "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/Zjom9Cj180s1f4bh"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "enviado",
+              "condition": "isFalse"
+            },
+            {
+              "keyName": "tempo",
+              "condition": "lte",
+              "keyValue": "60"
+            }
+          ]
+        },
+        "limit": 1
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        416,
+        -640
+      ],
+      "id": "d1d53255-30c1-4b76-8a99-5697fb90aca5",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://imperatus.digisac.app/api/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 61fc0e50638781036ad4be9dd0d435f1bd1a59a1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"text\": \"teste\",\n\"number\": \"5534999969911\",\n\"serviceId\": \"1fc282cb-028d-406e-9769-58bee2b4d6c5\",\n\"origin\": \"bot\",\n\"dontOpenticket\": true\n}",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -80,
+        -400
+      ],
+      "id": "3a55e5bc-182b-4e60-b939-bfeb895b3716",
+      "name": "envia mensagem para número"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "945475e5-2cd2-4e24-9007-ab346176cd70",
+              "leftValue": "={{ $json.Hour }}",
+              "rightValue": "={{ 8 }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "afterOrEquals"
+              }
+            },
+            {
+              "id": "d54377cc-5626-4923-9bcf-a4ec9da6d91a",
+              "leftValue": "={{ $json.Hour }}",
+              "rightValue": "={{ 18 }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "beforeOrEquals"
+              }
+            },
+            {
+              "id": "524d7b69-b76d-46e9-81d2-a4d52cb5d582",
+              "leftValue": "={{ $json['Day of week'] }}",
+              "rightValue": "Sunday",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "260ec436-7faa-4c77-9d17-6735b7c545cc",
+              "leftValue": "={{ $json['Day of week'] }}",
+              "rightValue": "Saturday",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        -640
+      ],
+      "id": "99df8f57-a0f7-45ab-bbff-85faeac3bcc7",
+      "name": "Dia e hora, envia?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a593772e-10f6-4fe0-9c38-eaf84ec1aefc",
+              "name": "numeroID",
+              "value": "={{ $json.numeroID }}",
+              "type": "string"
+            },
+            {
+              "id": "9bf0f951-432e-4c3e-a8cd-f26107c278aa",
+              "name": "Grupo",
+              "value": "={{ $json.Grupo }}",
+              "type": "string"
+            },
+            {
+              "id": "b020b749-3434-46e2-a504-d131b3520622",
+              "name": "Mensagem",
+              "value": "=João Elias - Jurídico:\\nQueridos clientes,\\n\\nA Kybernan entrará em uma breve pausa para descanso entre 24/12 e 02/01, retornando às atividades no dia 05/01.\\n\\nAgradecemos profundamente a parceria, a confiança e cada projeto compartilhado conosco ao longo deste ano. Que este período seja de luz, aconchego e boas celebrações para você e sua família.\\n\\nPara casos urgentes, o Igor estará de plantão e poderá ser contactado pelo número: ‪+55 19 99299-2100‬.\\n\\nDesejamos um Ano Novo cheio de paz e repleto de realizações.\\n\\nBoas festas!\\n\\n— Equipe Kybernan",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -640
+      ],
+      "id": "5cfecd7a-cef8-42ed-9397-e081916898c0",
+      "name": "dadosUser"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "Zjom9Cj180s1f4bh",
+          "mode": "list",
+          "cachedResultName": "Números de whatsapp",
+          "cachedResultUrl": "/projects/72MghKyBe7pL4bex/datatables/Zjom9Cj180s1f4bh"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numeroID",
+              "keyValue": "={{ $json.numeroID }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "enviado": true
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "numeroID",
+              "displayName": "numeroID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Grupo",
+              "displayName": "Grupo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "tempo",
+              "displayName": "tempo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "enviado",
+              "displayName": "enviado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        912,
+        -640
+      ],
+      "id": "56ac72a8-e9ac-48da-a3c0-a63c8c0a4a71",
+      "name": "Update row(s)"
     }
   ],
   "connections": {
@@ -542,11 +763,6 @@
         ]
       ]
     },
-    "envia mensagem para número": {
-      "main": [
-        []
-      ]
-    },
     "Convert to File": {
       "main": [
         [
@@ -562,7 +778,7 @@
       "main": [
         [
           {
-            "node": "ENVIA IMAGEM",
+            "node": "Wait",
             "type": "main",
             "index": 0
           }
@@ -607,7 +823,63 @@
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Dia e hora, envia?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        []
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "dadosUser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dia e hora, envia?": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dadosUser": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)": {
+      "main": [
+        [
+          {
+            "node": "base64FOTO",
             "type": "main",
             "index": 0
           }
@@ -621,7 +893,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "227e3632-f761-47f7-966d-135fe9aff997",
+  "versionId": "922ad151-49bb-45af-b575-3857462e4242",
   "triggerCount": 0,
   "shared": [
     {
