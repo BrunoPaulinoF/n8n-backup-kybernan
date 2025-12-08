@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-08T03:46:29.189Z",
+  "updatedAt": "2025-12-08T17:03:07.868Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -444,6 +444,12 @@
               "name": "ERP",
               "value": "={{ $json.ERP }}",
               "type": "string"
+            },
+            {
+              "id": "630f0159-3b5e-48c4-aa49-4eeb0af3b2de",
+              "name": "NomeGrupo",
+              "value": "={{ $json.NomeGrupo }}",
+              "type": "string"
             }
           ]
         },
@@ -615,7 +621,7 @@
             },
             {
               "category": "Nota-Fiscal",
-              "description": "Selecione esta opção se o texto contiver dados de uma Nota Fiscal, DANFE, Cupom ou NFS-e. Procure por termos como \"Chave de Acesso\", \"Natureza da Operação\", \"DANFE\" ou detalhes de produtos e impostos. Marque como verdadeiro mesmo que haja um boleto junto."
+              "description": "Selecione esta opção se o texto contiver dados de uma Nota Fiscal, DANFE, Cupom ou NFS-e. Procure por termos como \"Chave de Acesso\", \"Natureza da Operação\", \"DANFE\", \"Conhecimento de Transporte Eletrônico (CT-e) – Modal Rodoviário\" ou detalhes de produtos e impostos. Marque como verdadeiro mesmo que haja um boleto junto."
             },
             {
               "category": "holerites",
@@ -649,7 +655,8 @@
         },
         "options": {
           "multiClass": true,
-          "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis.\n\n# Input Analysis\nO texto de entrada é um resumo dos documentos existentes.\nO texto de entrada (input) pode conter um único resumo de documento ou múltiplos resumos concatenados (ex: resumo de uma Nota Fiscal seguida de um Boleto).\n\n# Rules for Classification\n1. **ANÁLISE PARCIAL:** Não tente classificar o texto como um todo único. Varra o texto procurando por evidências de cada categoria.\n2. **REGRA DO COMBO (IMPORTANTE):** É muito comum receber um \"Kit Pagamento\" que contém o resumo texto de uma \"Nota Fiscal\" E o resumo texto de um \"Boleto\".\n   - Se encontrar dados de Nota Fiscal (DANFE, Chave de acesso, Produtos) -> Marque 'Nota-Fiscal' como TRUE.\n   - Se encontrar dados de Cobrança (Linha digitável, Banco, Boleto) -> Marque 'Boletos-Guias' como TRUE.\n   - Se houver AMBOS no texto, você DEVE marcar AMBAS as categorias como TRUE.\n3. **EVITAR OUTROS:** Só classifique como \"Outros\" (ou nenhuma categoria) se o texto não tiver ABSOLUTAMENTE NENHUMA característica de nota fiscal, recibo, conta a pagar e demais classificações existentes.\n\n# Step-by-Step Thinking\n- O texto tem chave de acesso ou diz \"DANFE\"? Sim -> Nota-Fiscal.\n- O texto tem linha digitável (números de boleto) ou diz \"Boleto\"? Sim -> Boletos-Guias.\n- Obrigatoriamente você precisa classificar 1 ou mais caminhos mais provável, OBRIGATORIO.",
+          "fallback": "other",
+          "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis.\n\n# Input Analysis\nO texto de entrada é um resumo dos documentos existentes.\nO texto de entrada (input) pode conter um único resumo de documento ou múltiplos resumos concatenados (ex: resumo de uma Nota Fiscal seguida de um Boleto).\n\n# Rules for Classification\n1. **ANÁLISE PARCIAL:** Não tente classificar o texto como um todo único. Varra o texto procurando por evidências de cada categoria.\n2. **REGRA DO COMBO (IMPORTANTE):** É muito comum receber um \"Kit Pagamento\" que contém o resumo texto de uma \"Nota Fiscal\" E o resumo texto de um \"Boleto\".\n   - Se encontrar dados de Nota Fiscal (DANFE, Chave de acesso, Produtos) -> Marque 'Nota-Fiscal' como TRUE.\n   - Se encontrar dados de Cobrança (Linha digitável, Banco, Boleto) -> Marque 'Boletos-Guias' como TRUE.\n   - Se houver AMBOS no texto, você DEVE marcar AMBAS as categorias como TRUE.\n3. **EVITAR OUTROS:** Só classifique como \"Outros\" (ou nenhuma categoria) se o texto não tiver ABSOLUTAMENTE NENHUMA característica de nota fiscal, recibo, conta a pagar e demais classificações existentes.\n\n# Step-by-Step Thinking\n- O texto tem chave de acesso ou diz \"DANFE\"? Sim -> Nota-Fiscal.\n- O texto tem linha digitável (números de boleto) ou diz \"Boleto\"? Sim -> Boletos-Guias.\n- Obrigatoriamente você precisa classificar 1 ou mais caminhos mais provável, OBRIGATORIO.\n- Se for comprovante de pagamento de boleto, classifique apenas como \"comprovantePagamento\" e não como \"Boletos-Guias\" ",
           "enableAutoFixing": true
         }
       },
@@ -1598,7 +1605,7 @@
             "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
-            "TIPO DE ARQUIVO": "OUTROS"
+            "TIPO DE ARQUIVO": "NÃO IDENTIFICADO"
           },
           "matchingColumns": [],
           "schema": [
@@ -1927,8 +1934,9 @@
       "parameters": {
         "model": {
           "__rl": true,
+          "value": "gpt-4.1",
           "mode": "list",
-          "value": "gpt-4.1-mini"
+          "cachedResultName": "gpt-4.1"
         },
         "builtInTools": {},
         "options": {}
@@ -1957,7 +1965,7 @@
       "typeVersion": 1,
       "position": [
         2096,
-        752
+        672
       ],
       "id": "efbc1974-6b5e-4797-9ab2-394a1942c724",
       "name": "Split Out"
@@ -2009,7 +2017,7 @@
       "typeVersion": 3.2,
       "position": [
         2352,
-        752
+        672
       ],
       "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
       "name": "Merge2"
@@ -2455,9 +2463,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1-mini",
+          "value": "gpt-4.1",
           "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
+          "cachedResultName": "gpt-4.1"
         },
         "builtInTools": {},
         "options": {}
@@ -2586,9 +2594,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1-mini",
+          "value": "gpt-4.1",
           "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
+          "cachedResultName": "gpt-4.1"
         },
         "builtInTools": {},
         "options": {}
@@ -2867,7 +2875,7 @@
           "mode": "list",
           "cachedResultName": "GPT-4O"
         },
-        "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.",
+        "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.\n- Se houver uma folha em cima de outra, foque em passar as informações principais do documento que está por cima",
         "inputType": "base64",
         "options": {}
       },
@@ -2931,13 +2939,21 @@
         "workflowId": {
           "__rl": true,
           "value": "cD9AOYpxNXPlrKl1",
-          "mode": "list"
+          "mode": "list",
+          "cachedResultUrl": "/workflow/cD9AOYpxNXPlrKl1",
+          "cachedResultName": "Arquiva Boletos Loop"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "NomeGrupo": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-            "id": "={{ $('Upload file2').item.json.id }}"
+            "NomeGrupo": "={{ $json.NomeGrupo }}",
+            "id": "={{ $('Upload file2').item.json.id }}",
+            "DATA": "={{ $('AI Agent').item.json.output[0].DATA }}",
+            "MES": "={{ $('AI Agent').item.json.output[0].MES }}",
+            "ANO": "={{ $('AI Agent').item.json.output[0].ANO }}",
+            "NOME_ARQUIVO": "={{ $('AI Agent').item.json.output[0].NOME_ARQUIVO }}",
+            "CODIGO_BARRAS": "={{ $('AI Agent').item.json.output[0].CODIGO_BARRAS }}",
+            "folder": "={{ $('Merge1').item.json.Folder }}"
           },
           "matchingColumns": [
             "NomeGrupo",
@@ -2961,6 +2977,66 @@
               "display": true,
               "canBeUsedToMatch": true,
               "removed": false
+            },
+            {
+              "id": "DATA",
+              "displayName": "DATA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "MES",
+              "displayName": "MES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "ANO",
+              "displayName": "ANO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "NOME_ARQUIVO",
+              "displayName": "NOME_ARQUIVO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "CODIGO_BARRAS",
+              "displayName": "CODIGO_BARRAS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "folder",
+              "displayName": "folder",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -2972,7 +3048,7 @@
       "typeVersion": 1.2,
       "position": [
         2608,
-        752
+        672
       ],
       "name": "Call Arquiva Boletos Loop",
       "id": "1d1caef0-46d6-40dc-a7b2-c2c6c5b60412"
@@ -3203,7 +3279,13 @@
             "index": 0
           }
         ],
-        []
+        [
+          {
+            "node": "OUTROS",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "OpenAI Chat Model2": {
@@ -3478,7 +3560,13 @@
     },
     "OUTROS": {
       "main": [
-        []
+        [
+          {
+            "node": "Copy file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "HOLERITES": {
@@ -3781,14 +3869,14 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "4022",
+            "content-length": "4213",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
             "x-forwarded-host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "x-forwarded-port": "443",
             "x-forwarded-proto": "https",
-            "x-forwarded-server": "c907cab5af03",
+            "x-forwarded-server": "e0b582355b26",
             "x-real-ip": "187.45.178.254"
           },
           "params": {},
@@ -3801,9 +3889,9 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r05f4051753580a",
+              "id": "r0228bcee93dfe3",
               "image": "",
-              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/549351847_1539700660385093_2114147981921870226_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3AH0v3d7OEjwjIoySrP-ONaDoWmqLY5MxzyokxCpL2EjdQ&oe=694128B4&_nc_sid=5e03e0&_nc_cat=106",
+              "imagePreview": "",
               "lead_assignedAttendant_id": "",
               "lead_email": "",
               "lead_field01": "",
@@ -3834,15 +3922,15 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "RECANTO DO LAGO - BPO/KY",
+              "name": "MERAKI- BOLETOS",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363388861527002@g.us",
+              "wa_chatid": "120363402757807946@g.us",
               "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363388861527002",
+              "wa_fastid": "5519995586796:120363402757807946",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -3851,54 +3939,65 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "265768348459066@lid",
-              "wa_lastMessageTextVote": "Elias",
-              "wa_lastMessageType": "DocumentMessage",
-              "wa_lastMsgTimestamp": 1765148884000,
+              "wa_lastMessageSender": "269951646593223@lid",
+              "wa_lastMessageTextVote": "",
+              "wa_lastMessageType": "ImageMessage",
+              "wa_lastMsgTimestamp": 1765204195000,
               "wa_muteEndTime": 0,
-              "wa_name": "RECANTO DO LAGO - BPO/KY",
-              "wa_unreadCount": 79
+              "wa_name": "MERAKI- BOLETOS",
+              "wa_unreadCount": 63
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363388861527002@g.us",
+              "chatid": "120363402757807946@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/596558017_883524387435285_6735897407039145944_n.enc?ccb=11-4&oh=01_Q5Aa3QFh_MlfQWCtS9bC570-ye-mzQrCV4tQuM3sgdNyv2VQiw&oe=695D9399&_nc_sid=5e03e0&mms3=true",
-                "mimetype": "application/pdf",
-                "title": "SICOOB_2025_07_12_20_07_51_PIX",
-                "fileSHA256": "B739caZcCT0nnKkAvJZzy0bAgk6gto0mEpViZN9eAj8=",
-                "fileLength": 432443,
-                "pageCount": 1,
-                "mediaKey": "0h5Q/p47mgB3R9l3KijGtLEIndSvXFSu/t8flNz6VEs=",
-                "fileName": "SICOOB_2025_07_12_20_07_51_PIX.pdf",
-                "fileEncSHA256": "SJ/UD9Ta50q2I2nOcEy+OMYRnZRyvsJA5U+uDAv5OZ4=",
-                "directPath": "/v/t62.7119-24/596558017_883524387435285_6735897407039145944_n.enc?ccb=11-4&oh=01_Q5Aa3QFh_MlfQWCtS9bC570-ye-mzQrCV4tQuM3sgdNyv2VQiw&oe=695D9399&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1765148883,
-                "contactVcard": false,
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIACUDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAIDBAEG/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAPTTfMd0ZNKOAqZtXLM2hugdJZTqozJQ6ARSskp1+qACyAZgRwF//8QAFBEBAAAAAAAAAAAAAAAAAAAAMP/aAAgBAgEBPwB//8QAFhEAAwAAAAAAAAAAAAAAAAAAESAw/9oACAEDAQE/AEE//8QAKRAAAQMDAwIFBQAAAAAAAAAAAQACEQMQIRITMVFSBDIzQZEkQmFxof/aAAgBAQABPwBVNR8jwF9T3MQMjnNjwqrQHDQ2euUdXG2PlUw0eXmzyQMI13A+mt9x+xMmJIE/izzpHEpoBExC0joFAtWEt4TAHGCHfK2W9T8pjQwQJtVALckj9IUcYe4LaPe5AQImbeIBLRBhUw881IC23EeoU1jmnLybVQS3AlBrvel/U3A4i7wS3BgrRV70NYGSChPvb//+AAMA/9k=",
-                "caption": "Elias"
+                "URL": "https://mmg.whatsapp.net/v/t62.7118-24/596570937_1190885312374015_481725075406061092_n.enc?ccb=11-4&oh=01_Q5Aa3QEY9C3ePveh5ehzuaMrYemuhGv8dmCOn4OT7Iy2KKDM0g&oe=695E63CB&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "image/jpeg",
+                "fileSHA256": "PeeKftlDqN9SbiN68mG4j7k6EAbpi3pUKG5YxiScf5w=",
+                "fileLength": 118619,
+                "height": 1280,
+                "width": 720,
+                "mediaKey": "LUrO8KPJkiSn6ErGTnWX2eqf1Cftuh5z2Rui4zCTCyA=",
+                "fileEncSHA256": "45dh4U60z5is/OiKMiNEr1RQUgE2+mZslRkfdzuw1nA=",
+                "directPath": "/v/t62.7118-24/596570937_1190885312374015_481725075406061092_n.enc?ccb=11-4&oh=01_Q5Aa3QEY9C3ePveh5ehzuaMrYemuhGv8dmCOn4OT7Iy2KKDM0g&oe=695E63CB&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1765204193,
+                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAIB/9oADAMBAAIQAxAAAAD21qYwKZmPmOp40eSUHt53LbzoHlSZSA801Jv0YvOoByVIwcNvOMiuuJLnWZY3DCUYzETXRIVLA0kGaAMkDN//xAAWEQEBAQAAAAAAAAAAAAAAAAABIDD/2gAIAQIBAT8AxZZa/8QAFhEBAQEAAAAAAAAAAAAAAAAAASAw/9oACAEDAQE/AMSSSv/EACgQAQACAQMDAwQDAQAAAAAAAAECEQADEiEEMUEiUXEFE2GBBjJCkf/aAAgBAQABPwDSJQ0IRkUhjKZxzjPU+MfuSPOBOrvCfPM8ZxiWpXzkdSE/6yFz+QB9+DXjNRy78ZqDveXBrSfLjFjp/OOjp36t3/cOkhs4t+XNHQhCW4PV24z+QNaml8ZrVtbzTS+ZZJa8OemT5i4Ff7szUTdWzBIRu/1kUS6259cgS+1JzWtjj6QuF4TDlKyJF1HlbyUtr/Wj3yAblFb8OSnUtu3v7ZtYARLPzn1mN9PCVdnNSkpzeVXP7yMK5lzhIbI8OMZJ6pCYtWQ4/OJUO9yyIseVM+qF9G14c1GiwvHVjJB3GMmRQWZFIjUUcJKVIW/bIiXsE+c5lW6GTlKqIuddcuilxm8YE64echO2tiYvtTm+7GzGSFlOEnyJjIO0s3SG3kzrEl0s69s02+lju9s00iXb+83Rk2GbuOTBL7VjLxiD3MPxnUc9NqX7ZRGBHwZti4EQoMAMXCjGnvhR2zVN2lKIXZn//gADAP/Z",
+                "contextInfo": {
+                  "statusSourceType": 0
+                },
+                "firstScanSidecar": "w2rjNwv1ju2PIw==",
+                "firstScanLength": 7736,
+                "scansSidecar": "w2rjNwv1ju2PI8uTXLIti5D664KziP0q+RPjewH+6WYWRKY1ksB0OA==",
+                "scanLengths": [
+                  7736,
+                  41492,
+                  24960,
+                  44429
+                ],
+                "midQualityFileSHA256": "CARjfzf47HR0tIueIyI/rFmYIDlWoV0BV5tXSBPFKpM=",
+                "imageSourceType": 0
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "RECANTO DO LAGO - BPO/KY",
-              "id": "5519995586796:4A91991FAB8F24BD9E0A",
+              "groupName": "MERAKI- BOLETOS",
+              "id": "5519995586796:3AC5286B07F586699B92",
               "isGroup": true,
-              "mediaType": "document",
-              "messageTimestamp": 1765148884000,
-              "messageType": "DocumentMessage",
-              "messageid": "4A91991FAB8F24BD9E0A",
+              "mediaType": "image",
+              "messageTimestamp": 1765204195000,
+              "messageType": "ImageMessage",
+              "messageid": "3AC5286B07F586699B92",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "265768348459066@lid",
-              "senderName": "Nataliana Deus é Incrivel",
-              "sender_lid": "265768348459066@lid",
-              "sender_pn": "5519996951885@s.whatsapp.net",
-              "source": "unknown",
+              "sender": "269951646593223@lid",
+              "senderName": "Andreia Oliveira",
+              "sender_lid": "269951646593223@lid",
+              "sender_pn": "5519971187804@s.whatsapp.net",
+              "source": "ios",
               "status": "",
-              "text": "Elias",
+              "text": "",
               "track_id": "",
               "track_source": "",
               "type": "media",
@@ -3914,8 +4013,8 @@
       }
     ]
   },
-  "versionId": "fb252e4c-3978-4438-8cb0-d832489410d8",
-  "activeVersionId": "fb252e4c-3978-4438-8cb0-d832489410d8",
+  "versionId": "019dcf66-51de-4c5f-a4f7-726aa9581e63",
+  "activeVersionId": "019dcf66-51de-4c5f-a4f7-726aa9581e63",
   "triggerCount": 1,
   "shared": [
     {
@@ -3927,9 +4026,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2025-12-08T02:42:43.613Z",
-    "createdAt": "2025-12-08T02:42:43.613Z",
-    "versionId": "fb252e4c-3978-4438-8cb0-d832489410d8",
+    "updatedAt": "2025-12-08T17:03:07.853Z",
+    "createdAt": "2025-12-08T17:03:07.853Z",
+    "versionId": "019dcf66-51de-4c5f-a4f7-726aa9581e63",
     "workflowId": "xbiM1JT5KjJBCrxu",
     "nodes": [
       {
@@ -4370,6 +4469,12 @@
                 "name": "ERP",
                 "value": "={{ $json.ERP }}",
                 "type": "string"
+              },
+              {
+                "id": "630f0159-3b5e-48c4-aa49-4eeb0af3b2de",
+                "name": "NomeGrupo",
+                "value": "={{ $json.NomeGrupo }}",
+                "type": "string"
               }
             ]
           },
@@ -4541,7 +4646,7 @@
               },
               {
                 "category": "Nota-Fiscal",
-                "description": "Selecione esta opção se o texto contiver dados de uma Nota Fiscal, DANFE, Cupom ou NFS-e. Procure por termos como \"Chave de Acesso\", \"Natureza da Operação\", \"DANFE\" ou detalhes de produtos e impostos. Marque como verdadeiro mesmo que haja um boleto junto."
+                "description": "Selecione esta opção se o texto contiver dados de uma Nota Fiscal, DANFE, Cupom ou NFS-e. Procure por termos como \"Chave de Acesso\", \"Natureza da Operação\", \"DANFE\", \"Conhecimento de Transporte Eletrônico (CT-e) – Modal Rodoviário\" ou detalhes de produtos e impostos. Marque como verdadeiro mesmo que haja um boleto junto."
               },
               {
                 "category": "holerites",
@@ -4575,7 +4680,8 @@
           },
           "options": {
             "multiClass": true,
-            "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis.\n\n# Input Analysis\nO texto de entrada é um resumo dos documentos existentes.\nO texto de entrada (input) pode conter um único resumo de documento ou múltiplos resumos concatenados (ex: resumo de uma Nota Fiscal seguida de um Boleto).\n\n# Rules for Classification\n1. **ANÁLISE PARCIAL:** Não tente classificar o texto como um todo único. Varra o texto procurando por evidências de cada categoria.\n2. **REGRA DO COMBO (IMPORTANTE):** É muito comum receber um \"Kit Pagamento\" que contém o resumo texto de uma \"Nota Fiscal\" E o resumo texto de um \"Boleto\".\n   - Se encontrar dados de Nota Fiscal (DANFE, Chave de acesso, Produtos) -> Marque 'Nota-Fiscal' como TRUE.\n   - Se encontrar dados de Cobrança (Linha digitável, Banco, Boleto) -> Marque 'Boletos-Guias' como TRUE.\n   - Se houver AMBOS no texto, você DEVE marcar AMBAS as categorias como TRUE.\n3. **EVITAR OUTROS:** Só classifique como \"Outros\" (ou nenhuma categoria) se o texto não tiver ABSOLUTAMENTE NENHUMA característica de nota fiscal, recibo, conta a pagar e demais classificações existentes.\n\n# Step-by-Step Thinking\n- O texto tem chave de acesso ou diz \"DANFE\"? Sim -> Nota-Fiscal.\n- O texto tem linha digitável (números de boleto) ou diz \"Boleto\"? Sim -> Boletos-Guias.\n- Obrigatoriamente você precisa classificar 1 ou mais caminhos mais provável, OBRIGATORIO.",
+            "fallback": "other",
+            "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis.\n\n# Input Analysis\nO texto de entrada é um resumo dos documentos existentes.\nO texto de entrada (input) pode conter um único resumo de documento ou múltiplos resumos concatenados (ex: resumo de uma Nota Fiscal seguida de um Boleto).\n\n# Rules for Classification\n1. **ANÁLISE PARCIAL:** Não tente classificar o texto como um todo único. Varra o texto procurando por evidências de cada categoria.\n2. **REGRA DO COMBO (IMPORTANTE):** É muito comum receber um \"Kit Pagamento\" que contém o resumo texto de uma \"Nota Fiscal\" E o resumo texto de um \"Boleto\".\n   - Se encontrar dados de Nota Fiscal (DANFE, Chave de acesso, Produtos) -> Marque 'Nota-Fiscal' como TRUE.\n   - Se encontrar dados de Cobrança (Linha digitável, Banco, Boleto) -> Marque 'Boletos-Guias' como TRUE.\n   - Se houver AMBOS no texto, você DEVE marcar AMBAS as categorias como TRUE.\n3. **EVITAR OUTROS:** Só classifique como \"Outros\" (ou nenhuma categoria) se o texto não tiver ABSOLUTAMENTE NENHUMA característica de nota fiscal, recibo, conta a pagar e demais classificações existentes.\n\n# Step-by-Step Thinking\n- O texto tem chave de acesso ou diz \"DANFE\"? Sim -> Nota-Fiscal.\n- O texto tem linha digitável (números de boleto) ou diz \"Boleto\"? Sim -> Boletos-Guias.\n- Obrigatoriamente você precisa classificar 1 ou mais caminhos mais provável, OBRIGATORIO.\n- Se for comprovante de pagamento de boleto, classifique apenas como \"comprovantePagamento\" e não como \"Boletos-Guias\" ",
             "enableAutoFixing": true
           }
         },
@@ -5524,7 +5630,7 @@
               "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
-              "TIPO DE ARQUIVO": "OUTROS"
+              "TIPO DE ARQUIVO": "NÃO IDENTIFICADO"
             },
             "matchingColumns": [],
             "schema": [
@@ -5853,8 +5959,9 @@
         "parameters": {
           "model": {
             "__rl": true,
+            "value": "gpt-4.1",
             "mode": "list",
-            "value": "gpt-4.1-mini"
+            "cachedResultName": "gpt-4.1"
           },
           "builtInTools": {},
           "options": {}
@@ -5883,7 +5990,7 @@
         "typeVersion": 1,
         "position": [
           2096,
-          752
+          672
         ],
         "id": "efbc1974-6b5e-4797-9ab2-394a1942c724",
         "name": "Split Out"
@@ -5935,7 +6042,7 @@
         "typeVersion": 3.2,
         "position": [
           2352,
-          752
+          672
         ],
         "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
         "name": "Merge2"
@@ -6381,9 +6488,9 @@
         "parameters": {
           "model": {
             "__rl": true,
-            "value": "gpt-4.1-mini",
+            "value": "gpt-4.1",
             "mode": "list",
-            "cachedResultName": "gpt-4.1-mini"
+            "cachedResultName": "gpt-4.1"
           },
           "builtInTools": {},
           "options": {}
@@ -6512,9 +6619,9 @@
         "parameters": {
           "model": {
             "__rl": true,
-            "value": "gpt-4.1-mini",
+            "value": "gpt-4.1",
             "mode": "list",
-            "cachedResultName": "gpt-4.1-mini"
+            "cachedResultName": "gpt-4.1"
           },
           "builtInTools": {},
           "options": {}
@@ -6793,7 +6900,7 @@
             "mode": "list",
             "cachedResultName": "GPT-4O"
           },
-          "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.",
+          "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.\n- Se houver uma folha em cima de outra, foque em passar as informações principais do documento que está por cima",
           "inputType": "base64",
           "options": {}
         },
@@ -6857,13 +6964,21 @@
           "workflowId": {
             "__rl": true,
             "value": "cD9AOYpxNXPlrKl1",
-            "mode": "list"
+            "mode": "list",
+            "cachedResultUrl": "/workflow/cD9AOYpxNXPlrKl1",
+            "cachedResultName": "Arquiva Boletos Loop"
           },
           "workflowInputs": {
             "mappingMode": "defineBelow",
             "value": {
-              "NomeGrupo": "={{ $('Get row(s)').item.json.NomeGrupo }}",
-              "id": "={{ $('Upload file2').item.json.id }}"
+              "NomeGrupo": "={{ $json.NomeGrupo }}",
+              "id": "={{ $('Upload file2').item.json.id }}",
+              "DATA": "={{ $('AI Agent').item.json.output[0].DATA }}",
+              "MES": "={{ $('AI Agent').item.json.output[0].MES }}",
+              "ANO": "={{ $('AI Agent').item.json.output[0].ANO }}",
+              "NOME_ARQUIVO": "={{ $('AI Agent').item.json.output[0].NOME_ARQUIVO }}",
+              "CODIGO_BARRAS": "={{ $('AI Agent').item.json.output[0].CODIGO_BARRAS }}",
+              "folder": "={{ $('Merge1').item.json.Folder }}"
             },
             "matchingColumns": [
               "NomeGrupo",
@@ -6887,6 +7002,66 @@
                 "display": true,
                 "canBeUsedToMatch": true,
                 "removed": false
+              },
+              {
+                "id": "DATA",
+                "displayName": "DATA",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "MES",
+                "displayName": "MES",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "ANO",
+                "displayName": "ANO",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "NOME_ARQUIVO",
+                "displayName": "NOME_ARQUIVO",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "CODIGO_BARRAS",
+                "displayName": "CODIGO_BARRAS",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              },
+              {
+                "id": "folder",
+                "displayName": "folder",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
               }
             ],
             "attemptToConvertTypes": false,
@@ -6898,7 +7073,7 @@
         "typeVersion": 1.2,
         "position": [
           2608,
-          752
+          672
         ],
         "name": "Call Arquiva Boletos Loop",
         "id": "1d1caef0-46d6-40dc-a7b2-c2c6c5b60412"
@@ -7129,7 +7304,13 @@
               "index": 0
             }
           ],
-          []
+          [
+            {
+              "node": "OUTROS",
+              "type": "main",
+              "index": 0
+            }
+          ]
         ]
       },
       "OpenAI Chat Model2": {
@@ -7404,7 +7585,13 @@
       },
       "OUTROS": {
         "main": [
-          []
+          [
+            {
+              "node": "Copy file1",
+              "type": "main",
+              "index": 0
+            }
+          ]
         ]
       },
       "HOLERITES": {
