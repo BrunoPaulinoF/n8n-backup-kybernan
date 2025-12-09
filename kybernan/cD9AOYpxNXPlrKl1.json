@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-08T14:34:21.140Z",
+  "updatedAt": "2025-12-09T10:31:42.124Z",
   "createdAt": "2025-12-08T00:17:12.407Z",
   "id": "cD9AOYpxNXPlrKl1",
   "name": "Arquiva Boletos Loop",
@@ -1007,20 +1007,46 @@
     "Start": [
       {
         "json": {
-          "NomeGrupo": "MERAKI- BOLETOS",
-          "id": "1NFr0571ihSXDFHq_d0tsEReNh4ZrO6t5",
-          "DATA": "02",
+          "NomeGrupo": "CAMPSUI - GESTÃO DE CONTAS NF",
+          "id": "1VGaL4X7eek40Lo6TxgaC2AIRz7aIsiaD",
+          "DATA": "12",
           "MES": "DEZ",
           "ANO": "2025",
-          "NOME_ARQUIVO": "02.12 - RSVS LAUNDRY LTD",
-          "CODIGO_BARRAS": "4619111000000000348314875201391289000003400",
-          "folder": "19nzQ0vXxb3_Y_v2eRTXfLYIxTkmHYIde"
+          "NOME_ARQUIVO": "12.12 - PRIMAZ FRIGORÍFICO LTDA",
+          "CODIGO_BARRAS": "3419109000903908063630103760002102930002313969",
+          "folder": null
+        },
+        "binary": {}
+      },
+      {
+        "json": {
+          "NomeGrupo": "CAMPSUI - GESTÃO DE CONTAS NF",
+          "id": "1VGaL4X7eek40Lo6TxgaC2AIRz7aIsiaD",
+          "DATA": "12",
+          "MES": "DEZ",
+          "ANO": "2025",
+          "NOME_ARQUIVO": "12.12 - PRIMAZ FRIGORÍFICO LTDA",
+          "CODIGO_BARRAS": "3419109000903908063630103760002102930002313969",
+          "folder": null
+        },
+        "binary": {}
+      },
+      {
+        "json": {
+          "NomeGrupo": "CAMPSUI - GESTÃO DE CONTAS NF",
+          "id": "1VGaL4X7eek40Lo6TxgaC2AIRz7aIsiaD",
+          "DATA": "12",
+          "MES": "DEZ",
+          "ANO": "2025",
+          "NOME_ARQUIVO": "12.12 - PRIMAZ FRIGORÍFICO LTDA",
+          "CODIGO_BARRAS": "3419109000903908063630103760002102930002313969",
+          "folder": null
         },
         "binary": {}
       }
     ]
   },
-  "versionId": "a192d940-c55c-4489-8cee-57a2a1e6161a",
+  "versionId": "a789e82c-beba-4af7-ba0e-1aaa0ca8e8f6",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
