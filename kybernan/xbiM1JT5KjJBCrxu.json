@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-08T17:03:07.868Z",
+  "updatedAt": "2025-12-09T10:45:52.269Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -633,7 +633,7 @@
             },
             {
               "category": "comprovantePagamento",
-              "description": "comprovante de pagamento de boletos"
+              "description": "comprovante de pagamento de boletos ou comprovantes de agendamento"
             },
             {
               "category": "cheque",
@@ -641,7 +641,7 @@
             },
             {
               "category": "comprovantePixTransferencia",
-              "description": "comprovante de transferência ou pix"
+              "description": "comprovante de transferência ou pix ou comprovante de agendamento de pix e ted"
             },
             {
               "category": "pedidoDeCompra",
@@ -730,7 +730,7 @@
         "text": "={{ $('AI Agent1').item.json.output }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO"
+          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO\n- Se houver documentos que não sejam boletos ou contas a pagar, ignore, apenas siga com a extração de informações para contas a pagar, boletos, etc..."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -740,7 +740,8 @@
         752
       ],
       "id": "fee0a4a4-dc7a-4c9d-8313-2cb40fef7eb0",
-      "name": "AI Agent"
+      "name": "AI Agent",
+      "retryOnFail": true
     },
     {
       "parameters": {
@@ -958,7 +959,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "PEDIDO COMPRA"
@@ -1062,7 +1063,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "HOLERITES"
@@ -1166,7 +1167,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "RECIBOS"
@@ -1270,7 +1271,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NÃO SALVO",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "COMPROVANTE PAGAMENTO"
@@ -1374,7 +1375,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "CHEQUES"
@@ -1478,7 +1479,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NÃO SALVO",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "TRANSFERENCIA PIX"
@@ -1602,7 +1603,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "NÃO IDENTIFICADO"
@@ -1964,7 +1965,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        2096,
+        2304,
         672
       ],
       "id": "efbc1974-6b5e-4797-9ab2-394a1942c724",
@@ -2016,7 +2017,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        2352,
+        2560,
         672
       ],
       "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
@@ -2194,7 +2195,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "TIPO DE ARQUIVO": "NOTA FISCAL",
             "CAMINHO QUE FOI SALVO": "=PASTA DE NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}"
@@ -2638,7 +2639,7 @@
           "value": {
             "DATA": "={{ $today.format('dd-MM-yyyy') }}",
             "HORA": "={{ $now.format('hh:mm') }}",
-            "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+            "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
             "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
             "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
             "TIPO DE ARQUIVO": "RELATÓRIO CONTAS A PAGAR"
@@ -2698,26 +2699,6 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
-            },
-            {
-              "id": "MOTIVO DO ERRO",
-              "displayName": "MOTIVO DO ERRO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "CORRIGIDO",
-              "displayName": "CORRIGIDO",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -3047,11 +3028,75 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        2608,
-        672
+        2560,
+        976
       ],
       "name": "Call Arquiva Boletos Loop",
       "id": "1d1caef0-46d6-40dc-a7b2-c2c6c5b60412"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "769b83ae-27f6-4bf0-a0c6-325e4cede6a7",
+              "leftValue": "={{ $json.output[0].NOME_ARQUIVO }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9362c41a-d7ff-4d67-9ae7-96c96be110a5",
+              "leftValue": "={{ $json.output[0].ANO }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "ed9159ef-edf9-4379-a7d0-efaa2cb8f7c8",
+              "leftValue": "={{ $json.output[0].MES }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "4ea17b1c-be7a-4ea3-baa1-1f8d74731ca3",
+              "leftValue": "={{ $json.output[0].DATA }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2048,
+        752
+      ],
+      "id": "94a4cbaa-eb2a-4f9c-995f-db50eea742ba",
+      "name": "tem output?"
     }
   ],
   "connections": {
@@ -3314,7 +3359,7 @@
       "main": [
         [
           {
-            "node": "Split Out",
+            "node": "tem output?",
             "type": "main",
             "index": 0
           }
@@ -3850,6 +3895,24 @@
           }
         ]
       ]
+    },
+    "tem output?": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OUTROS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -3869,7 +3932,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "4213",
+            "content-length": "4480",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -3889,7 +3952,7 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r0228bcee93dfe3",
+              "id": "r5179105d33b663",
               "image": "",
               "imagePreview": "",
               "lead_assignedAttendant_id": "",
@@ -3922,15 +3985,15 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "MERAKI- BOLETOS",
+              "name": "LELEY FOODS - BPO/KY",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363402757807946@g.us",
+              "wa_chatid": "120363401866070546@g.us",
               "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363402757807946",
+              "wa_fastid": "5519995586796:120363401866070546",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -3939,65 +4002,66 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "269951646593223@lid",
-              "wa_lastMessageTextVote": "",
+              "wa_lastMessageSender": "224193132101769@lid",
+              "wa_lastMessageTextVote": "Este estou aguardando o Silvio mandar nota e boletos, então apenas dar entrada con ressalva",
               "wa_lastMessageType": "ImageMessage",
-              "wa_lastMsgTimestamp": 1765204195000,
+              "wa_lastMsgTimestamp": 1765222838000,
               "wa_muteEndTime": 0,
-              "wa_name": "MERAKI- BOLETOS",
-              "wa_unreadCount": 63
+              "wa_name": "LELEY FOODS - BPO/KY",
+              "wa_unreadCount": 238
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363402757807946@g.us",
+              "chatid": "120363401866070546@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/v/t62.7118-24/596570937_1190885312374015_481725075406061092_n.enc?ccb=11-4&oh=01_Q5Aa3QEY9C3ePveh5ehzuaMrYemuhGv8dmCOn4OT7Iy2KKDM0g&oe=695E63CB&_nc_sid=5e03e0&mms3=true",
+                "URL": "https://mmg.whatsapp.net/o1/v/t24/f2/m234/AQMQWvwSFUzhuD-NTzvBLzDL44IqrrfvzH69lqnMH-vffJm0t0wj4Fa3dRalDgmmxJV7WCkoZnbMaRfvNCtcTjBGbH7r0N-QGOWYZq1cfQ?ccb=9-4&oh=01_Q5Aa3QHHXQ3O9JSvjd8Ntsdg5nm_ygE5hocIqhRBWyw2i0LBsw&oe=695EAAF9&_nc_sid=e6ed6c&mms3=true",
                 "mimetype": "image/jpeg",
-                "fileSHA256": "PeeKftlDqN9SbiN68mG4j7k6EAbpi3pUKG5YxiScf5w=",
-                "fileLength": 118619,
-                "height": 1280,
-                "width": 720,
-                "mediaKey": "LUrO8KPJkiSn6ErGTnWX2eqf1Cftuh5z2Rui4zCTCyA=",
-                "fileEncSHA256": "45dh4U60z5is/OiKMiNEr1RQUgE2+mZslRkfdzuw1nA=",
-                "directPath": "/v/t62.7118-24/596570937_1190885312374015_481725075406061092_n.enc?ccb=11-4&oh=01_Q5Aa3QEY9C3ePveh5ehzuaMrYemuhGv8dmCOn4OT7Iy2KKDM0g&oe=695E63CB&_nc_sid=5e03e0",
-                "mediaKeyTimestamp": 1765204193,
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAIB/9oADAMBAAIQAxAAAAD21qYwKZmPmOp40eSUHt53LbzoHlSZSA801Jv0YvOoByVIwcNvOMiuuJLnWZY3DCUYzETXRIVLA0kGaAMkDN//xAAWEQEBAQAAAAAAAAAAAAAAAAABIDD/2gAIAQIBAT8AxZZa/8QAFhEBAQEAAAAAAAAAAAAAAAAAASAw/9oACAEDAQE/AMSSSv/EACgQAQACAQMDAwQDAQAAAAAAAAECEQADEiEEMUEiUXEFE2GBBjJCkf/aAAgBAQABPwDSJQ0IRkUhjKZxzjPU+MfuSPOBOrvCfPM8ZxiWpXzkdSE/6yFz+QB9+DXjNRy78ZqDveXBrSfLjFjp/OOjp36t3/cOkhs4t+XNHQhCW4PV24z+QNaml8ZrVtbzTS+ZZJa8OemT5i4Ff7szUTdWzBIRu/1kUS6259cgS+1JzWtjj6QuF4TDlKyJF1HlbyUtr/Wj3yAblFb8OSnUtu3v7ZtYARLPzn1mN9PCVdnNSkpzeVXP7yMK5lzhIbI8OMZJ6pCYtWQ4/OJUO9yyIseVM+qF9G14c1GiwvHVjJB3GMmRQWZFIjUUcJKVIW/bIiXsE+c5lW6GTlKqIuddcuilxm8YE64echO2tiYvtTm+7GzGSFlOEnyJjIO0s3SG3kzrEl0s69s02+lju9s00iXb+83Rk2GbuOTBL7VjLxiD3MPxnUc9NqX7ZRGBHwZti4EQoMAMXCjGnvhR2zVN2lKIXZn//gADAP/Z",
+                "caption": "Este estou aguardando o Silvio mandar nota e boletos, então apenas dar entrada con ressalva",
+                "fileSHA256": "JdTZvndwwoOGBZd9xk2Bi3/s1IylV0ghXL8pUNvgMGQ=",
+                "fileLength": 255939,
+                "height": 1599,
+                "width": 1140,
+                "mediaKey": "EuasN1ZfFWTZQyK1hHsGq1Vqv5RjFreBxyrlJjmV3Nk=",
+                "fileEncSHA256": "q4yOXNTRFaviaZbL2K3LJULar7yLScDdcbARuKnW6B8=",
+                "directPath": "/o1/v/t24/f2/m234/AQMQWvwSFUzhuD-NTzvBLzDL44IqrrfvzH69lqnMH-vffJm0t0wj4Fa3dRalDgmmxJV7WCkoZnbMaRfvNCtcTjBGbH7r0N-QGOWYZq1cfQ?ccb=9-4&oh=01_Q5Aa3QHHXQ3O9JSvjd8Ntsdg5nm_ygE5hocIqhRBWyw2i0LBsw&oe=695EAAF9&_nc_sid=e6ed6c",
+                "mediaKeyTimestamp": 1765222837,
+                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAECAwUG/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAIB/9oADAMBAAIQAxAAAADpKli3AXMo0MdDzxZN93TPS4BMEwi5s86URfd0y2uEqQgCLQefNSa7O+VVLVokYTLDjFE12KCpoBkoBAHKAm//xAAXEQEBAQEAAAAAAAAAAAAAAAABIAAw/9oACAECAQE/AOLLLLv/xAAXEQEBAQEAAAAAAAAAAAAAAAABIAAw/9oACAEDAQE/AOJJJJv/xAApEAABAwQBAgUFAQAAAAAAAAABAAIRAwQhMUEFEBITFFFhIiMkNHJi/9oACAEBAAE/AGta6kwuPCdSp+YHZwgMSEJ9kABpOUE8oAjZlXYcLupJ5VNoNFk5wnOc04GF5mNIVDoBF7xsIl5jCc57YMJhc7Ywr+PWVOc6VF32KeeECC3PChpUBQFEZTiZ1KzGNK+afVvPymNDaDI9k3SaMnHc9m6XUHlt24cKgZosPwgMohHtCIygupfTdvBVn+tS/lFSERjuU05XWGAXhPuFaCLWk7/KEFFvYrQRQ2utNJuwDy3BVrBsqc68Ka4TgypDtbRRC4UhN91110XNP+VaD8SkCONLw+F+sJuSYChHBhEGNoj5UwustHm03HkQv//+AAMA/9k=",
                 "contextInfo": {
                   "statusSourceType": 0
                 },
-                "firstScanSidecar": "w2rjNwv1ju2PIw==",
-                "firstScanLength": 7736,
-                "scansSidecar": "w2rjNwv1ju2PI8uTXLIti5D664KziP0q+RPjewH+6WYWRKY1ksB0OA==",
+                "firstScanSidecar": "6yaWklLSX8uMjA==",
+                "firstScanLength": 15612,
+                "scansSidecar": "6yaWklLSX8uMjAMCfTEXMY6jdCXlgZuL22J7bco3abRQ5xBGMbf9PQ==",
                 "scanLengths": [
-                  7736,
-                  41492,
-                  24960,
-                  44429
+                  15612,
+                  80554,
+                  55527,
+                  104244
                 ],
-                "midQualityFileSHA256": "CARjfzf47HR0tIueIyI/rFmYIDlWoV0BV5tXSBPFKpM=",
+                "midQualityFileSHA256": "iBBx5qE1rX+wVNkdYSu5cUxRnBl0Fb/Oa1SycedvKmI=",
                 "imageSourceType": 0
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "MERAKI- BOLETOS",
-              "id": "5519995586796:3AC5286B07F586699B92",
+              "groupName": "LELEY FOODS - BPO/KY",
+              "id": "5519995586796:3AA75AA1868C103078E4",
               "isGroup": true,
               "mediaType": "image",
-              "messageTimestamp": 1765204195000,
+              "messageTimestamp": 1765222838000,
               "messageType": "ImageMessage",
-              "messageid": "3AC5286B07F586699B92",
+              "messageid": "3AA75AA1868C103078E4",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "269951646593223@lid",
-              "senderName": "Andreia Oliveira",
-              "sender_lid": "269951646593223@lid",
-              "sender_pn": "5519971187804@s.whatsapp.net",
+              "sender": "224193132101769@lid",
+              "senderName": "Kederley",
+              "sender_lid": "224193132101769@lid",
+              "sender_pn": "5519981804818@s.whatsapp.net",
               "source": "ios",
               "status": "",
-              "text": "",
+              "text": "Este estou aguardando o Silvio mandar nota e boletos, então apenas dar entrada con ressalva",
               "track_id": "",
               "track_source": "",
               "type": "media",
@@ -4013,8 +4077,8 @@
       }
     ]
   },
-  "versionId": "019dcf66-51de-4c5f-a4f7-726aa9581e63",
-  "activeVersionId": "019dcf66-51de-4c5f-a4f7-726aa9581e63",
+  "versionId": "4b3dedff-0a2e-4043-a0f2-943b1af7225a",
+  "activeVersionId": "4b3dedff-0a2e-4043-a0f2-943b1af7225a",
   "triggerCount": 1,
   "shared": [
     {
@@ -4026,9 +4090,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2025-12-08T17:03:07.853Z",
-    "createdAt": "2025-12-08T17:03:07.853Z",
-    "versionId": "019dcf66-51de-4c5f-a4f7-726aa9581e63",
+    "updatedAt": "2025-12-09T10:45:52.253Z",
+    "createdAt": "2025-12-09T10:45:52.253Z",
+    "versionId": "4b3dedff-0a2e-4043-a0f2-943b1af7225a",
     "workflowId": "xbiM1JT5KjJBCrxu",
     "nodes": [
       {
@@ -4658,7 +4722,7 @@
               },
               {
                 "category": "comprovantePagamento",
-                "description": "comprovante de pagamento de boletos"
+                "description": "comprovante de pagamento de boletos ou comprovantes de agendamento"
               },
               {
                 "category": "cheque",
@@ -4666,7 +4730,7 @@
               },
               {
                 "category": "comprovantePixTransferencia",
-                "description": "comprovante de transferência ou pix"
+                "description": "comprovante de transferência ou pix ou comprovante de agendamento de pix e ted"
               },
               {
                 "category": "pedidoDeCompra",
@@ -4755,7 +4819,7 @@
           "text": "={{ $('AI Agent1').item.json.output }}",
           "hasOutputParser": true,
           "options": {
-            "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO"
+            "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO\n- Se houver documentos que não sejam boletos ou contas a pagar, ignore, apenas siga com a extração de informações para contas a pagar, boletos, etc..."
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -4765,7 +4829,8 @@
           752
         ],
         "id": "fee0a4a4-dc7a-4c9d-8313-2cb40fef7eb0",
-        "name": "AI Agent"
+        "name": "AI Agent",
+        "retryOnFail": true
       },
       {
         "parameters": {
@@ -4983,7 +5048,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "PEDIDO COMPRA"
@@ -5087,7 +5152,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "HOLERITES"
@@ -5191,7 +5256,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "RECIBOS"
@@ -5295,7 +5360,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NÃO SALVO",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "COMPROVANTE PAGAMENTO"
@@ -5399,7 +5464,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "CHEQUES"
@@ -5503,7 +5568,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NÃO SALVO",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "TRANSFERENCIA PIX"
@@ -5627,7 +5692,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "NÃO IDENTIFICADO"
@@ -5989,7 +6054,7 @@
         "type": "n8n-nodes-base.splitOut",
         "typeVersion": 1,
         "position": [
-          2096,
+          2304,
           672
         ],
         "id": "efbc1974-6b5e-4797-9ab2-394a1942c724",
@@ -6041,7 +6106,7 @@
         "type": "n8n-nodes-base.merge",
         "typeVersion": 3.2,
         "position": [
-          2352,
+          2560,
           672
         ],
         "id": "0aea1eea-ccb4-4ac0-a8df-5ff069084138",
@@ -6219,7 +6284,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "TIPO DE ARQUIVO": "NOTA FISCAL",
               "CAMINHO QUE FOI SALVO": "=PASTA DE NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}"
@@ -6663,7 +6728,7 @@
             "value": {
               "DATA": "={{ $today.format('dd-MM-yyyy') }}",
               "HORA": "={{ $now.format('hh:mm') }}",
-              "CLIENTE": "={{ $('Get row(s)').item.json.NomeGrupo }}",
+              "CLIENTE": "={{ $('Merge1').item.json.NomeGrupo }}",
               "CAMINHO QUE FOI SALVO": "=NOTAS FISCAIS",
               "LINK ARQUIVO": "={{ $('Upload file2').item.json.webViewLink }}",
               "TIPO DE ARQUIVO": "RELATÓRIO CONTAS A PAGAR"
@@ -6723,26 +6788,6 @@
                 "display": true,
                 "type": "string",
                 "canBeUsedToMatch": true
-              },
-              {
-                "id": "MOTIVO DO ERRO",
-                "displayName": "MOTIVO DO ERRO",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "type": "string",
-                "canBeUsedToMatch": true,
-                "removed": true
-              },
-              {
-                "id": "CORRIGIDO",
-                "displayName": "CORRIGIDO",
-                "required": false,
-                "defaultMatch": false,
-                "display": true,
-                "type": "string",
-                "canBeUsedToMatch": true,
-                "removed": true
               }
             ],
             "attemptToConvertTypes": false,
@@ -7072,11 +7117,75 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.2,
         "position": [
-          2608,
-          672
+          2560,
+          976
         ],
         "name": "Call Arquiva Boletos Loop",
         "id": "1d1caef0-46d6-40dc-a7b2-c2c6c5b60412"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "769b83ae-27f6-4bf0-a0c6-325e4cede6a7",
+                "leftValue": "={{ $json.output[0].NOME_ARQUIVO }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "9362c41a-d7ff-4d67-9ae7-96c96be110a5",
+                "leftValue": "={{ $json.output[0].ANO }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "ed9159ef-edf9-4379-a7d0-efaa2cb8f7c8",
+                "leftValue": "={{ $json.output[0].MES }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "4ea17b1c-be7a-4ea3-baa1-1f8d74731ca3",
+                "leftValue": "={{ $json.output[0].DATA }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "or"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2048,
+          752
+        ],
+        "id": "94a4cbaa-eb2a-4f9c-995f-db50eea742ba",
+        "name": "tem output?"
       }
     ],
     "connections": {
@@ -7339,7 +7448,7 @@
         "main": [
           [
             {
-              "node": "Split Out",
+              "node": "tem output?",
               "type": "main",
               "index": 0
             }
@@ -7870,6 +7979,24 @@
           [
             {
               "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "tem output?": {
+        "main": [
+          [
+            {
+              "node": "Split Out",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "OUTROS",
               "type": "main",
               "index": 0
             }
