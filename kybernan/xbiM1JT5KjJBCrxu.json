@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-09T10:45:52.269Z",
+  "updatedAt": "2025-12-09T15:19:36.335Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -617,7 +617,7 @@
           "categories": [
             {
               "category": "Boletos-Guias",
-              "description": "Selecione esta opção se o texto contiver instrumentos de cobrança ou pagamento. Procure obrigatoriamente por \"Linha digitável\", \"Código de barras\", \"Boleto bancário\", \"Vencimento\", \"Pix copia e cola\", \"qr code\" e \"Valor do documento\"."
+              "description": "Selecione esta opção se o texto contiver instrumentos de cobrança ou pagamento. Procure por \"Linha digitável\", \"Código de barras\", \"Boleto bancário\", \"Vencimento\", \"Pix copia e cola\", \"qr code\" ou \"Valor do documento\", não precisa ter todas estas informações, são apenas dicas de como entender que é um boleto ou guia. O objetivo principal é classificar boletos bancários ou guias como Boletos-Guias"
             },
             {
               "category": "Nota-Fiscal",
@@ -656,7 +656,7 @@
         "options": {
           "multiClass": true,
           "fallback": "other",
-          "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis.\n\n# Input Analysis\nO texto de entrada é um resumo dos documentos existentes.\nO texto de entrada (input) pode conter um único resumo de documento ou múltiplos resumos concatenados (ex: resumo de uma Nota Fiscal seguida de um Boleto).\n\n# Rules for Classification\n1. **ANÁLISE PARCIAL:** Não tente classificar o texto como um todo único. Varra o texto procurando por evidências de cada categoria.\n2. **REGRA DO COMBO (IMPORTANTE):** É muito comum receber um \"Kit Pagamento\" que contém o resumo texto de uma \"Nota Fiscal\" E o resumo texto de um \"Boleto\".\n   - Se encontrar dados de Nota Fiscal (DANFE, Chave de acesso, Produtos) -> Marque 'Nota-Fiscal' como TRUE.\n   - Se encontrar dados de Cobrança (Linha digitável, Banco, Boleto) -> Marque 'Boletos-Guias' como TRUE.\n   - Se houver AMBOS no texto, você DEVE marcar AMBAS as categorias como TRUE.\n3. **EVITAR OUTROS:** Só classifique como \"Outros\" (ou nenhuma categoria) se o texto não tiver ABSOLUTAMENTE NENHUMA característica de nota fiscal, recibo, conta a pagar e demais classificações existentes.\n\n# Step-by-Step Thinking\n- O texto tem chave de acesso ou diz \"DANFE\"? Sim -> Nota-Fiscal.\n- O texto tem linha digitável (números de boleto) ou diz \"Boleto\"? Sim -> Boletos-Guias.\n- Obrigatoriamente você precisa classificar 1 ou mais caminhos mais provável, OBRIGATORIO.\n- Se for comprovante de pagamento de boleto, classifique apenas como \"comprovantePagamento\" e não como \"Boletos-Guias\" ",
+          "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis. Sua prioridade é identificar corretamente instrumentos de cobrança e fiscais.\n\n# Input Analysis\nO texto de entrada é um resumo extraído de documentos via OCR.\nO input pode conter:\n1. Um único documento isolado.\n2. Múltiplos documentos concatenados (ex: Uma Nota Fiscal seguida do seu Boleto bancário).\n\n# Rules for Classification\n\n1. **REGRA DE OURO (BOLETOS):**\n   - Se o texto contiver a frase \"Boleto bancário\", \"Linha digitável\", \"Código de barras\" OU \"Nosso número\", classifique AUTOMATICAMENTE como \"Boletos-Guias\".\n   - **Atenção:** Não exija a presença de \"Pix\" ou \"QR Code\". Se tiver apenas a linha digitável, JÁ É um boleto.\n\n2. **DIFERENÇA CRÍTICA (A PAGAR vs PAGO):**\n   - Se tem \"Vencimento\" e é uma cobrança -> Classifique como \"Boletos-Guias\".\n   - Se tem \"Autenticação\", \"Comprovante de Operação\" ou \"Pagamento efetuado\" -> Classifique como \"comprovantePagamento\".\n\n3. **REGRA DO COMBO (MULTI-CLASS):**\n   - Se o texto contiver dados de Nota Fiscal (DANFE, Chave de acesso) **E** dados de Boleto (Linha digitável), você **DEVE** marcar AMBAS as categorias (\"Nota-Fiscal\" E \"Boletos-Guias\") como verdadeiras.\n   - Não escolha apenas um se os dois existirem no texto.\n\n4. **EVITAR \"OUTROS\":**\n   - Use a categoria \"Outros\" APENAS se o documento for ilegível ou não tiver nenhuma relação com finanças/contabilidade. Na dúvida entre \"Outros\" e \"Boletos-Guias\", escolha \"Boletos-Guias\".\n\n# Step-by-Step Thinking\n1. O texto diz explicitamente \"Tipo de documento: Boleto bancário\"? Se SIM -> Marque \"Boletos-Guias\" imediatamente.\n2. O texto possui uma linha digitável numérica longa? Se SIM -> Marque \"Boletos-Guias\".\n3. O texto possui chave de acesso de 44 dígitos ou diz \"DANFE\"? Se SIM -> Marque \"Nota-Fiscal\".\n4. Verificação final: É apenas um comprovante de que a conta já foi paga (tem autenticação bancária)? Se SIM, classifique como \"comprovantePagamento\" e ignore \"Boletos-Guias\". Se for a conta original para pagar, mantenha \"Boletos-Guias\".\n5. Se o tipo de documento for Boleto bancário, classifique como \"Boletos-Guias\"",
           "enableAutoFixing": true
         }
       },
@@ -730,7 +730,7 @@
         "text": "={{ $('AI Agent1').item.json.output }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO\n- Se houver documentos que não sejam boletos ou contas a pagar, ignore, apenas siga com a extração de informações para contas a pagar, boletos, etc..."
+          "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR_CENDETE\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR_CENDETE\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO\n- Se houver documentos que não sejam boletos ou contas a pagar, ignore, apenas siga com a extração de informações para contas a pagar, boletos, etc...\n- O nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE, utilize este nome para nomear o arquivo."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -1890,12 +1890,12 @@
       "parameters": {
         "content": "## Junta texto, arquivo e dados",
         "height": 528,
-        "width": 528
+        "width": 576
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -656,
+        -704,
         992
       ],
       "id": "bbbacf82-a592-42d0-bb59-d43ce181a372",
@@ -2464,9 +2464,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1",
+          "value": "gpt-4.1-mini",
           "mode": "list",
-          "cachedResultName": "gpt-4.1"
+          "cachedResultName": "gpt-4.1-mini"
         },
         "builtInTools": {},
         "options": {}
@@ -2579,7 +2579,7 @@
         "promptType": "define",
         "text": "={{ $json.text }}",
         "options": {
-          "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar\n- Apenas informações mais relevantes, resumindo bastante seu output\n- Sempre que houver código de barras no boleto é obrigatório informar."
+          "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar\n- Apenas informações mais relevantes, resumindo bastante seu output\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Quando for boleto, o nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -2723,131 +2723,6 @@
     },
     {
       "parameters": {
-        "content": "## PDF com senha",
-        "height": 288,
-        "width": 832
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        64,
-        -288
-      ],
-      "id": "985f918c-4180-4a9c-8b7e-e5b68b6f1674",
-      "name": "Sticky Note13"
-    },
-    {
-      "parameters": {
-        "operation": "sendAndWait",
-        "chatId": "5399986688",
-        "message": "=PDF com senha.\nDados:\n{{ $('Dados de Entrada').item.json.Nome }}\n{{ $('Dados de Entrada').item.json.body.message.senderName }}\n\n\nDigite a senha do PDF: ",
-        "responseType": "freeText",
-        "options": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        128,
-        -176
-      ],
-      "id": "9a3c78ce-cc5c-4706-be58-bec6b7f4847a",
-      "name": "Send a text message",
-      "webhookId": "238ca806-a5e4-4c8d-ae35-be35bfc59f14",
-      "credentials": {
-        "telegramApi": {
-          "id": "ouMbTOaEUCUE7jGs",
-          "name": "Telegram account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://kybernan.uazapi.com/message/download",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "token",
-              "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
-            }
-          ]
-        },
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "id",
-              "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
-            },
-            {
-              "name": "return_base64",
-              "value": "true"
-            },
-            {
-              "name": "generate_mp3",
-              "value": "false"
-            },
-            {
-              "name": "transcribe",
-              "value": "false"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        304,
-        -176
-      ],
-      "id": "dd8c79e7-b894-4e75-85ad-826a843a8e82",
-      "name": "HTTP Request7"
-    },
-    {
-      "parameters": {
-        "operation": "toBinary",
-        "sourceProperty": "base64Data",
-        "options": {
-          "mimeType": "={{ $json.mimetype }}"
-        }
-      },
-      "type": "n8n-nodes-base.convertToFile",
-      "typeVersion": 1.1,
-      "position": [
-        496,
-        -176
-      ],
-      "id": "170e8499-b92e-451f-ac51-a94a42f460b5",
-      "name": "Convert to File5"
-    },
-    {
-      "parameters": {
-        "operation": "pdf",
-        "options": {
-          "password": "={{ $('Send a text message').item.json.data.text }}"
-        }
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1.1,
-      "position": [
-        704,
-        -176
-      ],
-      "id": "802b31f1-a47d-455a-85d8-985ab214aeed",
-      "name": "Extract from File2",
-      "alwaysOutputData": true,
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
         "resource": "image",
         "operation": "analyze",
         "modelId": {
@@ -2856,7 +2731,7 @@
           "mode": "list",
           "cachedResultName": "GPT-4O"
         },
-        "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.\n- Se houver uma folha em cima de outra, foque em passar as informações principais do documento que está por cima",
+        "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.\n- Se houver uma folha em cima de outra, foque em passar as informações principais do documento que está por cima\n- Quando for boleto, o nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE.",
         "inputType": "base64",
         "options": {}
       },
@@ -2880,7 +2755,9 @@
         "workflowId": {
           "__rl": true,
           "value": "MV2sF6k5w8fkmTQI",
-          "mode": "list"
+          "mode": "list",
+          "cachedResultUrl": "/workflow/MV2sF6k5w8fkmTQI",
+          "cachedResultName": "Faz OCR Arquivador"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -2909,8 +2786,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        224,
-        208
+        160,
+        -96
       ],
       "name": "Call Faz OCR Arquivador",
       "id": "047e48c8-4558-4ead-972f-923934f01796"
@@ -3097,6 +2974,173 @@
       ],
       "id": "94a4cbaa-eb2a-4f9c-995f-db50eea742ba",
       "name": "tem output?"
+    },
+    {
+      "parameters": {
+        "chatId": "5399986688",
+        "text": "Desbloqueado com sucesso!",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        496,
+        128
+      ],
+      "id": "392bc405-3f88-42b0-b80d-c04b3605b0e0",
+      "name": "Send a text message1",
+      "webhookId": "4b07c559-b2d5-4e8c-beff-8a10997611a0",
+      "credentials": {
+        "telegramApi": {
+          "id": "ZgkuVjgKskJsBz1a",
+          "name": "PASSWORD PDF"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "kbfwJBar3KrSSjmM",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/kbfwJBar3KrSSjmM",
+          "cachedResultName": "UNLOCK PASSWORD"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "body_message_senderName": "={{ $('Dados de Entrada').item.json.body.message.senderName }}",
+            "Nome": "={{ $('Dados de Entrada').item.json.Nome }}",
+            "body_message_messageid": "={{ $('Dados de Entrada').item.json.body.message.messageid }}",
+            "senha": "={{ $json.data.text }}"
+          },
+          "matchingColumns": [
+            "body_message_senderName",
+            "Nome",
+            "body_message_messageid"
+          ],
+          "schema": [
+            {
+              "id": "body_message_senderName",
+              "displayName": "body_message_senderName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "body_message_messageid",
+              "displayName": "body_message_messageid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "senha",
+              "displayName": "senha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        128
+      ],
+      "name": "Call UNLOCK PASSWORD",
+      "id": "e1d1bd3e-7cb1-4063-b8d8-2d07ea99729c"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "5399986688",
+        "message": "=PDF com senha.\nDados:\n{{ $('Dados de Entrada').item.json.Nome }}\n{{ $('Dados de Entrada').item.json.body.message.senderName }}\n\n\nDigite a senha do PDF: ",
+        "responseType": "freeText",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -80,
+        128
+      ],
+      "id": "3a95ee4d-8b04-4c81-bff5-1975e7193d22",
+      "name": "Send a text message",
+      "webhookId": "238ca806-a5e4-4c8d-ae35-be35bfc59f14",
+      "credentials": {
+        "telegramApi": {
+          "id": "ZgkuVjgKskJsBz1a",
+          "name": "PASSWORD PDF"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "MV2sF6k5w8fkmTQI",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/MV2sF6k5w8fkmTQI",
+          "cachedResultName": "Faz OCR Arquivador"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "body_message_messageid": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
+          },
+          "matchingColumns": [
+            "body_message_messageid"
+          ],
+          "schema": [
+            {
+              "id": "body_message_messageid",
+              "displayName": "body_message_messageid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -1520,
+        240
+      ],
+      "name": "Call Faz OCR Arquivador1",
+      "id": "d7b7325f-ab0f-4188-9678-b11715664e8c"
     }
   ],
   "connections": {
@@ -3230,7 +3274,7 @@
             "index": 0
           },
           {
-            "node": "Upload file2",
+            "node": "Call Faz OCR Arquivador1",
             "type": "main",
             "index": 0
           }
@@ -3820,55 +3864,6 @@
         ]
       ]
     },
-    "Send a text message": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request7",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request7": {
-      "main": [
-        [
-          {
-            "node": "Convert to File5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Convert to File5": {
-      "main": [
-        [
-          {
-            "node": "Extract from File2",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Upload file2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File2": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "TRANSFERENCIA PIX": {
       "main": [
         []
@@ -3913,6 +3908,44 @@
           }
         ]
       ]
+    },
+    "Call UNLOCK PASSWORD": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Call UNLOCK PASSWORD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Faz OCR Arquivador1": {
+      "main": [
+        [
+          {
+            "node": "Upload file2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -3932,7 +3965,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "4480",
+            "content-length": "12013",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -3952,9 +3985,9 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "r5179105d33b663",
+              "id": "ref8832bd85cb03",
               "image": "",
-              "imagePreview": "",
+              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/491875945_698624952979637_3766181487753972042_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3QGkHq6S5_NAfwVZc9j6TzwaDqBHdRsKmTAe5lcnVkxmSA&oe=694401E2&_nc_sid=5e03e0&_nc_cat=105",
               "lead_assignedAttendant_id": "",
               "lead_email": "",
               "lead_field01": "",
@@ -3985,15 +4018,15 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "LELEY FOODS - BPO/KY",
+              "name": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363401866070546@g.us",
+              "wa_chatid": "120363422750225374@g.us",
               "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363401866070546",
+              "wa_fastid": "5519995586796:120363422750225374",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -4002,66 +4035,55 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "224193132101769@lid",
-              "wa_lastMessageTextVote": "Este estou aguardando o Silvio mandar nota e boletos, então apenas dar entrada con ressalva",
+              "wa_lastMessageSender": "137499217248386:72@lid",
+              "wa_lastMessageTextVote": "",
               "wa_lastMessageType": "ImageMessage",
-              "wa_lastMsgTimestamp": 1765222838000,
+              "wa_lastMsgTimestamp": 1765292731000,
               "wa_muteEndTime": 0,
-              "wa_name": "LELEY FOODS - BPO/KY",
-              "wa_unreadCount": 238
+              "wa_name": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
+              "wa_unreadCount": 3
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363401866070546@g.us",
+              "chatid": "120363422750225374@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/o1/v/t24/f2/m234/AQMQWvwSFUzhuD-NTzvBLzDL44IqrrfvzH69lqnMH-vffJm0t0wj4Fa3dRalDgmmxJV7WCkoZnbMaRfvNCtcTjBGbH7r0N-QGOWYZq1cfQ?ccb=9-4&oh=01_Q5Aa3QHHXQ3O9JSvjd8Ntsdg5nm_ygE5hocIqhRBWyw2i0LBsw&oe=695EAAF9&_nc_sid=e6ed6c&mms3=true",
+                "URL": "https://mmg.whatsapp.net/o1/v/t24/f2/m233/AQMe_lX0yjJfviHF9eequwmq3alPchjPN65cpXq7NLM18b4iEM3iOSqQ3ZyJv-fDlP84K_QXP_kXJIaLFFPHCbUtAyDfkERCFo7WQ7PRdg?ccb=9-4&oh=01_Q5Aa3QFD_SCwqj6o629HXcgTKlKLDI6DcJ4Z9UTFMFl2I0IU8w&oe=695FB5E1&_nc_sid=e6ed6c&mms3=true",
                 "mimetype": "image/jpeg",
-                "caption": "Este estou aguardando o Silvio mandar nota e boletos, então apenas dar entrada con ressalva",
-                "fileSHA256": "JdTZvndwwoOGBZd9xk2Bi3/s1IylV0ghXL8pUNvgMGQ=",
-                "fileLength": 255939,
-                "height": 1599,
-                "width": 1140,
-                "mediaKey": "EuasN1ZfFWTZQyK1hHsGq1Vqv5RjFreBxyrlJjmV3Nk=",
-                "fileEncSHA256": "q4yOXNTRFaviaZbL2K3LJULar7yLScDdcbARuKnW6B8=",
-                "directPath": "/o1/v/t24/f2/m234/AQMQWvwSFUzhuD-NTzvBLzDL44IqrrfvzH69lqnMH-vffJm0t0wj4Fa3dRalDgmmxJV7WCkoZnbMaRfvNCtcTjBGbH7r0N-QGOWYZq1cfQ?ccb=9-4&oh=01_Q5Aa3QHHXQ3O9JSvjd8Ntsdg5nm_ygE5hocIqhRBWyw2i0LBsw&oe=695EAAF9&_nc_sid=e6ed6c",
-                "mediaKeyTimestamp": 1765222837,
-                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wgARCABIAEgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAECAwUG/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAIB/9oADAMBAAIQAxAAAADpKli3AXMo0MdDzxZN93TPS4BMEwi5s86URfd0y2uEqQgCLQefNSa7O+VVLVokYTLDjFE12KCpoBkoBAHKAm//xAAXEQEBAQEAAAAAAAAAAAAAAAABIAAw/9oACAECAQE/AOLLLLv/xAAXEQEBAQEAAAAAAAAAAAAAAAABIAAw/9oACAEDAQE/AOJJJJv/xAApEAABAwQBAgUFAQAAAAAAAAABAAIRAwQhMUEFEBITFFFhIiMkNHJi/9oACAEBAAE/AGta6kwuPCdSp+YHZwgMSEJ9kABpOUE8oAjZlXYcLupJ5VNoNFk5wnOc04GF5mNIVDoBF7xsIl5jCc57YMJhc7Ywr+PWVOc6VF32KeeECC3PChpUBQFEZTiZ1KzGNK+afVvPymNDaDI9k3SaMnHc9m6XUHlt24cKgZosPwgMohHtCIygupfTdvBVn+tS/lFSERjuU05XWGAXhPuFaCLWk7/KEFFvYrQRQ2utNJuwDy3BVrBsqc68Ka4TgypDtbRRC4UhN91110XNP+VaD8SkCONLw+F+sJuSYChHBhEGNoj5UwustHm03HkQv//+AAMA/9k=",
+                "caption": "",
+                "fileSHA256": "zPKW6URX/+n/iz7xk4cQa5+eUpzMtKjX3NTlplkvMao=",
+                "fileLength": 381273,
+                "height": 1280,
+                "width": 1217,
+                "mediaKey": "iPXA31EI+LvFLY2EdvNUtoLV/IRWBExA0t/9g7EuV1s=",
+                "fileEncSHA256": "HtuSUgAvlNDmuCRzAtEYMCofK0EHUu2FcKf1X56miUc=",
+                "directPath": "/o1/v/t24/f2/m233/AQMe_lX0yjJfviHF9eequwmq3alPchjPN65cpXq7NLM18b4iEM3iOSqQ3ZyJv-fDlP84K_QXP_kXJIaLFFPHCbUtAyDfkERCFo7WQ7PRdg?ccb=9-4&oh=01_Q5Aa3QFD_SCwqj6o629HXcgTKlKLDI6DcJ4Z9UTFMFl2I0IU8w&oe=695FB5E1&_nc_sid=e6ed6c",
+                "mediaKeyTimestamp": 1765292730,
+                "JPEGThumbnail": "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",
                 "contextInfo": {
-                  "statusSourceType": 0
-                },
-                "firstScanSidecar": "6yaWklLSX8uMjA==",
-                "firstScanLength": 15612,
-                "scansSidecar": "6yaWklLSX8uMjAMCfTEXMY6jdCXlgZuL22J7bco3abRQ5xBGMbf9PQ==",
-                "scanLengths": [
-                  15612,
-                  80554,
-                  55527,
-                  104244
-                ],
-                "midQualityFileSHA256": "iBBx5qE1rX+wVNkdYSu5cUxRnBl0Fb/Oa1SycedvKmI=",
-                "imageSourceType": 0
+                  "expiration": 0
+                }
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "LELEY FOODS - BPO/KY",
-              "id": "5519995586796:3AA75AA1868C103078E4",
+              "groupName": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
+              "id": "5519995586796:3FB4B56D68D00A5FAE3B",
               "isGroup": true,
               "mediaType": "image",
-              "messageTimestamp": 1765222838000,
+              "messageTimestamp": 1765292731000,
               "messageType": "ImageMessage",
-              "messageid": "3AA75AA1868C103078E4",
+              "messageid": "3FB4B56D68D00A5FAE3B",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "224193132101769@lid",
-              "senderName": "Kederley",
-              "sender_lid": "224193132101769@lid",
-              "sender_pn": "5519981804818@s.whatsapp.net",
-              "source": "ios",
+              "sender": "137499217248386:72@lid",
+              "senderName": "Bruno P Ferreira",
+              "sender_lid": "137499217248386@lid",
+              "sender_pn": "553499969911@s.whatsapp.net",
+              "source": "unknown",
               "status": "",
-              "text": "Este estou aguardando o Silvio mandar nota e boletos, então apenas dar entrada con ressalva",
+              "text": "",
               "track_id": "",
               "track_source": "",
               "type": "media",
@@ -4077,8 +4099,8 @@
       }
     ]
   },
-  "versionId": "4b3dedff-0a2e-4043-a0f2-943b1af7225a",
-  "activeVersionId": "4b3dedff-0a2e-4043-a0f2-943b1af7225a",
+  "versionId": "b2bb3805-9dd6-4901-bc11-5c236d68f5c4",
+  "activeVersionId": "b2bb3805-9dd6-4901-bc11-5c236d68f5c4",
   "triggerCount": 1,
   "shared": [
     {
@@ -4090,9 +4112,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2025-12-09T10:45:52.253Z",
-    "createdAt": "2025-12-09T10:45:52.253Z",
-    "versionId": "4b3dedff-0a2e-4043-a0f2-943b1af7225a",
+    "updatedAt": "2025-12-09T15:19:36.324Z",
+    "createdAt": "2025-12-09T15:19:36.324Z",
+    "versionId": "b2bb3805-9dd6-4901-bc11-5c236d68f5c4",
     "workflowId": "xbiM1JT5KjJBCrxu",
     "nodes": [
       {
@@ -4706,7 +4728,7 @@
             "categories": [
               {
                 "category": "Boletos-Guias",
-                "description": "Selecione esta opção se o texto contiver instrumentos de cobrança ou pagamento. Procure obrigatoriamente por \"Linha digitável\", \"Código de barras\", \"Boleto bancário\", \"Vencimento\", \"Pix copia e cola\", \"qr code\" e \"Valor do documento\"."
+                "description": "Selecione esta opção se o texto contiver instrumentos de cobrança ou pagamento. Procure por \"Linha digitável\", \"Código de barras\", \"Boleto bancário\", \"Vencimento\", \"Pix copia e cola\", \"qr code\" ou \"Valor do documento\", não precisa ter todas estas informações, são apenas dicas de como entender que é um boleto ou guia. O objetivo principal é classificar boletos bancários ou guias como Boletos-Guias"
               },
               {
                 "category": "Nota-Fiscal",
@@ -4745,7 +4767,7 @@
           "options": {
             "multiClass": true,
             "fallback": "other",
-            "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis.\n\n# Input Analysis\nO texto de entrada é um resumo dos documentos existentes.\nO texto de entrada (input) pode conter um único resumo de documento ou múltiplos resumos concatenados (ex: resumo de uma Nota Fiscal seguida de um Boleto).\n\n# Rules for Classification\n1. **ANÁLISE PARCIAL:** Não tente classificar o texto como um todo único. Varra o texto procurando por evidências de cada categoria.\n2. **REGRA DO COMBO (IMPORTANTE):** É muito comum receber um \"Kit Pagamento\" que contém o resumo texto de uma \"Nota Fiscal\" E o resumo texto de um \"Boleto\".\n   - Se encontrar dados de Nota Fiscal (DANFE, Chave de acesso, Produtos) -> Marque 'Nota-Fiscal' como TRUE.\n   - Se encontrar dados de Cobrança (Linha digitável, Banco, Boleto) -> Marque 'Boletos-Guias' como TRUE.\n   - Se houver AMBOS no texto, você DEVE marcar AMBAS as categorias como TRUE.\n3. **EVITAR OUTROS:** Só classifique como \"Outros\" (ou nenhuma categoria) se o texto não tiver ABSOLUTAMENTE NENHUMA característica de nota fiscal, recibo, conta a pagar e demais classificações existentes.\n\n# Step-by-Step Thinking\n- O texto tem chave de acesso ou diz \"DANFE\"? Sim -> Nota-Fiscal.\n- O texto tem linha digitável (números de boleto) ou diz \"Boleto\"? Sim -> Boletos-Guias.\n- Obrigatoriamente você precisa classificar 1 ou mais caminhos mais provável, OBRIGATORIO.\n- Se for comprovante de pagamento de boleto, classifique apenas como \"comprovantePagamento\" e não como \"Boletos-Guias\" ",
+            "systemPromptTemplate": "=# Role\nVocê é um classificador especialista em triagem de documentos financeiros e contábeis. Sua prioridade é identificar corretamente instrumentos de cobrança e fiscais.\n\n# Input Analysis\nO texto de entrada é um resumo extraído de documentos via OCR.\nO input pode conter:\n1. Um único documento isolado.\n2. Múltiplos documentos concatenados (ex: Uma Nota Fiscal seguida do seu Boleto bancário).\n\n# Rules for Classification\n\n1. **REGRA DE OURO (BOLETOS):**\n   - Se o texto contiver a frase \"Boleto bancário\", \"Linha digitável\", \"Código de barras\" OU \"Nosso número\", classifique AUTOMATICAMENTE como \"Boletos-Guias\".\n   - **Atenção:** Não exija a presença de \"Pix\" ou \"QR Code\". Se tiver apenas a linha digitável, JÁ É um boleto.\n\n2. **DIFERENÇA CRÍTICA (A PAGAR vs PAGO):**\n   - Se tem \"Vencimento\" e é uma cobrança -> Classifique como \"Boletos-Guias\".\n   - Se tem \"Autenticação\", \"Comprovante de Operação\" ou \"Pagamento efetuado\" -> Classifique como \"comprovantePagamento\".\n\n3. **REGRA DO COMBO (MULTI-CLASS):**\n   - Se o texto contiver dados de Nota Fiscal (DANFE, Chave de acesso) **E** dados de Boleto (Linha digitável), você **DEVE** marcar AMBAS as categorias (\"Nota-Fiscal\" E \"Boletos-Guias\") como verdadeiras.\n   - Não escolha apenas um se os dois existirem no texto.\n\n4. **EVITAR \"OUTROS\":**\n   - Use a categoria \"Outros\" APENAS se o documento for ilegível ou não tiver nenhuma relação com finanças/contabilidade. Na dúvida entre \"Outros\" e \"Boletos-Guias\", escolha \"Boletos-Guias\".\n\n# Step-by-Step Thinking\n1. O texto diz explicitamente \"Tipo de documento: Boleto bancário\"? Se SIM -> Marque \"Boletos-Guias\" imediatamente.\n2. O texto possui uma linha digitável numérica longa? Se SIM -> Marque \"Boletos-Guias\".\n3. O texto possui chave de acesso de 44 dígitos ou diz \"DANFE\"? Se SIM -> Marque \"Nota-Fiscal\".\n4. Verificação final: É apenas um comprovante de que a conta já foi paga (tem autenticação bancária)? Se SIM, classifique como \"comprovantePagamento\" e ignore \"Boletos-Guias\". Se for a conta original para pagar, mantenha \"Boletos-Guias\".\n5. Se o tipo de documento for Boleto bancário, classifique como \"Boletos-Guias\"",
             "enableAutoFixing": true
           }
         },
@@ -4819,7 +4841,7 @@
           "text": "={{ $('AI Agent1').item.json.output }}",
           "hasOutputParser": true,
           "options": {
-            "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO\n- Se houver documentos que não sejam boletos ou contas a pagar, ignore, apenas siga com a extração de informações para contas a pagar, boletos, etc..."
+            "systemMessage": "=Analise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE o seguinte JSON:\n\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS - NOME_DO_FORNECEDOR_CENDETE\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n1. Em \"NOME_ARQUIVO\", use o número do mês (ex: 01, 02) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n2. Priorize a data de VENCIMENTO encontrada.\n3. Não inclua markdown, apenas o JSON puro.\n4. Exemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico)\n5. Se tiver nota fiscal com boletos, ignore a nota fiscal e extraia os dados apenas dos boletos\n6. Se a data de vencimento for a mesma, não extrair mais de uma vez os dados, extrair 1 vez apenas e neste caso o nome do arquivo coloque \"DD.MM - DIVERSOS FORNECEDORES\" se houver mais de um na mesma data.\n7. Sempre que houver código de barras de um determinado boleto, também extraia o valor, só números, tenha certeza de que está informando o código inteiro e o número está correto.\n\nAnalise o texto financeiro fornecido e extraia os dados para retornar EXATAMENTE um ARRAY JSON contendo um ou mais objetos, no seguinte formato.\n\nSe for encontrada apenas UMA data de vencimento/pagamento (indicando um único boleto ou conta), o retorno DEVE ser um array contendo um único objeto.\nSe for encontrada MAIS DE UMA data de vencimento/pagamento (indicando múltiplos boletos ou contas), o retorno DEVE ser um array JSON contendo um objeto para cada boleto/conta individual.\n\nEstrutura do Objeto (dentro do Array):\n{\n  \"DATA\": \"Dia com 2 dígitos (DD)\",\n  \"MES\": \"Mês abreviado em maiúsculo (JAN, FEV, MAR, ABR, MAI, JUN, JUL, AGO, SET, OUT, NOV, DEZ)\",\n  \"ANO\": \"Ano com 4 dígitos (AAAA)\",\n  \"NOME_ARQUIVO\": \"DIA.MÊS_NUMÉRICO - NOME_DO_FORNECEDOR_CENDETE\",\n  \"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n\nRegras:\n\nEm \"NOME_ARQUIVO\", use o número do mês com dois dígitos (ex: 01, 02, ..., 12) e o nome da empresa que irá receber os valores, ou seja, nome do beneficiário em maiúsculo.\n\nPriorize a data de VENCIMENTO encontrada.\n\nExemplo para NOME_ARQUIVO: \"10.11 - ALIBRA\" (Sendo 10 o DIA e 11 o MÊS numérico).\n\nExemplo de Saída (Múltiplos Boletos):\n[\n{\n\"DATA\": \"10\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"10.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n},\n{\n\"DATA\": \"17\",\n\"MES\": \"NOV\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"17.11 - ALIBRA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\nExemplo de Saída (Boleto Único):\n[\n{\n\"DATA\": \"15\",\n\"MES\": \"SET\",\n\"ANO\": \"2025\",\n\"NOME_ARQUIVO\": \"15.09 - AGUA_LIMPA\",\n\"CODIGO_BARRAS\": \"número completo exato do código só números\"\n}\n]\n\n## RULES\n- NUNCA, JAMAIS, erre informações, tenha certeza das datas, dia, mês e ANO\n- Se houver documentos que não sejam boletos ou contas a pagar, ignore, apenas siga com a extração de informações para contas a pagar, boletos, etc...\n- O nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE, utilize este nome para nomear o arquivo."
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -5979,12 +6001,12 @@
         "parameters": {
           "content": "## Junta texto, arquivo e dados",
           "height": 528,
-          "width": 528
+          "width": 576
         },
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
-          -656,
+          -704,
           992
         ],
         "id": "bbbacf82-a592-42d0-bb59-d43ce181a372",
@@ -6553,9 +6575,9 @@
         "parameters": {
           "model": {
             "__rl": true,
-            "value": "gpt-4.1",
+            "value": "gpt-4.1-mini",
             "mode": "list",
-            "cachedResultName": "gpt-4.1"
+            "cachedResultName": "gpt-4.1-mini"
           },
           "builtInTools": {},
           "options": {}
@@ -6668,7 +6690,7 @@
           "promptType": "define",
           "text": "={{ $json.text }}",
           "options": {
-            "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar\n- Apenas informações mais relevantes, resumindo bastante seu output\n- Sempre que houver código de barras no boleto é obrigatório informar."
+            "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar\n- Apenas informações mais relevantes, resumindo bastante seu output\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Quando for boleto, o nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE."
           }
         },
         "type": "@n8n/n8n-nodes-langchain.agent",
@@ -6812,131 +6834,6 @@
       },
       {
         "parameters": {
-          "content": "## PDF com senha",
-          "height": 288,
-          "width": 832
-        },
-        "type": "n8n-nodes-base.stickyNote",
-        "typeVersion": 1,
-        "position": [
-          64,
-          -288
-        ],
-        "id": "985f918c-4180-4a9c-8b7e-e5b68b6f1674",
-        "name": "Sticky Note13"
-      },
-      {
-        "parameters": {
-          "operation": "sendAndWait",
-          "chatId": "5399986688",
-          "message": "=PDF com senha.\nDados:\n{{ $('Dados de Entrada').item.json.Nome }}\n{{ $('Dados de Entrada').item.json.body.message.senderName }}\n\n\nDigite a senha do PDF: ",
-          "responseType": "freeText",
-          "options": {
-            "appendAttribution": false
-          }
-        },
-        "type": "n8n-nodes-base.telegram",
-        "typeVersion": 1.2,
-        "position": [
-          128,
-          -176
-        ],
-        "id": "9a3c78ce-cc5c-4706-be58-bec6b7f4847a",
-        "name": "Send a text message",
-        "webhookId": "238ca806-a5e4-4c8d-ae35-be35bfc59f14",
-        "credentials": {
-          "telegramApi": {
-            "id": "ouMbTOaEUCUE7jGs",
-            "name": "Telegram account"
-          }
-        }
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "https://kybernan.uazapi.com/message/download",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Accept",
-                "value": "application/json"
-              },
-              {
-                "name": "token",
-                "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
-              }
-            ]
-          },
-          "sendBody": true,
-          "bodyParameters": {
-            "parameters": [
-              {
-                "name": "id",
-                "value": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
-              },
-              {
-                "name": "return_base64",
-                "value": "true"
-              },
-              {
-                "name": "generate_mp3",
-                "value": "false"
-              },
-              {
-                "name": "transcribe",
-                "value": "false"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.3,
-        "position": [
-          304,
-          -176
-        ],
-        "id": "dd8c79e7-b894-4e75-85ad-826a843a8e82",
-        "name": "HTTP Request7"
-      },
-      {
-        "parameters": {
-          "operation": "toBinary",
-          "sourceProperty": "base64Data",
-          "options": {
-            "mimeType": "={{ $json.mimetype }}"
-          }
-        },
-        "type": "n8n-nodes-base.convertToFile",
-        "typeVersion": 1.1,
-        "position": [
-          496,
-          -176
-        ],
-        "id": "170e8499-b92e-451f-ac51-a94a42f460b5",
-        "name": "Convert to File5"
-      },
-      {
-        "parameters": {
-          "operation": "pdf",
-          "options": {
-            "password": "={{ $('Send a text message').item.json.data.text }}"
-          }
-        },
-        "type": "n8n-nodes-base.extractFromFile",
-        "typeVersion": 1.1,
-        "position": [
-          704,
-          -176
-        ],
-        "id": "802b31f1-a47d-455a-85d8-985ab214aeed",
-        "name": "Extract from File2",
-        "alwaysOutputData": true,
-        "onError": "continueErrorOutput"
-      },
-      {
-        "parameters": {
           "resource": "image",
           "operation": "analyze",
           "modelId": {
@@ -6945,7 +6842,7 @@
             "mode": "list",
             "cachedResultName": "GPT-4O"
           },
-          "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.\n- Se houver uma folha em cima de outra, foque em passar as informações principais do documento que está por cima",
+          "text": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber uma imagem de algum tipo de documento financeiro ou talvez mais de 1 documento.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1 mesmo.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1, com o tipo de documento e informações relevantes.\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar.\n- Apenas informações mais relevantes, resumindo bastante seu output.\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Antes de gerar o output tenha certeza de que está passando todas informações corretamente, sem errar os números e informações.\n- Se houver uma folha em cima de outra, foque em passar as informações principais do documento que está por cima\n- Quando for boleto, o nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE.",
           "inputType": "base64",
           "options": {}
         },
@@ -6969,7 +6866,9 @@
           "workflowId": {
             "__rl": true,
             "value": "MV2sF6k5w8fkmTQI",
-            "mode": "list"
+            "mode": "list",
+            "cachedResultUrl": "/workflow/MV2sF6k5w8fkmTQI",
+            "cachedResultName": "Faz OCR Arquivador"
           },
           "workflowInputs": {
             "mappingMode": "defineBelow",
@@ -6998,8 +6897,8 @@
         "type": "n8n-nodes-base.executeWorkflow",
         "typeVersion": 1.2,
         "position": [
-          224,
-          208
+          160,
+          -96
         ],
         "name": "Call Faz OCR Arquivador",
         "id": "047e48c8-4558-4ead-972f-923934f01796"
@@ -7186,6 +7085,173 @@
         ],
         "id": "94a4cbaa-eb2a-4f9c-995f-db50eea742ba",
         "name": "tem output?"
+      },
+      {
+        "parameters": {
+          "chatId": "5399986688",
+          "text": "Desbloqueado com sucesso!",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          496,
+          128
+        ],
+        "id": "392bc405-3f88-42b0-b80d-c04b3605b0e0",
+        "name": "Send a text message1",
+        "webhookId": "4b07c559-b2d5-4e8c-beff-8a10997611a0",
+        "credentials": {
+          "telegramApi": {
+            "id": "ZgkuVjgKskJsBz1a",
+            "name": "PASSWORD PDF"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "kbfwJBar3KrSSjmM",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/kbfwJBar3KrSSjmM",
+            "cachedResultName": "UNLOCK PASSWORD"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "body_message_senderName": "={{ $('Dados de Entrada').item.json.body.message.senderName }}",
+              "Nome": "={{ $('Dados de Entrada').item.json.Nome }}",
+              "body_message_messageid": "={{ $('Dados de Entrada').item.json.body.message.messageid }}",
+              "senha": "={{ $json.data.text }}"
+            },
+            "matchingColumns": [
+              "body_message_senderName",
+              "Nome",
+              "body_message_messageid"
+            ],
+            "schema": [
+              {
+                "id": "body_message_senderName",
+                "displayName": "body_message_senderName",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Nome",
+                "displayName": "Nome",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "body_message_messageid",
+                "displayName": "body_message_messageid",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "senha",
+                "displayName": "senha",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "type": "string",
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          160,
+          128
+        ],
+        "name": "Call UNLOCK PASSWORD",
+        "id": "e1d1bd3e-7cb1-4063-b8d8-2d07ea99729c"
+      },
+      {
+        "parameters": {
+          "operation": "sendAndWait",
+          "chatId": "5399986688",
+          "message": "=PDF com senha.\nDados:\n{{ $('Dados de Entrada').item.json.Nome }}\n{{ $('Dados de Entrada').item.json.body.message.senderName }}\n\n\nDigite a senha do PDF: ",
+          "responseType": "freeText",
+          "options": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          -80,
+          128
+        ],
+        "id": "3a95ee4d-8b04-4c81-bff5-1975e7193d22",
+        "name": "Send a text message",
+        "webhookId": "238ca806-a5e4-4c8d-ae35-be35bfc59f14",
+        "credentials": {
+          "telegramApi": {
+            "id": "ZgkuVjgKskJsBz1a",
+            "name": "PASSWORD PDF"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "workflowId": {
+            "__rl": true,
+            "value": "MV2sF6k5w8fkmTQI",
+            "mode": "list",
+            "cachedResultUrl": "/workflow/MV2sF6k5w8fkmTQI",
+            "cachedResultName": "Faz OCR Arquivador"
+          },
+          "workflowInputs": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "body_message_messageid": "={{ $('Dados de Entrada').item.json.body.message.messageid }}"
+            },
+            "matchingColumns": [
+              "body_message_messageid"
+            ],
+            "schema": [
+              {
+                "id": "body_message_messageid",
+                "displayName": "body_message_messageid",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": true
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1.2,
+        "position": [
+          -1520,
+          240
+        ],
+        "name": "Call Faz OCR Arquivador1",
+        "id": "d7b7325f-ab0f-4188-9678-b11715664e8c"
       }
     ],
     "connections": {
@@ -7319,7 +7385,7 @@
               "index": 0
             },
             {
-              "node": "Upload file2",
+              "node": "Call Faz OCR Arquivador1",
               "type": "main",
               "index": 0
             }
@@ -7909,55 +7975,6 @@
           ]
         ]
       },
-      "Send a text message": {
-        "main": [
-          [
-            {
-              "node": "HTTP Request7",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "HTTP Request7": {
-        "main": [
-          [
-            {
-              "node": "Convert to File5",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Convert to File5": {
-        "main": [
-          [
-            {
-              "node": "Extract from File2",
-              "type": "main",
-              "index": 0
-            },
-            {
-              "node": "Upload file2",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Extract from File2": {
-        "main": [
-          [
-            {
-              "node": "Edit Fields",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
       "TRANSFERENCIA PIX": {
         "main": [
           []
@@ -7997,6 +8014,44 @@
           [
             {
               "node": "OUTROS",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call UNLOCK PASSWORD": {
+        "main": [
+          [
+            {
+              "node": "Aggregate",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Send a text message1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a text message": {
+        "main": [
+          [
+            {
+              "node": "Call UNLOCK PASSWORD",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Call Faz OCR Arquivador1": {
+        "main": [
+          [
+            {
+              "node": "Upload file2",
               "type": "main",
               "index": 0
             }
