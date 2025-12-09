@@ -1,0 +1,414 @@
+{
+  "updatedAt": "2025-12-09T12:19:40.855Z",
+  "createdAt": "2025-12-09T11:47:42.447Z",
+  "id": "kbfwJBar3KrSSjmM",
+  "name": "UNLOCK PASSWORD",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## PDF com senha",
+        "height": 400,
+        "width": 1888
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -368
+      ],
+      "id": "985f918c-4180-4a9c-8b7e-e5b68b6f1674",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.ilovepdf.com/v1/auth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "public_key",
+              "value": "project_public_6e99f304b7b0f32194a219829ae0da16_1TjZUf8d65af7f20c2bb97ef86ef511d10f50"
+            },
+            {
+              "name": "secret_key",
+              "value": "secret_key_2b4e29231feda1bacf76a575828fdba7_8l_xca3740dd3253a8b56bbc5e54cd6c1664f"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        752,
+        -128
+      ],
+      "id": "c2b2e622-2a13-4bad-b8e1-8c93af9460cb",
+      "name": "Gerar JWT"
+    },
+    {
+      "parameters": {
+        "url": "https://api.ilovepdf.com/v1/start/pdfocr",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        944,
+        -128
+      ],
+      "id": "4ad62435-18f7-4221-82c7-acaf658194a9",
+      "name": "CriaTarefaOcr"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://{{ $json.server }}/v1/upload",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "task",
+              "value": "={{ $json.task }}"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1408,
+        -128
+      ],
+      "id": "027c5dd1-2876-4581-9eaa-a97b4a64801d",
+      "name": "UploadPdf"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://{{ $('CriaTarefaOcr').item.json.server }}/v1/process",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"task\": \"{{ $('CriaTarefaOcr').item.json.task }}\",\n  \"tool\": \"pdfocr\",\n  \"files\": [\n    {\n      \"server_filename\": \"{{ $json.server_filename }}\",\n      \"filename\": \"file\",\n      \"password\": \"{{ $('Start').item.json.senha }}\"\n    }\n  ],\n  \"ocr_languages\": [\n    \"por\"\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1568,
+        -128
+      ],
+      "id": "2a69e82d-1858-4723-84fb-cd06f89ab5de",
+      "name": "ProcessPdfToOcr"
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $('CriaTarefaOcr').item.json.server }}/v1/download/{{ $('CriaTarefaOcr').item.json.task }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Gerar JWT').item.json.token }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1744,
+        -128
+      ],
+      "id": "3da3785b-c9a9-4296-b3f0-afad58e6243b",
+      "name": "DownloadPdfOcr"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1184,
+        -240
+      ],
+      "id": "055f7f0d-3303-4594-82fc-d3efa0248485",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kybernan.uazapi.com/message/download",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "token",
+              "value": "4d8e979d-0339-417a-89c6-9e56bc0cead7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "id",
+              "value": "={{ $('Start').item.json.body_message_messageid }}"
+            },
+            {
+              "name": "return_base64",
+              "value": "true"
+            },
+            {
+              "name": "generate_mp3",
+              "value": "false"
+            },
+            {
+              "name": "transcribe",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        352,
+        -336
+      ],
+      "id": "bf4054bb-0877-4c10-b070-c8bd59378109",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64Data",
+        "options": {
+          "mimeType": "={{ $json.mimetype }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        -336
+      ],
+      "id": "c988a5b5-bcc1-48a9-833c-f218c0b59286",
+      "name": "Convert to File3"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "body_message_senderName",
+              "type": "any"
+            },
+            {
+              "name": "Nome",
+              "type": "any"
+            },
+            {
+              "name": "body_message_messageid",
+              "type": "any"
+            },
+            {
+              "name": "senha"
+            }
+          ]
+        }
+      },
+      "id": "d4443299-2967-4f77-8c01-764127f9e231",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -112,
+        -176
+      ]
+    }
+  ],
+  "connections": {
+    "Gerar JWT": {
+      "main": [
+        [
+          {
+            "node": "CriaTarefaOcr",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CriaTarefaOcr": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "UploadPdf": {
+      "main": [
+        [
+          {
+            "node": "ProcessPdfToOcr",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ProcessPdfToOcr": {
+      "main": [
+        [
+          {
+            "node": "DownloadPdfOcr",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "UploadPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Convert to File3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File3": {
+      "main": [
+        [
+          {
+            "node": "Gerar JWT",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {
+    "Start": [
+      {
+        "json": {
+          "body_message_senderName": "Tania Bortoli",
+          "Nome": "PJ - GESTÃO DE CONTAS",
+          "body_message_messageid": "4A153BBA833F5E9A3770"
+        }
+      }
+    ]
+  },
+  "versionId": "133b1b78-22ce-4d87-a88c-938ea9819b41",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-12-09T11:47:42.447Z",
+      "createdAt": "2025-12-09T11:47:42.447Z",
+      "role": "workflow:owner",
+      "workflowId": "kbfwJBar3KrSSjmM",
+      "projectId": "72MghKyBe7pL4bex"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
