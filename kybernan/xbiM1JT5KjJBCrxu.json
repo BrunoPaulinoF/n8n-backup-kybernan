@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-09T15:19:36.335Z",
+  "updatedAt": "2025-12-11T11:00:29.732Z",
   "createdAt": "2025-11-26T10:17:15.840Z",
   "id": "xbiM1JT5KjJBCrxu",
   "name": "PRINCIPAL - ARQUIVADOR",
@@ -2578,6 +2578,7 @@
       "parameters": {
         "promptType": "define",
         "text": "={{ $json.text }}",
+        "needsFallback": true,
         "options": {
           "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar\n- Apenas informações mais relevantes, resumindo bastante seu output\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Quando for boleto, o nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE."
         }
@@ -2605,8 +2606,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        144,
-        1440
+        272,
+        1600
       ],
       "id": "8ba80996-7f66-470e-8032-3e7302e09683",
       "name": "OpenAI Chat Model3",
@@ -3141,6 +3142,42 @@
       ],
       "name": "Call Faz OCR Arquivador1",
       "id": "d7b7325f-ab0f-4188-9678-b11715664e8c"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        1504
+      ],
+      "id": "5e7461cb-b08d-45c1-aea3-63668677a60d",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "fRrIyxCKgTlReSWb",
+          "name": "Kybernan-Arquivador"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-image-sharp.imageSharp",
+      "typeVersion": 1,
+      "position": [
+        -1744,
+        -240
+      ],
+      "id": "8e5ff5ef-3bbc-4b95-bb69-e2f6821fd9ec",
+      "name": "Image Sharp"
     }
   ],
   "connections": {
@@ -3269,12 +3306,12 @@
       "main": [
         [
           {
-            "node": "Analyze image1",
+            "node": "Call Faz OCR Arquivador1",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Call Faz OCR Arquivador1",
+            "node": "Analyze image1",
             "type": "main",
             "index": 0
           }
@@ -3837,7 +3874,7 @@
           {
             "node": "AI Agent1",
             "type": "ai_languageModel",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -3946,6 +3983,17 @@
           }
         ]
       ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -3965,7 +4013,7 @@
           "headers": {
             "host": "kybernan-n8n-webhook.qdidmr.easypanel.host",
             "user-agent": "uazapiGO-Webhook/1.0",
-            "content-length": "12013",
+            "content-length": "4338",
             "accept-encoding": "gzip",
             "content-type": "application/json",
             "x-forwarded-for": "187.45.178.254",
@@ -3985,9 +4033,9 @@
               "chatbot_disableUntil": 0,
               "chatbot_lastTriggerAt": 0,
               "chatbot_lastTrigger_id": "",
-              "id": "ref8832bd85cb03",
+              "id": "r5179105d33b663",
               "image": "",
-              "imagePreview": "https://pps.whatsapp.net/v/t61.24694-24/491875945_698624952979637_3766181487753972042_n.jpg?stp=dst-jpg_s96x96_tt6&ccb=11-4&oh=01_Q5Aa3QGkHq6S5_NAfwVZc9j6TzwaDqBHdRsKmTAe5lcnVkxmSA&oe=694401E2&_nc_sid=5e03e0&_nc_cat=105",
+              "imagePreview": "",
               "lead_assignedAttendant_id": "",
               "lead_email": "",
               "lead_field01": "",
@@ -4018,15 +4066,15 @@
               "lead_personalid": "",
               "lead_status": "",
               "lead_tags": [],
-              "name": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
+              "name": "LELEY FOODS - BPO/KY",
               "owner": "5519995586796",
               "phone": "",
               "wa_archived": false,
-              "wa_chatid": "120363422750225374@g.us",
+              "wa_chatid": "120363401866070546@g.us",
               "wa_chatlid": "",
               "wa_contactName": "",
               "wa_ephemeralExpiration": 0,
-              "wa_fastid": "5519995586796:120363422750225374",
+              "wa_fastid": "5519995586796:120363401866070546",
               "wa_isBlocked": false,
               "wa_isGroup": true,
               "wa_isGroup_admin": true,
@@ -4035,53 +4083,54 @@
               "wa_isGroup_member": true,
               "wa_isPinned": false,
               "wa_label": [],
-              "wa_lastMessageSender": "137499217248386:72@lid",
+              "wa_lastMessageSender": "137499217248386@lid",
               "wa_lastMessageTextVote": "",
-              "wa_lastMessageType": "ImageMessage",
-              "wa_lastMsgTimestamp": 1765292731000,
+              "wa_lastMessageType": "DocumentMessage",
+              "wa_lastMsgTimestamp": 1765404249000,
               "wa_muteEndTime": 0,
-              "wa_name": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
-              "wa_unreadCount": 3
+              "wa_name": "LELEY FOODS - BPO/KY",
+              "wa_unreadCount": 310
             },
             "instanceName": "CelKybernan",
             "message": {
               "buttonOrListid": "",
-              "chatid": "120363422750225374@g.us",
+              "chatid": "120363401866070546@g.us",
               "content": {
-                "URL": "https://mmg.whatsapp.net/o1/v/t24/f2/m233/AQMe_lX0yjJfviHF9eequwmq3alPchjPN65cpXq7NLM18b4iEM3iOSqQ3ZyJv-fDlP84K_QXP_kXJIaLFFPHCbUtAyDfkERCFo7WQ7PRdg?ccb=9-4&oh=01_Q5Aa3QFD_SCwqj6o629HXcgTKlKLDI6DcJ4Z9UTFMFl2I0IU8w&oe=695FB5E1&_nc_sid=e6ed6c&mms3=true",
-                "mimetype": "image/jpeg",
-                "caption": "",
-                "fileSHA256": "zPKW6URX/+n/iz7xk4cQa5+eUpzMtKjX3NTlplkvMao=",
-                "fileLength": 381273,
-                "height": 1280,
-                "width": 1217,
-                "mediaKey": "iPXA31EI+LvFLY2EdvNUtoLV/IRWBExA0t/9g7EuV1s=",
-                "fileEncSHA256": "HtuSUgAvlNDmuCRzAtEYMCofK0EHUu2FcKf1X56miUc=",
-                "directPath": "/o1/v/t24/f2/m233/AQMe_lX0yjJfviHF9eequwmq3alPchjPN65cpXq7NLM18b4iEM3iOSqQ3ZyJv-fDlP84K_QXP_kXJIaLFFPHCbUtAyDfkERCFo7WQ7PRdg?ccb=9-4&oh=01_Q5Aa3QFD_SCwqj6o629HXcgTKlKLDI6DcJ4Z9UTFMFl2I0IU8w&oe=695FB5E1&_nc_sid=e6ed6c",
-                "mediaKeyTimestamp": 1765292730,
-                "JPEGThumbnail": "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",
-                "contextInfo": {
-                  "expiration": 0
-                }
+                "URL": "https://mmg.whatsapp.net/v/t62.7119-24/596041872_740118915191877_524731919314055991_n.enc?ccb=11-4&oh=01_Q5Aa3QHuxOvcFbIdxRxDQ8v0sPxzRHL4EKEppVAdDgwLsy2zRw&oe=69616C31&_nc_sid=5e03e0&mms3=true",
+                "mimetype": "application/pdf",
+                "fileSHA256": "YlfPVD4NRHRQo9w5BLt93T2hAo/bPBUCcR4KHsCEdv4=",
+                "fileLength": 55347,
+                "pageCount": 1,
+                "mediaKey": "+DlqEMzk4d4rWwf45rzw4IWLyEcwLMbrjInwh/Ie8+Q=",
+                "fileName": "SICOOB_2025_10_12_19_03_59_PIX.pdf",
+                "fileEncSHA256": "VxJvfGaO6eIAtJwedvSqOOEdnybnUkUIcai0C44YDKc=",
+                "directPath": "/v/t62.7119-24/596041872_740118915191877_524731919314055991_n.enc?ccb=11-4&oh=01_Q5Aa3QHuxOvcFbIdxRxDQ8v0sPxzRHL4EKEppVAdDgwLsy2zRw&oe=69616C31&_nc_sid=5e03e0",
+                "mediaKeyTimestamp": 1765404248,
+                "thumbnailDirectPath": "/v/t62.36145-24/595398157_837569569063598_3993298840133799711_n.enc?ccb=11-4&oh=01_Q5Aa3QFpL29gJBzxvDsN6N19AY9Jv8GgakMsBQIT4XGwx3-F1Q&oe=696179C9&_nc_sid=5e03e0",
+                "thumbnailSHA256": "1G6Z4CcYbZSlZzy9jvba/LzIa0rAKmfB6nNFQWSqfaw=",
+                "thumbnailEncSHA256": "Nj0xoVACwsRwT6kJgb1gFmGzKVHSsPaxx+f9dbIW/mw=",
+                "JPEGThumbnail": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABERERESERMVFRMaHBkcGiYjICAjJjoqLSotKjpYN0A3N0A3WE5fTUhNX06MbmJiboyiiIGIosWwsMX46/j///8BERERERIRExUVExocGRwaJiMgICMmOiotKi0qOlg3QDc3QDdYTl9NSE1fToxuYmJujKKIgYiixbCwxfjr+P/////CABEIAGAAJgMBIgACEQEDEQH/xAAvAAADAQADAAAAAAAAAAAAAAAAAwQCAQUGAQEBAQEAAAAAAAAAAAAAAAABAgAD/9oADAMBAAIQAxAAAADw9E9jDobJlYBtM9PYMz4tRtg5CpnKrYlHrwwA6T2x0sJWxeKADpPXJaxLh6MUAHSeuK1jGdrZ2BPX/8QALxAAAgECBQEGBQUBAAAAAAAAAQIRAAMEEhMzciEQIjFxgZIUQVFh0RVEU5Ghsf/aAAgBAQABPwCrBwwDayseoiKH6VP7iPSr2jqto5tP5ZvGsFutw7Fl7TXMlmAYg+NaTETlw/lNXpVmtlbfiDK1gt1uFIYYH/omtS2end9lFgvzT2itRQOmX2CsFutwpACetW8LadAZMmjgrfXqavWbduAA01g95uJq2CWgRJpkuIJMf2DUmpNYLebiasxnEiRTLZ8cj+jD8Ufhx427vuH4pzbgZAwPzk1g95uJqz0cdY+9M4AGS+QfM07u5OZy3Zg95uJqwJuAQDVyzcYwttRH0prVxBLLAmOzB7zcTVqM4kTR0cveVhxK0+nPcDep7MHvNxNWSQ4hsp+tal4AD4hY86u5m7zXFY/Y9mD3m4mrTZXBo4gmZtLHma1U/gT/AGmdSpAtIPuJrB7zcTSeNHEfRU9RTXg0SiegimYEdFArB7zcTX//xAAYEQADAQEAAAAAAAAAAAAAAAABEBEAMP/aAAgBAgEBPwAuacw//8QAGhEAAgMBAQAAAAAAAAAAAAAAARAAERIxAv/aAAgBAwEBPwB6ozSLLPX67LX/2Q==",
+                "thumbnailHeight": 480,
+                "thumbnailWidth": 189
               },
               "convertOptions": "",
               "edited": "",
               "fromMe": false,
-              "groupName": "GRUPO TESTE AUTOMAÇÃO (IGNORAR)",
-              "id": "5519995586796:3FB4B56D68D00A5FAE3B",
+              "groupName": "LELEY FOODS - BPO/KY",
+              "id": "5519995586796:A5FFDC397E47F431502756B61CB53285",
               "isGroup": true,
-              "mediaType": "image",
-              "messageTimestamp": 1765292731000,
-              "messageType": "ImageMessage",
-              "messageid": "3FB4B56D68D00A5FAE3B",
+              "mediaType": "document",
+              "messageTimestamp": 1765404249000,
+              "messageType": "DocumentMessage",
+              "messageid": "A5FFDC397E47F431502756B61CB53285",
               "owner": "5519995586796",
               "quoted": "",
               "reaction": "",
-              "sender": "137499217248386:72@lid",
+              "sender": "137499217248386@lid",
               "senderName": "Bruno P Ferreira",
               "sender_lid": "137499217248386@lid",
               "sender_pn": "553499969911@s.whatsapp.net",
-              "source": "unknown",
+              "source": "android",
               "status": "",
               "text": "",
               "track_id": "",
@@ -4099,8 +4148,8 @@
       }
     ]
   },
-  "versionId": "b2bb3805-9dd6-4901-bc11-5c236d68f5c4",
-  "activeVersionId": "b2bb3805-9dd6-4901-bc11-5c236d68f5c4",
+  "versionId": "41056f31-134a-434b-8ef9-4c7fd841166c",
+  "activeVersionId": "41056f31-134a-434b-8ef9-4c7fd841166c",
   "triggerCount": 1,
   "shared": [
     {
@@ -4112,9 +4161,9 @@
     }
   ],
   "activeVersion": {
-    "updatedAt": "2025-12-09T15:19:36.324Z",
-    "createdAt": "2025-12-09T15:19:36.324Z",
-    "versionId": "b2bb3805-9dd6-4901-bc11-5c236d68f5c4",
+    "updatedAt": "2025-12-11T11:00:29.713Z",
+    "createdAt": "2025-12-11T11:00:29.713Z",
+    "versionId": "41056f31-134a-434b-8ef9-4c7fd841166c",
     "workflowId": "xbiM1JT5KjJBCrxu",
     "nodes": [
       {
@@ -6689,6 +6738,7 @@
         "parameters": {
           "promptType": "define",
           "text": "={{ $json.text }}",
+          "needsFallback": true,
           "options": {
             "systemMessage": "=# Roles:\n- Você é um limpador de informações desnecessárias, extraindo apenas o mais importante e classificando o tipo de documento.\n\n## Context:\n- Você irá receber informações de algum tipo de documento financeiro, ou mais de 1 documento também, às vezes informações de vários documentos.\n\n## Task:\n\n### Etapa 1:\n- Entenda e identifique se existe mais de 1 documento ou apenas 1.\n\n### Etapa 2:\n- Entenda e identifique cada tipo de documento, exemplos: Boletos, Contas a pagar, Contas a receber, Nota fiscal, Cupom fiscal, Holerites, Comprovantes, Cheques, Transferencias, entre outros...\n\n### Etapa 3:\n- Extraia as informações mais importantes para cada documento, exemplo, para cada boleto as informações principais são, data de vencimento, codigo de barras, nome do beneficiário (recebedor)...\n- Gere um relatório informando as informações mais relevantes para cada documento.\n\n## Rules:\n- Não informe as etapas, apenas crie o relatório extraindo as informações para cada documento se houver mais de 1 com o tipo de documento e informações relevantes\n- Se for um único documento com várias contas à pagar juntas, apenas faça um resumo simples informando que é um relatório de contas a pagar completo e que deve ser classificado como relatório de contas a pagar\n- Apenas informações mais relevantes, resumindo bastante seu output\n- Sempre que houver código de barras no boleto é obrigatório informar.\n- Quando for boleto, o nome do fornecedor é o que emitiu e está cobrando o boleto, normalmente está como CEDENTE."
           }
@@ -6716,8 +6766,8 @@
         "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
         "typeVersion": 1.3,
         "position": [
-          144,
-          1440
+          272,
+          1600
         ],
         "id": "8ba80996-7f66-470e-8032-3e7302e09683",
         "name": "OpenAI Chat Model3",
@@ -7252,6 +7302,42 @@
         ],
         "name": "Call Faz OCR Arquivador1",
         "id": "d7b7325f-ab0f-4188-9678-b11715664e8c"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "mode": "list",
+            "value": "gpt-4.1-mini"
+          },
+          "builtInTools": {},
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.3,
+        "position": [
+          160,
+          1504
+        ],
+        "id": "5e7461cb-b08d-45c1-aea3-63668677a60d",
+        "name": "OpenAI Chat Model4",
+        "credentials": {
+          "openAiApi": {
+            "id": "fRrIyxCKgTlReSWb",
+            "name": "Kybernan-Arquivador"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-image-sharp.imageSharp",
+        "typeVersion": 1,
+        "position": [
+          -1744,
+          -240
+        ],
+        "id": "8e5ff5ef-3bbc-4b95-bb69-e2f6821fd9ec",
+        "name": "Image Sharp"
       }
     ],
     "connections": {
@@ -7380,12 +7466,12 @@
         "main": [
           [
             {
-              "node": "Analyze image1",
+              "node": "Call Faz OCR Arquivador1",
               "type": "main",
               "index": 0
             },
             {
-              "node": "Call Faz OCR Arquivador1",
+              "node": "Analyze image1",
               "type": "main",
               "index": 0
             }
@@ -7948,7 +8034,7 @@
             {
               "node": "AI Agent1",
               "type": "ai_languageModel",
-              "index": 0
+              "index": 1
             }
           ]
         ]
@@ -8053,6 +8139,17 @@
             {
               "node": "Upload file2",
               "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model4": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent1",
+              "type": "ai_languageModel",
               "index": 0
             }
           ]
